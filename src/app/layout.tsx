@@ -1,6 +1,5 @@
 "use client";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
-import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Footer } from "../components/Footer";
@@ -10,10 +9,6 @@ import { theme } from "@/theme";
 import { Header } from "@/components/Header";
 
 const inter = Inter({ subsets: ["latin"] });
-
-// export const metadata: Metadata = {
-//   title: "Food Delivery",
-// };
 
 export default function RootLayout({
   children,

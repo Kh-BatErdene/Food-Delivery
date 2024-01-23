@@ -43,7 +43,12 @@ export default function Login() {
             />
             <Link
               href="/signup"
-              style={{ marginBottom: "48px", fontSize: "14px" }}
+              style={{
+                marginBottom: "48px",
+                fontSize: "14px",
+                color: "black",
+                textDecoration: "none",
+              }}
             >
               Нууц үг сэргээх
             </Link>
