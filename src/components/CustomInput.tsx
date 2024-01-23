@@ -1,6 +1,6 @@
 "use client";
-// import VisibilityIcon from "@mui/icons-material/Visibility";
-// import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import {
   IconButton,
   InputAdornment,
@@ -32,12 +32,17 @@ export const CustomInput = (props: CustomInputProps) => {
         placeholder={placeholder}
         onChange={onChange}
         type={type === "password" && showPassword ? "text" : type}
-        sx={{ width: "384px", background: "#ECEDF0" }}
+        sx={{
+          width: "384px",
+          height: "48px",
+          bgcolor: "#ECEDF0",
+        }}
         InputProps={{
+          sx: { height: "48px", fontFamily: "revert", fontSize: "14px" },
           endAdornment: type === "password" && (
             <InputAdornment position="end">
               <IconButton onClick={handleShowPassword}>
-                {/* {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />} */}
+                {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
               </IconButton>
             </InputAdornment>
           ),
