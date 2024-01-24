@@ -1,17 +1,29 @@
 "use client";
 
-import {
-  Button,
-  InputAdornment,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
+import { Button, Stack, Typography } from "@mui/material";
 import ShoppingBasketOutlinedIcon from "@mui/icons-material/ShoppingBasketOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
+import { CustomInput } from "./CustomInput";
+import React, { useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export const Header = () => {
+  const pathname = usePathname();
+  const data = [
+    {
+      label: "НҮҮР",
+      href: "home",
+    },
+    {
+      label: "ХООЛНЫ ЦЭС",
+      href: "menu",
+    },
+    {
+      label: "ХҮРГЭЛТИЙН БҮС",
+      href: "Delivery-area",
+    },
+  ];
   return (
     <Stack maxWidth="1440px" m="auto">
       <Stack
@@ -22,33 +34,33 @@ export const Header = () => {
         sx={{ maxWidth: "1258px", width: "100%", m: "auto", height: "57px" }}
       >
         <Stack direction="row" alignItems="center" gap={5}>
-          <img src="/BlackIcon.svg" style={{ width: "40px" }} />
-          <Typography fontSize={13} fontWeight={700} fontFamily={"Roboto"}>
-            НҮҮР
-          </Typography>
-          <Typography fontSize={13} fontWeight={700} fontFamily={"Roboto"}>
-            ХООЛНЫ ЦЭС
-          </Typography>
-          <Typography fontSize={13} fontWeight={700} fontFamily={"Roboto"}>
-            ХҮРГЭЛТИЙН БҮС
-          </Typography>
+          <Link href={"/"}>
+            <img src="/BlackIcon.svg" style={{ width: "40px" }} />
+          </Link>
+          {data.map((item, index) => {
+            return (
+              <Link
+                href={`/${item.href}`}
+                key={index}
+                style={{
+                  fontSize: "13px",
+                  fontFamily: "Roboto",
+                  fontWeight: "700",
+                  alignItems: "center",
+                  textDecoration: "none",
+                  color: pathname.includes(item.href) ? "#18BA51" : "black",
+                }}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
         </Stack>
 
         <Stack direction="row" alignItems="center" gap={1}>
-          <TextField
-            type="search"
-            placeholder="Хайх"
-            sx={{ height: "40px" }}
-            inputProps={{
-              style: { padding: "8px 8px" },
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchIcon />
-                </InputAdornment>
-              ),
-            }}
-          ></TextField>
-          <Button sx={{ color: "common.black" }}>
+          <CustomInput type="search" placeholder="Хайх" />
+
+          <Button sx={{ color: "common.black", height: "32px", mb: "2px" }}>
             <Stack
               direction="row"
               alignItems="center"
@@ -67,7 +79,7 @@ export const Header = () => {
             </Stack>
           </Button>
 
-          <Button sx={{ color: "common.black" }}>
+          <Button sx={{ color: "common.black", height: "32px", mb: "2px" }}>
             <Stack
               direction="row"
               alignItems="center"

@@ -1,6 +1,8 @@
 "use client";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import SearchIcon from "@mui/icons-material/Search";
+
 import {
   IconButton,
   InputAdornment,
@@ -11,7 +13,7 @@ import {
 import { ChangeEventHandler, HTMLInputTypeAttribute, useState } from "react";
 
 type CustomInputProps = {
-  label: string;
+  label?: string;
   placeholder?: string;
   onChange?: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
   type?: HTMLInputTypeAttribute;
@@ -33,12 +35,12 @@ export const CustomInput = (props: CustomInputProps) => {
         onChange={onChange}
         type={type === "password" && showPassword ? "text" : type}
         sx={{
-          width: "384px",
-          height: "48px",
+          width: type === "password" || type === "text" ? "384px" : "260px",
+          height: type === "password" || type === "text" ? "48px" : "32px",
+          mb: type === "password" || type === "text" ? "0" : "10px",
           bgcolor: "#ECEDF0",
         }}
         InputProps={{
-          sx: { height: "48px", fontFamily: "revert", fontSize: "14px" },
           endAdornment: type === "password" && (
             <InputAdornment position="end">
               <IconButton onClick={handleShowPassword}>
@@ -46,8 +48,21 @@ export const CustomInput = (props: CustomInputProps) => {
               </IconButton>
             </InputAdornment>
           ),
+          startAdornment: type === "search" && (
+            <InputAdornment position="start">
+              <SearchIcon />
+            </InputAdornment>
+          ),
         }}
-      ></TextField>
+        inputProps={{
+          style: {
+            padding:
+              type === "password" || type === "text" ? "14px 12px" : "6px",
+            fontFamily: "revert",
+            fontSize: "14px",
+          },
+        }}
+      />
     </Stack>
   );
 };

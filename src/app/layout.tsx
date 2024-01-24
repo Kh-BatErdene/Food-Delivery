@@ -4,11 +4,12 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Footer } from "../components/Footer";
 import { ThemeProvider } from "@emotion/react";
-import { CssBaseline } from "@mui/material";
+import { CssBaseline, Stack } from "@mui/material";
 import { theme } from "@/theme";
 import { Header } from "@/components/Header";
 
 const inter = Inter({ subsets: ["latin"] });
+<link rel="shortcut icon" href="#"></link>;
 
 export default function RootLayout({
   children,
@@ -20,7 +21,9 @@ export default function RootLayout({
           <ThemeProvider theme={theme}>
             <Header />
             {children}
+
             <Footer />
+
             <CssBaseline />
           </ThemeProvider>
         </AppRouterCacheProvider>

@@ -3,11 +3,13 @@
 import { CustomInput } from "@/components";
 import { Button, Container, Stack, Typography } from "@mui/material";
 import Link from "next/link";
-import { ChangeEvent, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function Login() {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const router = useRouter();
 
   return (
     <Container
@@ -42,7 +44,7 @@ export default function Login() {
               type="password"
             />
             <Link
-              href="/signup"
+              href="/password-recovery"
               style={{
                 marginBottom: "48px",
                 fontSize: "14px",
@@ -64,7 +66,13 @@ export default function Login() {
             Нэвтрэх
           </Button>
           <Typography sx={{ mx: "auto" }}>Эсвэл</Typography>
-          <Button variant="outlined" sx={{ outlineColor: "18BA51" }}>
+
+          <Button
+            onClick={() => {
+              router.push("/signup");
+            }}
+            variant="outlined"
+          >
             Бүртгүүлэх
           </Button>
         </Stack>
