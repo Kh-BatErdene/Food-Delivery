@@ -24,7 +24,7 @@ export default function RootLayout({
             <Footer />
             <CssBaseline />
           </ThemeProvider>
-        </AppRouterCacheProvider>
+        </AppRouterCacheProvider>{" "}
       </body>
     </html>
   );

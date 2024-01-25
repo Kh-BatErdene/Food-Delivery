@@ -5,16 +5,15 @@ import FacebookOutlinedIcon from "@mui/icons-material/FacebookOutlined";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import Link from "next/link";
-import { OverridableComponent } from "@mui/material/OverridableComponent";
 
 export const Footer = () => {
   const data = [
-    { label: "Нүүр", href: "Home" },
-    { label: "Холбоо барих", href: "Contact" },
-    { label: "Хоолны цэс", href: "Menu" },
-    { label: "Үйлчилгээний нөхцөл", href: "Terms-of-Service" },
-    { label: "Хүргэлтийн бүс", href: "Delivery-area" },
-    { label: "Нууцлалын бодлого", href: "Privacy-Policy" },
+    { label: "Нүүр", href: "home" },
+    { label: "Холбоо барих", href: "contact" },
+    { label: "Хоолны цэс", href: "menu" },
+    { label: "Үйлчилгээний нөхцөл", href: "terms-of-services" },
+    { label: "Хүргэлтийн бүс", href: "delivery-area" },
+    { label: "Нууцлалын бодлого", href: "privacy-policy" },
   ];
   return (
     <Stack
@@ -23,6 +22,7 @@ export const Footer = () => {
         height: "545px",
         mt: "115px",
         backgroundImage: "url(/Foods.png)",
+        px: "24px",
       }}
     >
       <Stack sx={{ mt: "120px", mx: "10px" }} gap={5} width="1200">

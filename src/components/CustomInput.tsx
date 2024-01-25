@@ -41,6 +41,7 @@ export const CustomInput = (props: CustomInputProps) => {
           bgcolor: "#ECEDF0",
         }}
         InputProps={{
+          style: { padding: "0px 10px" },
           endAdornment: type === "password" && (
             <InputAdornment position="end">
               <IconButton onClick={handleShowPassword}>
@@ -57,7 +58,7 @@ export const CustomInput = (props: CustomInputProps) => {
         inputProps={{
           style: {
             padding:
-              type === "password" || type === "text" ? "14px 12px" : "6px",
+              type === "password" || type === "text" ? "14px 12px" : "6px ",
             fontFamily: "revert",
             fontSize: "14px",
           },
