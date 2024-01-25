@@ -1,15 +1,17 @@
 "use client";
 
-import { Button, Stack, Typography } from "@mui/material";
+import { Button, Container, Stack, Typography } from "@mui/material";
 import ShoppingBasketOutlinedIcon from "@mui/icons-material/ShoppingBasketOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import { CustomInput } from "./CustomInput";
 import React, { useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 export const Header = () => {
   const pathname = usePathname();
+
+  const [loginOpen, setLoginOpen] = useState(false);
   const data = [
     {
       label: "НҮҮР",
@@ -87,6 +89,7 @@ export const Header = () => {
               sx={{ mx: "4px" }}
             >
               <PersonOutlineOutlinedIcon />
+
               <Typography
                 fontSize={13}
                 fontWeight={700}

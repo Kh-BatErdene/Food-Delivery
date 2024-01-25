@@ -4,7 +4,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Footer } from "../components/Footer";
 import { ThemeProvider } from "@emotion/react";
-import { CssBaseline, Stack } from "@mui/material";
+import { CssBaseline } from "@mui/material";
 import { theme } from "@/theme";
 import { Header } from "@/components/Header";
 
@@ -21,9 +21,7 @@ export default function RootLayout({
           <ThemeProvider theme={theme}>
             <Header />
             {children}
-
             <Footer />
-
             <CssBaseline />
           </ThemeProvider>
         </AppRouterCacheProvider>

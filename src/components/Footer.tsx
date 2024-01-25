@@ -20,9 +20,8 @@ export const Footer = () => {
     <Stack
       sx={{
         bgcolor: "#18BA51",
-        mt: "75px",
         height: "545px",
-        m: "auto",
+        mt: "115px",
         backgroundImage: "url(/Foods.png)",
       }}
     >
