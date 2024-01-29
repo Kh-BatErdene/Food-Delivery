@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Stack, SvgIconTypeMap, Typography } from "@mui/material";
+import { Container, Grid, Stack, Typography } from "@mui/material";
 import FacebookOutlinedIcon from "@mui/icons-material/FacebookOutlined";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import TwitterIcon from "@mui/icons-material/Twitter";
@@ -19,10 +19,11 @@ export const Footer = () => {
     <Stack
       sx={{
         bgcolor: "#18BA51",
-        height: "545px",
+
+        height: "100%",
         mt: "115px",
         backgroundImage: "url(/Foods.png)",
-        px: "24px",
+        p: "24px",
       }}
     >
       <Stack sx={{ mt: "120px", mx: "10px" }} gap={5} width="1200">
@@ -32,30 +33,26 @@ export const Footer = () => {
             Food Delivery
           </Typography>
         </Stack>
-        <Stack
-          direction="row"
-          justifyContent="space-between"
-          gap={1}
-          sx={{
-            maxWidth: "1200px",
-            width: "100%",
-            m: "auto",
-            flexWrap: "wrap",
-          }}
-        >
-          {data.map((item, index) => {
-            return (
-              <Link
-                key={index}
-                style={{ color: "white" }}
-                href={`/${item.href}`}
-              >
-                {item.label}
-              </Link>
-            );
-          })}
-        </Stack>
-        <Stack direction="row" gap={2} margin="auto">
+        <Container>
+          <Grid container spacing={2} sx={{ textAlign: "center" }}>
+            {data.map((item, index) => {
+              return (
+                <Grid key={index} item xs={12} sm={4} md={2}>
+                  <Link
+                    style={{
+                      color: "white",
+                    }}
+                    href={`/${item.href}`}
+                  >
+                    {item.label}
+                  </Link>
+                </Grid>
+              );
+            })}
+          </Grid>
+        </Container>
+
+        <Stack direction="row" sx={{ m: "auto" }} spacing={1}>
           <Link href={"https://facebook.com/"}>
             <FacebookOutlinedIcon sx={{ fontSize: "40px", fill: "white" }} />
           </Link>
@@ -78,3 +75,7 @@ export const Footer = () => {
     </Stack>
   );
 };
+
+export function FLink() {
+  return;
+}

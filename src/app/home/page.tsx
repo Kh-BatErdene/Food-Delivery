@@ -1,7 +1,8 @@
 "use client";
 
 import { Card } from "@/components/Card";
-import { Stack, Typography } from "@mui/material";
+import QuickButton from "@/components/Quick_Button";
+import { Box, Container, Grid, Stack, Typography } from "@mui/material";
 
 export default function Home() {
   return (
@@ -10,7 +11,7 @@ export default function Home() {
       <Stack
         direction="row"
         sx={{
-          bgcolor: "#18BA51",
+          bgcolor: "primary.main",
           width: "100%",
           height: "788px",
           backgroundImage: "url(/Foods.png)",
@@ -20,7 +21,7 @@ export default function Home() {
           px: "24px",
         }}
       >
-        <div style={{ width: "400px" }}>
+        <Box style={{ width: "400px" }}>
           <Typography
             fontSize="55px"
             fontFamily="Poppins"
@@ -34,7 +35,7 @@ export default function Home() {
           <p style={{ color: "white", fontSize: "22px" }}>
             Horem ipsum dolor sit amet, consectetur adipiscing elit.
           </p>
-        </div>
+        </Box>
 
         <img
           style={{
@@ -45,14 +46,32 @@ export default function Home() {
           src="Home-food.png"
         />
       </Stack>
+      <Container sx={{ mb: "138px" }}>
+        <Grid container spacing={2}>
+          {new Array(4).fill(0).map((_, index) => (
+            <Grid key={index} item xs={12} sm={6} md={4} lg={3}>
+              <QuickButton />
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
 
       {/* Cards code start here */}
-      <Stack
-        direction="row"
-        sx={{ px: "24px", width: "100%", justifyContent: "center" }}
-      >
-        <Card />
-      </Stack>
+      <Container sx={{ px: "20px" }}>
+        <Stack direction="row" alignItems="center" sx={{ mb: "42px" }}>
+          <img src="/Star.svg" />
+          <Typography fontFamily={"Roboto"} fontWeight={700} fontSize={22}>
+             Хямдралтай
+          </Typography>
+        </Stack>
+        <Grid container spacing={2}>
+          {new Array(12).fill(0).map((_, index) => (
+            <Grid key={index} item xs={12} sm={6} md={4} lg={3}>
+              <Card />
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
     </Stack>
   );
 }

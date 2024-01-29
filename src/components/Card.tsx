@@ -1,4 +1,5 @@
-import { Stack, Typography } from "@mui/material";
+import { Grid, Stack, Typography } from "@mui/material";
+import Image from "next/image";
 
 export const Card = () => {
   const data = [
@@ -7,47 +8,11 @@ export const Card = () => {
       name: "Өглөөний хоол",
       price: 14800,
       old_price: 16800,
-    },
-    {
-      image: "card.png",
-      name: "Өглөөний хоол",
-      price: 14800,
-      old_price: 16800,
-    },
-    {
-      image: "card.png",
-      name: "Өглөөний хоол",
-      price: 14800,
-      old_price: 16800,
-    },
-    {
-      image: "card.png",
-      name: "Өглөөний хоол",
-      price: 14800,
-      old_price: 16800,
-    },
-    {
-      image: "card.png",
-      name: "Өглөөний хоол",
-      price: 14800,
-      old_price: 16800,
-    },
-    {
-      image: "card.png",
-      name: "Өглөөний хоол",
-      price: 14800,
-      old_price: 16800,
+      sale: 20,
     },
   ];
   return (
     <Stack>
-      <Stack direction="row" alignItems="center" sx={{ mb: "42px" }}>
-        <img src="/Star.svg" />
-        <Typography fontFamily={"Roboto"} fontWeight={700} fontSize={22}>
-           Хямдралтай
-        </Typography>
-      </Stack>
-
       <Stack
         direction="row"
         gap={3}
@@ -57,11 +22,33 @@ export const Card = () => {
       >
         {data.map((item, index) => {
           return (
-            <Stack
-              key={index}
-              sx={{ maxWidth: "282px", maxHeight: "256px", width: "100%" }}
-            >
-              <img src={item.image} style={{ width: "100%" }} />
+            <Stack key={index} sx={{ width: "100%", position: "relative" }}>
+              <Image
+                src="/card.png"
+                alt="home-page-img"
+                width={282}
+                height={186}
+              ></Image>
+
+              <div
+                style={{
+                  width: "69px",
+                  height: "35px",
+                  backgroundColor: "#18BA51",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  borderRadius: "16px",
+                  border: "solid 2px white",
+                  color: "white",
+                  fontWeight: "700",
+                  position: "absolute",
+                  right: "16px",
+                  top: "16px",
+                }}
+              >
+                {item.sale}%
+              </div>
 
               <Typography
                 marginTop={2}
