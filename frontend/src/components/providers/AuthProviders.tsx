@@ -1,4 +1,5 @@
 import { createContext } from "react";
+//gg
 
 type AuthContextType = {
   login: (email: string, password: string) => Promise<void>;
