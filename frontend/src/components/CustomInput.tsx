@@ -8,19 +8,13 @@ import {
   InputAdornment,
   Stack,
   TextField,
+  TextFieldProps,
   Typography,
 } from "@mui/material";
 import { ChangeEventHandler, HTMLInputTypeAttribute, useState } from "react";
 
-type CustomInputProps = {
-  label?: string;
-  placeholder?: string;
-  onChange?: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
-  type?: HTMLInputTypeAttribute;
-};
-
-export const CustomInput = (props: CustomInputProps) => {
-  const { placeholder, label, onChange, type = "text" } = props;
+export const CustomInput = (props: TextFieldProps) => {
+  const { label, onChange, type = "text", ...rest } = props;
 
   const [showPassword, setShowPassword] = useState(false);
   const handleShowPassword = () => {
@@ -31,7 +25,8 @@ export const CustomInput = (props: CustomInputProps) => {
     <Stack gap={1}>
       <Typography fontSize={14}>{label}</Typography>
       <TextField
-        placeholder={placeholder}
+        // placeholder={placeholder}
+        {...rest}
         onChange={onChange}
         type={type === "password" && showPassword ? "text" : type}
         sx={{
