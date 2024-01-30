@@ -5,8 +5,9 @@ import "./globals.css";
 import { Footer } from "../components/Footer";
 import { ThemeProvider } from "@emotion/react";
 import { CssBaseline } from "@mui/material";
-import { theme } from "@/theme";
-import { Header } from "@/components/Header";
+
+import { theme } from "../theme";
+import { Header } from "../components/Header";
 
 const inter = Inter({ subsets: ["latin"] });
 <link rel="shortcut icon" href="#"></link>;

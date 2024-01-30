@@ -1,8 +1,9 @@
 "use client";
 
-import { Card } from "@/components/Card";
-import QuickButton from "@/components/Quick_Button";
+// import { Card } from "@/components/Card";
+import QuickButton from "../../components/Quick_Button";
 import { Box, Container, Grid, Stack, Typography } from "@mui/material";
+import { Card } from "../../components/Card";
 
 export default function Home() {
   return (

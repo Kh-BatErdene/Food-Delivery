@@ -1,10 +1,11 @@
 "use client";
 
-import { CustomInput } from "@/components";
+// import { CustomInput } from "@/components";
 import { Button, Container, Stack, Typography } from "@mui/material";
 import { useState } from "react";
 import CloudOutlinedIcon from "@mui/icons-material/CloudOutlined";
 import CloudIcon from "@mui/icons-material/Cloud";
+import { CustomInput } from "../../components";
 
 export default function SignUp() {
   const [password, setPassword] = useState("");

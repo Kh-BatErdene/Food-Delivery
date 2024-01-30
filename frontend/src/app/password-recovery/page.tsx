@@ -1,8 +1,9 @@
 "use client";
 
-import { CustomInput } from "@/components";
+// import { CustomInput } from "@/components";
 import { Button, Container, Stack, Typography } from "@mui/material";
 import { useState } from "react";
+import { CustomInput } from "../../components";
 
 export default function PasswordRecovery() {
   const [email, setEmail] = useState("");

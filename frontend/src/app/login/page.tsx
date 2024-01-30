@@ -1,12 +1,13 @@
 "use client";
 
-import { CustomInput } from "@/components";
+// import { CustomInput } from "@/components";
 import { Button, Container, Stack, Typography } from "@mui/material";
 import { useFormik } from "formik";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import * as yup from "yup";
+import { CustomInput } from "../../components";
 
 const validationSchema = yup.object({
   email: yup.string().email().required(),

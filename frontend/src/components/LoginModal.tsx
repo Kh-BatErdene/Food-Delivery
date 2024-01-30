@@ -1,10 +1,11 @@
 "use client";
 
-import { CustomInput } from "@/components";
+// import { CustomInput } from "@/components";
 import { Button, Container, Stack, Typography } from "@mui/material";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { CustomInput } from "./CustomInput";
 
 export default function LoginModal() {
   const [password, setPassword] = useState("");
