@@ -1,4 +1,4 @@
-import { Grid, Stack, Typography } from "@mui/material";
+import { Box, Grid, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 
 export const Card = () => {
@@ -22,13 +22,22 @@ export const Card = () => {
       >
         {data.map((item, index) => {
           return (
-            <Stack key={index} sx={{ width: "100%", position: "relative" }}>
-              <Image
+            <Stack
+              key={index}
+              sx={{
+                cursor: "pointer",
+                position: "relative",
+                width: "100%",
+              }}
+            >
+              {/* <Image
                 src="/card.png"
                 alt="home-page-img"
                 width={282}
                 height={186}
-              ></Image>
+              ></Image> */}
+
+              <img src="/card.png"></img>
 
               <div
                 style={{

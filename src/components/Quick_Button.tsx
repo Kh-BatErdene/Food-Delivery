@@ -7,23 +7,23 @@ export default function QuickButton() {
   const data = [
     {
       title: "Хүргэлтийн төлөв хянах",
-      icon: <AutoStoriesOutlinedIcon />,
+      icon: <AutoStoriesOutlinedIcon style={{ color: "#18BA51" }} />,
       des: "Захиалга бэлтгэлийн явцыг хянах",
     },
   ];
   return (
-    <Stack>
+    <Stack direction="row" justifyContent="center">
       {data.map((item, index) => {
         return (
           <Stack
             key={index}
             sx={{
+              // bgcolor: { xs: "red", md: "green" },
               width: "264px",
               height: "155px",
               borderRadius: "16px",
               textAlign: "center",
-              border: "solid 2px gray",
-              boxShadow: "inherit",
+              boxShadow: 4,
               p: "24px",
             }}
           >

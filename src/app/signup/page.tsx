@@ -4,10 +4,13 @@ import { CustomInput } from "@/components";
 import { Button, Container, Stack, Typography } from "@mui/material";
 import { useState } from "react";
 import CloudOutlinedIcon from "@mui/icons-material/CloudOutlined";
+import CloudIcon from "@mui/icons-material/Cloud";
 
 export default function SignUp() {
   const [password, setPassword] = useState("");
+  const [repassword, setRepassword] = useState("");
   const [email, setEmail] = useState("");
+  const [checkCloud, setCheckCloud] = useState(false);
 
   return (
     <Container
@@ -59,18 +62,32 @@ export default function SignUp() {
             label="Нууц үг давтах"
             placeholder="Нууц үгээ оруулна уу"
             onChange={(event) => {
-              setPassword(event.target.value);
+              setRepassword(event.target.value);
             }}
             type="password"
           />
-          <Stack direction="row" alignItems="center" gap={1}>
-            <CloudOutlinedIcon />
+
+          <Stack
+            direction="row"
+            alignItems="center"
+            gap={1}
+            sx={{ cursor: "pointer" }}
+          >
+            <Stack
+              onClick={() => {
+                setCheckCloud(!checkCloud);
+              }}
+            >
+              {(!checkCloud && <CloudOutlinedIcon />) ||
+                (checkCloud && <CloudIcon />)}
+            </Stack>
+
             <Typography fontSize={14}>Үйлчилгээний нөхцөл зөвшөөрөх</Typography>
           </Stack>
           <Button
             variant="contained"
             disableElevation
-            disabled={!email || !password}
+            disabled={!email || !password || !repassword || !checkCloud}
           >
             Бүртгүүлэх
           </Button>
