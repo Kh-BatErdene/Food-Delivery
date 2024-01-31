@@ -5,18 +5,24 @@ import { Button, Container, Stack, Typography } from "@mui/material";
 import { useFormik } from "formik";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 import * as yup from "yup";
 import { CustomInput } from "../../components";
 
 const validationSchema = yup.object({
-  email: yup.string().email().required(),
-  password: yup.string().required(),
+  email: yup
+    .string()
+    .email("И-мэйл буруу байна")
+    .required("И-мэйлээ оруулна уу"),
+  password: yup
+    .string()
+    .required("Нууц үгээ оруулна уу")
+    .matches(
+      /^(?=.*[A-Za-z])?[A-Za-z\d@$!%*#?&]{8,}$/,
+      "Нууц үг багадаа 8 тэмдэгт байх ёстой"
+    ),
 });
 
 export default function Login() {
-  const [password, setPassword] = useState("");
-  const [email, setEmail] = useState("");
   const router = useRouter();
 
   const formik = useFormik({
@@ -25,7 +31,9 @@ export default function Login() {
       password: "",
     },
     validationSchema: validationSchema,
-    onSubmit: async (values) => {},
+    onSubmit: (values) => {
+      console.log(values);
+    },
   });
 
   return (
@@ -45,20 +53,28 @@ export default function Login() {
 
         <Stack gap={2}>
           <CustomInput
+            id="email"
+            name="email"
             label="Имэйл"
             placeholder="Имэйл хаягаа оруулна уу"
-            onChange={(event) => {
-              setEmail(event.target.value);
-            }}
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            error={formik.touched.email && Boolean(formik.errors.email)}
+            helperText={formik.touched.email && formik.errors.email}
+            onBlur={formik.handleBlur}
             type="text"
           />
           <Stack alignItems={"flex-end"}>
             <CustomInput
+              id="password"
+              name="password"
               label="Нууц үг"
               placeholder="Нууц үг"
-              onChange={(event) => {
-                setPassword(event.target.value);
-              }}
+              value={formik.values.password}
+              onChange={formik.handleChange}
+              error={formik.touched.password && Boolean(formik.errors.password)}
+              helperText={formik.touched.password && formik.errors.password}
+              onBlur={formik.handleBlur}
               type="password"
             />
             <Link
@@ -79,7 +95,9 @@ export default function Login() {
           <Button
             variant="contained"
             disableElevation
-            disabled={!email || !password}
+            onClick={() => {
+              formik.handleSubmit();
+            }}
           >
             Нэвтрэх
           </Button>

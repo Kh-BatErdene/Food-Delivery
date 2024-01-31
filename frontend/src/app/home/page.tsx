@@ -4,8 +4,13 @@
 import QuickButton from "../../components/Quick_Button";
 import { Box, Container, Grid, Stack, Typography } from "@mui/material";
 import { Card } from "../../components/Card";
+import OrderModal from "../../components/OrderModal";
+import React, { useState } from "react";
+import CloseIcon from "@mui/icons-material/Close";
+import Modal from "@mui/material/Modal";
 
 export default function Home() {
+  const [order, setOrder] = useState(false);
   return (
     <Stack>
       {/* Home carousel code start here */}
@@ -90,14 +95,62 @@ export default function Home() {
             </Typography>
           </Stack>
           <Grid container spacing={2}>
-            {new Array(12).fill(0).map((_, index) => (
-              <Grid key={index} item xs={12} sm={6} md={4} lg={3}>
+            {new Array(12).fill(0).map((item, index) => (
+              <Grid
+                key={index}
+                item
+                xs={12}
+                sm={6}
+                md={4}
+                lg={3}
+                onClick={() => {
+                  setOrder(true);
+                }}
+              >
                 <Card />
               </Grid>
             ))}
           </Grid>
         </Container>
       </Stack>
+      <Modal open={order} sx={{ mx: "20px" }}>
+        <Box
+          sx={{
+            display: "flex",
+            maxHeight: "564px",
+            height: "100%",
+            maxWidth: "981px",
+            width: "100%",
+            p: 4,
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            bgcolor: "background.paper",
+            border: "2px solid #000",
+            boxShadow: 24,
+            borderRadius: "16px",
+          }}
+        >
+          <Stack
+            direction="row"
+            justifyContent="end"
+            sx={{
+              cursor: "pointer",
+              position: "absolute",
+              right: 20,
+              top: 20,
+            }}
+            onClick={() => {
+              setOrder(false);
+            }}
+          >
+            <CloseIcon />
+          </Stack>
+
+          {order && <OrderModal />}
+        </Box>
+      </Modal>
     </Stack>
   );
 }

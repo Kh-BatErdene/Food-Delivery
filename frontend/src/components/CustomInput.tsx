@@ -11,10 +11,10 @@ import {
   TextFieldProps,
   Typography,
 } from "@mui/material";
-import { ChangeEventHandler, HTMLInputTypeAttribute, useState } from "react";
+import { useState } from "react";
 
 export const CustomInput = (props: TextFieldProps) => {
-  const { label, onChange, type = "text", ...rest } = props;
+  const { label, type = "text", ...rest } = props;
 
   const [showPassword, setShowPassword] = useState(false);
   const handleShowPassword = () => {
@@ -25,9 +25,7 @@ export const CustomInput = (props: TextFieldProps) => {
     <Stack gap={1}>
       <Typography fontSize={14}>{label}</Typography>
       <TextField
-        // placeholder={placeholder}
         {...rest}
-        onChange={onChange}
         type={type === "password" && showPassword ? "text" : type}
         sx={{
           width: type === "password" || type === "text" ? "384px" : "260px",
@@ -36,7 +34,7 @@ export const CustomInput = (props: TextFieldProps) => {
           bgcolor: "#ECEDF0",
         }}
         InputProps={{
-          style: { padding: "0px 10px" },
+          sx: { padding: "0px 10px" },
           endAdornment: type === "password" && (
             <InputAdornment position="end">
               <IconButton onClick={handleShowPassword}>

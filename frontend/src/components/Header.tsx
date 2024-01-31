@@ -1,23 +1,26 @@
 "use client";
-
-import { Button, Container, Stack, Typography } from "@mui/material";
+//Mui Imports
+import { Button, Drawer, Stack, Typography } from "@mui/material";
 import ShoppingBasketOutlinedIcon from "@mui/icons-material/ShoppingBasketOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
-import CloseIcon from "@mui/icons-material/Close";
-import { CustomInput } from "./CustomInput";
-import React, { useState } from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
+
+//Next Ract imports
+import React, { useContext } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
 import LoginModal from "./LoginModal";
-import OrderModal from "./OrderModal";
+import DrawerModal from "./DrawerModal";
+import { CustomInput } from "./CustomInput";
+import { useStates } from "./providers/StateProviders";
 
 export const Header = () => {
   const pathname = usePathname();
 
-  const [open, setOpen] = useState(false);
-  const [order, setOrder] = useState(false);
+  const { isOpenDrawer, setIsOpenDrawer, isOpen, setIsOpen } = useStates();
+
   const data = [
     {
       label: "НҮҮР",
@@ -92,14 +95,14 @@ export const Header = () => {
 
           {/* //SignUp Button */}
           <Button
-            onClick={() => {
-              setOrder(true);
-            }}
             sx={{
               color: "common.black",
               height: "32px",
               mb: "2px",
               width: "120px",
+            }}
+            onClick={() => {
+              setIsOpenDrawer(true);
             }}
           >
             <Stack
@@ -120,44 +123,17 @@ export const Header = () => {
             </Stack>
           </Button>
 
-          <Modal open={order} sx={{ mx: "20px" }}>
-            <Box
-              sx={{
-                display: "flex",
-                maxHeight: "564px",
-                height: "100%",
-                maxWidth: "981px",
-                width: "100%",
-                p: 4,
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
-                bgcolor: "background.paper",
-                border: "2px solid #000",
-                boxShadow: 24,
-                borderRadius: "16px",
+          <React.Fragment>
+            <Drawer
+              anchor="right"
+              open={isOpenDrawer}
+              onClose={() => {
+                setIsOpenDrawer(false);
               }}
             >
-              <Stack
-                direction="row"
-                justifyContent="end"
-                sx={{
-                  cursor: "pointer",
-                  position: "absolute",
-                  right: 20,
-                  top: 20,
-                }}
-                onClick={() => {
-                  setOrder(false);
-                }}
-              >
-                <CloseIcon />
-              </Stack>
-
-              {order && <OrderModal />}
-            </Box>
-          </Modal>
+              <DrawerModal />
+            </Drawer>
+          </React.Fragment>
 
           {/* //Login Button */}
           <Button
@@ -168,7 +144,7 @@ export const Header = () => {
               width: "120px",
             }}
             onClick={() => {
-              setOpen(true);
+              setIsOpen(true);
             }}
           >
             <Stack
@@ -177,13 +153,16 @@ export const Header = () => {
               gap={1}
               sx={{ mx: "4px" }}
             >
-              <PersonOutlineOutlinedIcon />
+              <PersonOutlineOutlinedIcon
+                sx={{ color: isOpen ? "#18BA51" : "black" }}
+              />
 
               <Typography
                 fontSize={13}
                 fontWeight={700}
                 fontFamily={"Roboto"}
                 marginTop={0.4}
+                sx={{ color: isOpen ? "#18BA51" : "black" }}
               >
                 Нэвтрэх
               </Typography>
@@ -193,9 +172,9 @@ export const Header = () => {
           {/* //Login Modal */}
           <div>
             <Modal
-              open={open}
+              open={isOpen}
               onClose={() => {
-                setOpen(false);
+                setIsOpen(false);
               }}
             >
               <Box
@@ -213,7 +192,7 @@ export const Header = () => {
                   boxShadow: 24,
                 }}
               >
-                {open && <LoginModal />}
+                {isOpen && <LoginModal />}
               </Box>
             </Modal>
           </div>

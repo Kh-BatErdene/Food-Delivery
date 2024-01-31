@@ -8,6 +8,8 @@ import { CssBaseline } from "@mui/material";
 
 import { theme } from "../theme";
 import { Header } from "../components/Header";
+import { StateProvider } from "../components/providers/StateProviders";
+import { AuthProvider } from "../components";
 
 const inter = Inter({ subsets: ["latin"] });
 <link rel="shortcut icon" href="#"></link>;
@@ -20,12 +22,16 @@ export default function RootLayout({
       <body className={inter.className}>
         <AppRouterCacheProvider>
           <ThemeProvider theme={theme}>
-            <Header />
-            {children}
-            <Footer />
+            <AuthProvider>
+              <StateProvider>
+                <Header />
+                {children}
+                <Footer />
+              </StateProvider>
+            </AuthProvider>
             <CssBaseline />
           </ThemeProvider>
-        </AppRouterCacheProvider>{" "}
+        </AppRouterCacheProvider>
       </body>
     </html>
   );
