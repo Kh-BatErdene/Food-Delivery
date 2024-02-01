@@ -98,6 +98,7 @@ export default function Login() {
             onClick={() => {
               formik.handleSubmit();
             }}
+            disabled={!formik.values.email || !formik.values.password}
           >
             Нэвтрэх
           </Button>

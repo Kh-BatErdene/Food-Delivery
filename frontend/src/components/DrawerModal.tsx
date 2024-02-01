@@ -3,13 +3,23 @@
 import { Box, Stack, Typography } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { useState } from "react";
+import { useStates } from "./providers/StateProviders";
 
 export default function DrawerModal() {
+  const { setIsOpenDrawer } = useStates();
   const [count, setCount] = useState(1);
   return (
     <Stack sx={{ p: "24px", width: "586px" }}>
       <Stack direction="row" sx={{ mb: "50px" }} onClick={() => {}}>
-        <ArrowBackIosIcon />
+        <Stack
+          sx={{ cursor: "pointer" }}
+          onClick={() => {
+            setIsOpenDrawer(false);
+          }}
+        >
+          <ArrowBackIosIcon />
+        </Stack>
+
         <Typography sx={{ m: "auto", fontWeight: "900", fontSize: "20px" }}>
           Таны сагс
         </Typography>

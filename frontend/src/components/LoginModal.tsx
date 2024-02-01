@@ -2,15 +2,40 @@
 
 // import { CustomInput } from "@/components";
 import { Button, Container, Stack, Typography } from "@mui/material";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 import { CustomInput } from "./CustomInput";
+import * as yup from "yup";
+import { useFormik } from "formik";
+import { useStates } from "./providers/StateProviders";
+
+const validationSchema = yup.object({
+  email: yup
+    .string()
+    .email("И-мэйл буруу байна")
+    .required("И-мэйлээ оруулна уу"),
+  password: yup
+    .string()
+    .required("Нууц үгээ оруулна уу")
+    .matches(
+      /^(?=.*[A-Za-z])?[A-Za-z\d@$!%*#?&]{8,}$/,
+      "Нууц үг багадаа 8 тэмдэгт байх ёстой"
+    ),
+});
 
 export default function LoginModal() {
-  const [password, setPassword] = useState("");
-  const [email, setEmail] = useState("");
+  const { setIsOpen } = useStates();
   const router = useRouter();
+
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+      console.log(values);
+    },
+  });
 
   return (
     <Stack width={448} height={549} alignItems={"center"}>
@@ -20,25 +45,36 @@ export default function LoginModal() {
 
       <Stack gap={2}>
         <CustomInput
+          id="email"
+          name="email"
           label="Имэйл"
           placeholder="Имэйл хаягаа оруулна уу"
-          onChange={(event) => {
-            setEmail(event.target.value);
-          }}
+          value={formik.values.email}
+          onChange={formik.handleChange}
+          error={formik.touched.email && Boolean(formik.errors.email)}
+          helperText={formik.touched.email && formik.errors.email}
+          onBlur={formik.handleBlur}
           type="text"
         />
         <Stack alignItems={"flex-end"}>
           <CustomInput
+            id="password"
+            name="password"
             label="Нууц үг"
             placeholder="Нууц үг"
-            onChange={(event) => {
-              setPassword(event.target.value);
-            }}
+            value={formik.values.password}
+            onChange={formik.handleChange}
+            error={formik.touched.password && Boolean(formik.errors.password)}
+            helperText={formik.touched.password && formik.errors.password}
+            onBlur={formik.handleBlur}
             type="password"
           />
-          <Link
-            href="/password-recovery"
-            style={{
+          <Stack
+            onClick={() => {
+              router.push("/password-recovery");
+              setIsOpen(false);
+            }}
+            sx={{
               marginBottom: "48px",
               fontSize: "14px",
               color: "black",
@@ -46,7 +82,7 @@ export default function LoginModal() {
             }}
           >
             Нууц үг сэргээх
-          </Link>
+          </Stack>
         </Stack>
       </Stack>
 
@@ -54,7 +90,10 @@ export default function LoginModal() {
         <Button
           variant="contained"
           disableElevation
-          disabled={!email || !password}
+          disabled={!formik.values.email || !formik.values.password}
+          onClick={() => {
+            formik.handleSubmit;
+          }}
         >
           Нэвтрэх
         </Button>
@@ -63,6 +102,7 @@ export default function LoginModal() {
         <Button
           onClick={() => {
             router.push("/signup");
+            setIsOpen(false);
           }}
           variant="outlined"
         >

@@ -2,12 +2,13 @@ import { RequestHandler } from "express";
 import { UserModel } from "../models";
 
 export const signup: RequestHandler = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, address } = req.body;
 
   const user = await UserModel.create({
     name,
     email,
     password,
+    address,
   });
   return res.json(user);
 };
