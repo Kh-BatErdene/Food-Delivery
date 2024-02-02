@@ -1,8 +1,15 @@
 "use client";
 
 // import { CustomInput } from "@/components";
-import { Button, Container, Stack, Typography } from "@mui/material";
-import { useContext, useState } from "react";
+import {
+  Box,
+  Button,
+  Container,
+  Snackbar,
+  Stack,
+  Typography,
+} from "@mui/material";
+import React, { useContext, useState } from "react";
 import CloudOutlinedIcon from "@mui/icons-material/CloudOutlined";
 import CloudIcon from "@mui/icons-material/Cloud";
 import { AuthContext, CustomInput } from "../../components";
@@ -15,15 +22,13 @@ const validationSchema = yup.object({
     .string()
     .email("И-мэйл буруу байна")
     .required("И-мэйлээ оруулна уу"),
-  password: yup
-    .string()
-    .required("Нууц үгээ оруулна уу")
-    .matches(
-      /^(?=.*[A-Za-z])?[A-Za-z\d@$!%*#?&]{8,}$/,
-      "Нууц үг багадаа 8 тэмдэгт байх ёстой"
-    ),
+  password: yup.string().required("Нууц үгээ оруулна уу"),
+  // .matches(
+  //   /^(?=.*[A-Za-z])?[A-Za-z\d@$!%*#?&]{8,}$/,
+  //   "Нууц үг багадаа 8 тэмдэгт байх ёстой"
+  // ),
   address: yup.string().required("Хаягаа оруулна уу"),
-  repassword: yup.string().required("Нууц үгээ оруулна уу"),
+  // repassword: yup.string().required("Нууц үгээ оруулна уу"),
 });
 
 export default function SignUp() {
@@ -48,6 +53,8 @@ export default function SignUp() {
       });
     },
   });
+
+  const [open, setOpen] = useState(false);
 
   return (
     <Container
@@ -118,10 +125,10 @@ export default function SignUp() {
             placeholder="Нууц үг"
             value={formik.values.repassword}
             onChange={formik.handleChange}
-            error={
-              formik.touched.repassword &&
-              Boolean(formik.values.password !== formik.values.repassword)
-            }
+            // error={
+            //   formik.touched.repassword &&
+            //   Boolean(formik.values.password !== formik.values.repassword)
+            // }
             helperText={formik.touched.repassword && formik.errors.repassword}
             onBlur={formik.handleBlur}
             type="password"
@@ -144,9 +151,11 @@ export default function SignUp() {
 
             <Typography fontSize={14}>Үйлчилгээний нөхцөл зөвшөөрөх</Typography>
           </Stack>
+
           <Button
             onClick={() => {
               formik.handleSubmit();
+              setOpen(true);
             }}
             variant="contained"
             disableElevation
@@ -156,6 +165,7 @@ export default function SignUp() {
           >
             Бүртгүүлэх
           </Button>
+          {/* <ErrorSnackbar /> */}
         </Stack>
       </Stack>
     </Container>

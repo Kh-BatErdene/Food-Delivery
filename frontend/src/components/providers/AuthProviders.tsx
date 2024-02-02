@@ -1,5 +1,6 @@
-import { PropsWithChildren, createContext, useContext } from "react";
+import { PropsWithChildren, createContext } from "react";
 import { api } from "../../common";
+import { toast } from "react-toastify";
 
 type signupParams = {
   email: string;
@@ -18,10 +19,11 @@ export const AuthContext = createContext<AuthContextType>(
 export const AuthProvider = ({ children }: PropsWithChildren) => {
   const signup = async (params: signupParams) => {
     try {
-      // alert("aafd");
       const { data } = await api.post("/signup", params);
     } catch (error) {
-      console.log(`signup ${error}`);
+      if (error.response?.status === 409) {
+        return toast.error("kwjfkl");
+      }
     }
   };
 
@@ -29,7 +31,3 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     <AuthContext.Provider value={{ signup }}>{children}</AuthContext.Provider>
   );
 };
-
-// export const useAuth = () => {
-//   return useContext(AuthContext);
-// };

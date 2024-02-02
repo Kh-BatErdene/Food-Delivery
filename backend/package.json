@@ -24,6 +24,7 @@
     "init": "^0.1.2",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.3.0",
-    "mongoose": "^8.1.1"
+    "mongoose": "^8.1.1",
+    "toastify": "^2.0.1"
   }
 }

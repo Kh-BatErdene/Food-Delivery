@@ -3,14 +3,22 @@ import { UserModel } from "../models";
 
 export const signup: RequestHandler = async (req, res) => {
   const { name, email, password, address } = req.body;
+  try {
+    const usercheck = await UserModel.findOne({ email: email });
 
-  const user = await UserModel.create({
-    name,
-    email,
-    password,
-    address,
-  });
-  return res.json(user);
+    if (usercheck) {
+      return res.status(409).json({
+        message: "Хэрэглэгч давхцаж байна",
+      });
+    }
+    const user = await UserModel.create({
+      name,
+      email,
+      password,
+      address,
+    });
+    return res.json(user);
+  } catch (error) {}
 };
 
 export const login: RequestHandler = async (req, res) => {

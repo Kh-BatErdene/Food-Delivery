@@ -15,11 +15,13 @@ import LoginModal from "./LoginModal";
 import DrawerModal from "./DrawerModal";
 import { CustomInput } from "./CustomInput";
 import { useStates } from "./providers/StateProviders";
+import { UserContext } from "./providers/UserProviders";
 
 export const Header = () => {
   const pathname = usePathname();
 
   const { isOpenDrawer, setIsOpenDrawer, isOpen, setIsOpen } = useStates();
+  const { user } = useContext(UserContext);
 
   const data = [
     {
@@ -165,6 +167,35 @@ export const Header = () => {
                 sx={{ color: isOpen ? "#18BA51" : "black" }}
               >
                 Нэвтрэх
+              </Typography>
+            </Stack>
+          </Button>
+
+          <Button
+            sx={{
+              color: "common.black",
+              height: "32px",
+              mb: "2px",
+              width: "120px",
+            }}
+            onClick={() => user}
+          >
+            <Stack
+              direction="row"
+              alignItems="center"
+              gap={1}
+              sx={{ mx: "4px" }}
+            >
+              <PersonOutlineOutlinedIcon />
+
+              <Typography
+                fontSize={13}
+                fontWeight={700}
+                fontFamily={"Roboto"}
+                marginTop={0.4}
+                sx={{ color: isOpen ? "#18BA51" : "black" }}
+              >
+                Хэрэглэгч
               </Typography>
             </Stack>
           </Button>
