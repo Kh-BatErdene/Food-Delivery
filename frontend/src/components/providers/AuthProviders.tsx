@@ -45,10 +45,17 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       router.push("/home");
       setIsProfile(true);
       setIsLogin(false);
+      toast.success("Амжилттай бүртгэгдлээ", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: true,
+      });
     } catch (error) {
-      if (error.response?.status === 409) {
-        return toast.error("kwjfkl");
-      }
+      toast.error(error.response.data.message, {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: true,
+      });
     }
   };
 
@@ -61,9 +68,18 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       router.push("/home");
       setIsProfile(true);
       setIsLogin(false);
+      toast(data.message);
+      toast.success("Амжилттай нэвтэрлээ", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: true,
+      });
     } catch (error) {
-      // toast.error(error.response.data.message);
-      toast("Successfuly");
+      toast.error(error.response.data.message, {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: true,
+      });
     }
   };
 
