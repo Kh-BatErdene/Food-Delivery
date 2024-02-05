@@ -1,5 +1,10 @@
 import { Stack } from "@mui/material";
+import { FIlterButtons } from "../../components/FIlterButtons";
 
 export default function Menu() {
-  return <Stack></Stack>;
+  return (
+    <Stack>
+      <FIlterButtons />
+    </Stack>
+  );
 }

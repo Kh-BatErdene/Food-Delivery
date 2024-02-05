@@ -1,5 +1,6 @@
 import { RequestHandler } from "express";
 import { UserModel } from "../models";
+import jwt = require("jsonwebtoken");
 
 export const signup: RequestHandler = async (req, res) => {
   const { name, email, password, address } = req.body;
@@ -24,15 +25,23 @@ export const signup: RequestHandler = async (req, res) => {
 export const login: RequestHandler = async (req, res) => {
   const { email, password } = req.body;
 
-  const user = await UserModel.findOne({
-    email,
-    password,
-  });
+  try {
+    const user = await UserModel.findOne({ email: email });
 
-  if (!user) {
-    return res.status(401).json({
-      message: "Invalid credentials",
-    });
-  }
-  return res.json(user);
+    if (!user) {
+      return res.status(401).json({
+        message: "E-mail буруу байна",
+      });
+    }
+
+    const userpassword = await UserModel.findOne({ password: password });
+
+    if (!userpassword) {
+      return res.status(401).json({
+        message: "Нууц үг буруу байна",
+      });
+    }
+    const token = jwt.sign({ email }, "secret-key");
+    res.json({ token });
+  } catch (error) {}
 };

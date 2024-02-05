@@ -10,10 +10,9 @@ import { theme } from "../theme";
 import { Header } from "../components/Header";
 import { StateProvider } from "../components/providers/StateProviders";
 import { AuthProvider } from "../components";
-import {
-  UserContext,
-  UserProvider,
-} from "../components/providers/UserProviders";
+import { UserProvider } from "../components/providers/UserProviders";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const inter = Inter({ subsets: ["latin"] });
 <link rel="shortcut icon" href="#"></link>;
@@ -36,6 +35,7 @@ export default function RootLayout({
               </AuthProvider>
             </UserProvider>
             <CssBaseline />
+            <ToastContainer />
           </ThemeProvider>
         </AppRouterCacheProvider>
       </body>

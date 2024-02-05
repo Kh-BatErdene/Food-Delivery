@@ -7,24 +7,25 @@ import { CustomInput } from "./CustomInput";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import { useStates } from "./providers/StateProviders";
+import { useContext } from "react";
+import { AuthContext } from "./providers/AuthProviders";
 
 const validationSchema = yup.object({
   email: yup
     .string()
     .email("И-мэйл буруу байна")
     .required("И-мэйлээ оруулна уу"),
-  password: yup
-    .string()
-    .required("Нууц үгээ оруулна уу")
-    .matches(
-      /^(?=.*[A-Za-z])?[A-Za-z\d@$!%*#?&]{8,}$/,
-      "Нууц үг багадаа 8 тэмдэгт байх ёстой"
-    ),
+  password: yup.string().required("Нууц үгээ оруулна уу"),
+  // .matches(
+  //   /^(?=.*[A-Za-z])?[A-Za-z\d@$!%*#?&]{8,}$/,
+  //   "Нууц үг багадаа 8 тэмдэгт байх ёстой"
+  // ),
 });
 
 export default function LoginModal() {
   const { setIsOpen } = useStates();
   const router = useRouter();
+  const { login } = useContext(AuthContext);
 
   const formik = useFormik({
     initialValues: {
@@ -33,7 +34,7 @@ export default function LoginModal() {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      console.log(values);
+      login({ email: values.email, password: values.password });
     },
   });
 
@@ -90,10 +91,11 @@ export default function LoginModal() {
         <Button
           variant="contained"
           disableElevation
-          disabled={!formik.values.email || !formik.values.password}
           onClick={() => {
-            formik.handleSubmit;
+            formik.handleSubmit();
+            setIsOpen(false);
           }}
+          disabled={!formik.values.email || !formik.values.password}
         >
           Нэвтрэх
         </Button>

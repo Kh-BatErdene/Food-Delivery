@@ -3,14 +3,8 @@ import { api } from "../../common";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 
-type userParams = {
-  name: string;
-  email: string;
-  password: string;
-  address: string;
-};
 type UserContextType = {
-  user: (params: userParams) => void;
+  user: () => void;
 };
 
 export const UserContext = createContext<UserContextType>(
@@ -21,11 +15,14 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
   const router = useRouter();
 
   //profile information button function
-  const user = async (params: userParams) => {
-    alert("dk");
+  const user = async () => {
     router.push("/user");
+
     try {
-      const { data } = await api.post("/user", params);
+      const token = localStorage.getItem("token");
+      const { data } = await api.get("/user", {
+        headers: { Authorization: token },
+      });
     } catch (error) {
       if (error.response?.status === 409) {
         return toast.error("kwjfkl");

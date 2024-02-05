@@ -16,12 +16,14 @@ import DrawerModal from "./DrawerModal";
 import { CustomInput } from "./CustomInput";
 import { useStates } from "./providers/StateProviders";
 import { UserContext } from "./providers/UserProviders";
+import { AuthContext } from "./providers/AuthProviders";
 
 export const Header = () => {
   const pathname = usePathname();
 
   const { isOpenDrawer, setIsOpenDrawer, isOpen, setIsOpen } = useStates();
   const { user } = useContext(UserContext);
+  const { isLogin, isProfile } = useContext(AuthContext);
 
   const data = [
     {
@@ -138,67 +140,73 @@ export const Header = () => {
           </React.Fragment>
 
           {/* //Login Button */}
-          <Button
-            sx={{
-              color: "common.black",
-              height: "32px",
-              mb: "2px",
-              width: "120px",
-            }}
-            onClick={() => {
-              setIsOpen(true);
-            }}
-          >
-            <Stack
-              direction="row"
-              alignItems="center"
-              gap={1}
-              sx={{ mx: "4px" }}
+          {isLogin && (
+            <Button
+              sx={{
+                color: "common.black",
+                height: "32px",
+                mb: "2px",
+                width: "120px",
+              }}
+              onClick={() => {
+                setIsOpen(true);
+              }}
             >
-              <PersonOutlineOutlinedIcon
-                sx={{ color: isOpen ? "#18BA51" : "black" }}
-              />
-
-              <Typography
-                fontSize={13}
-                fontWeight={700}
-                fontFamily={"Roboto"}
-                marginTop={0.4}
-                sx={{ color: isOpen ? "#18BA51" : "black" }}
+              <Stack
+                direction="row"
+                alignItems="center"
+                gap={1}
+                sx={{ mx: "4px" }}
               >
-                Нэвтрэх
-              </Typography>
-            </Stack>
-          </Button>
+                <PersonOutlineOutlinedIcon
+                  sx={{ color: isOpen ? "#18BA51" : "black" }}
+                />
 
-          <Button
-            sx={{
-              color: "common.black",
-              height: "32px",
-              mb: "2px",
-              width: "120px",
-            }}
-            onClick={() => user}
-          >
-            <Stack
-              direction="row"
-              alignItems="center"
-              gap={1}
-              sx={{ mx: "4px" }}
+                <Typography
+                  fontSize={13}
+                  fontWeight={700}
+                  fontFamily={"Roboto"}
+                  marginTop={0.4}
+                  sx={{ color: isOpen ? "#18BA51" : "black" }}
+                >
+                  Нэвтрэх
+                </Typography>
+              </Stack>
+            </Button>
+          )}
+
+          {isProfile && (
+            <Button
+              sx={{
+                color: "common.black",
+                height: "32px",
+                mb: "2px",
+                width: "120px",
+              }}
+              onClick={() => {
+                user();
+              }}
             >
-              <PersonOutlineOutlinedIcon />
-
-              <Typography
-                fontSize={13}
-                fontWeight={700}
-                fontFamily={"Roboto"}
-                marginTop={0.4}
-                sx={{ color: isOpen ? "#18BA51" : "black" }}
+              <Stack
+                direction="row"
+                alignItems="center"
+                gap={1}
+                sx={{ mx: "4px" }}
               >
-                Хэрэглэгч
-              </Typography>
-            </Stack>
-          </Button>
+                <PersonOutlineOutlinedIcon />
+
+                <Typography
+                  fontSize={13}
+                  fontWeight={700}
+                  fontFamily={"Roboto"}
+                  marginTop={0.4}
+                  sx={{ color: isOpen ? "#18BA51" : "black" }}
+                >
+                  Хэрэглэгч
+                </Typography>
+              </Stack>
+            </Button>
+          )}
 
           {/* //Login Modal */}
           <div>

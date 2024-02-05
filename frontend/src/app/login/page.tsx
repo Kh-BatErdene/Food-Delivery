@@ -6,24 +6,24 @@ import { useFormik } from "formik";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import * as yup from "yup";
-import { CustomInput } from "../../components";
+import { AuthContext, CustomInput } from "../../components";
+import { useContext } from "react";
 
 const validationSchema = yup.object({
   email: yup
     .string()
     .email("И-мэйл буруу байна")
     .required("И-мэйлээ оруулна уу"),
-  password: yup
-    .string()
-    .required("Нууц үгээ оруулна уу")
-    .matches(
-      /^(?=.*[A-Za-z])?[A-Za-z\d@$!%*#?&]{8,}$/,
-      "Нууц үг багадаа 8 тэмдэгт байх ёстой"
-    ),
+  password: yup.string().required("Нууц үгээ оруулна уу"),
+  // .matches(
+  //   /^(?=.*[A-Za-z])?[A-Za-z\d@$!%*#?&]{8,}$/,
+  //   "Нууц үг багадаа 8 тэмдэгт байх ёстой"
+  // ),
 });
 
 export default function Login() {
   const router = useRouter();
+  const { login } = useContext(AuthContext);
 
   const formik = useFormik({
     initialValues: {
@@ -32,7 +32,7 @@ export default function Login() {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      console.log(values);
+      login({ email: values.email, password: values.password });
     },
   });
 
