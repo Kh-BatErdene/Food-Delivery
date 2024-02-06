@@ -7,8 +7,6 @@ import {
 } from "react";
 
 type StateContextType = {
-  isOpen: boolean;
-  setIsOpen: Dispatch<SetStateAction<boolean>>;
   isOpenDrawer: boolean;
   setIsOpenDrawer: Dispatch<SetStateAction<boolean>>;
 };
@@ -19,13 +17,11 @@ export const StateContext = createContext<StateContextType>(
 
 export const StateProvider = ({ children }) => {
   //States
-  const [isOpen, setIsOpen] = useState(false);
+
   const [isOpenDrawer, setIsOpenDrawer] = useState(false);
 
   return (
-    <StateContext.Provider
-      value={{ isOpen, setIsOpen, isOpenDrawer, setIsOpenDrawer }}
-    >
+    <StateContext.Provider value={{ isOpenDrawer, setIsOpenDrawer }}>
       {children}
     </StateContext.Provider>
   );

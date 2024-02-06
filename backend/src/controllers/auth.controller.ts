@@ -41,7 +41,8 @@ export const login: RequestHandler = async (req, res) => {
         message: "Нууц үг буруу байна",
       });
     }
-    const token = jwt.sign({ email }, "secret-key");
+    const id = user._id;
+    const token = jwt.sign({ id }, "secret-key");
     res.json({ token });
   } catch (error) {}
 };

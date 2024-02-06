@@ -21,9 +21,9 @@ import { AuthContext } from "./providers/AuthProviders";
 export const Header = () => {
   const pathname = usePathname();
 
-  const { isOpenDrawer, setIsOpenDrawer, isOpen, setIsOpen } = useStates();
+  const { isOpenDrawer, setIsOpenDrawer } = useStates();
   const { user } = useContext(UserContext);
-  const { isLogin, isProfile } = useContext(AuthContext);
+  const { isLogin, isProfile, isOpen, setIsOpen } = useContext(AuthContext);
 
   const data = [
     {

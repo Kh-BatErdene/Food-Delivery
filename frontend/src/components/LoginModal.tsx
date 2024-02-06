@@ -23,9 +23,8 @@ const validationSchema = yup.object({
 });
 
 export default function LoginModal() {
-  const { setIsOpen } = useStates();
   const router = useRouter();
-  const { login } = useContext(AuthContext);
+  const { login, setIsOpen } = useContext(AuthContext);
 
   const formik = useFormik({
     initialValues: {
@@ -93,7 +92,6 @@ export default function LoginModal() {
           disableElevation
           onClick={() => {
             formik.handleSubmit();
-            setIsOpen(false);
           }}
           disabled={!formik.values.email || !formik.values.password}
         >

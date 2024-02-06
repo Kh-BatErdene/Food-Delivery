@@ -1,9 +1,18 @@
 "use client";
-import { PropsWithChildren, createContext, useState } from "react";
+import {
+  Dispatch,
+  PropsWithChildren,
+  SetStateAction,
+  createContext,
+  useContext,
+  useState,
+} from "react";
 import { api } from "../../common";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
+import { useStates } from "./StateProviders";
+import { error } from "console";
 
 //Доорх функцанд авж буй хувьсагчдын төрөлийг зааж өөртөө хадгалж байна.
 type signupParams = {
@@ -25,6 +34,8 @@ type AuthContextType = {
   login: (params: loginParams) => void;
   isProfile: boolean;
   isLogin: boolean;
+  isOpen: boolean;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
 };
 
 //Шинэ контекст үүсгэж түүнд AuthContextType-г агуулж төрөлийг зааж өгнө.
@@ -34,6 +45,7 @@ export const AuthContext = createContext<AuthContextType>(
 
 //AuthProvider component эндээс эхэлнэ. Layout-аас {children}-г react-ийн PropsWithChildren ашиглан авж байна.
 export const AuthProvider = ({ children }: PropsWithChildren) => {
+  const [isOpen, setIsOpen] = useState(false);
   const [isProfile, setIsProfile] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
   const router = useRouter();
@@ -65,9 +77,10 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       const { data } = await api.post("/login", params);
       const { token } = data;
       localStorage.setItem("token", token);
-      router.push("/home");
       setIsProfile(true);
       setIsLogin(false);
+      setIsOpen(false);
+      router.push("/home");
       toast(data.message);
       toast.success("Амжилттай нэвтэрлээ", {
         position: "top-center",
@@ -84,7 +97,9 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   };
 
   return (
-    <AuthContext.Provider value={{ signup, login, isProfile, isLogin }}>
+    <AuthContext.Provider
+      value={{ signup, login, isProfile, isLogin, isOpen, setIsOpen }}
+    >
       {children}
     </AuthContext.Provider>
   );
