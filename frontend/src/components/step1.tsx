@@ -1,10 +1,12 @@
 import { Button, Stack, Typography } from "@mui/material";
 import { CustomInput } from "./CustomInput";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useStates } from "./providers/StateProviders";
+import { AuthContext } from "./providers/AuthProviders";
 
 export const Step1 = () => {
   const { setIndex } = useStates();
+  const { recovery } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   return (
     <Stack

@@ -4,7 +4,6 @@ import {
   PropsWithChildren,
   SetStateAction,
   createContext,
-  useContext,
   useState,
 } from "react";
 import { api } from "../../common";
@@ -26,6 +25,10 @@ type loginParams = {
   password: string;
 };
 
+type recoveryParams = {
+  email: string;
+};
+
 //Мөн AuthContextType функцанд дотор энд бичсэн 2 функцын төрөлийг зааж өгч байна.
 type AuthContextType = {
   signup: (params: signupParams) => void;
@@ -34,6 +37,7 @@ type AuthContextType = {
   isLogin: boolean;
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
+  recovery: (params: recoveryParams) => void;
 };
 
 //Шинэ контекст үүсгэж түүнд AuthContextType-г агуулж төрөлийг зааж өгнө.
@@ -94,6 +98,16 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     }
   };
 
+  //Recovery Function
+
+  const recovery = async (params: recoveryParams) => {
+    alert("successfuly");
+    try {
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -103,6 +117,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
         isLogin,
         isOpen,
         setIsOpen,
+        recovery,
       }}
     >
       {children}
