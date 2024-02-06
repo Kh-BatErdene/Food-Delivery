@@ -1,11 +1,19 @@
-import { Button, Container, Stack, Typography } from "@mui/material";
+import { Button, Stack, Typography } from "@mui/material";
 import { CustomInput } from "./CustomInput";
 import { useState } from "react";
+import { useStates } from "./providers/StateProviders";
 
 export const Step1 = () => {
+  const { setIndex } = useStates();
   const [email, setEmail] = useState("");
   return (
-    <Container sx={{ bgcolor: "yellow" }}>
+    <Stack
+      sx={{
+        width: "100%",
+        maxWidth: "450px",
+        alignItems: "center",
+      }}
+    >
       <Typography fontSize={28} fontWeight={700} marginBottom={6}>
         Нууц үг сэргээх
       </Typography>
@@ -23,11 +31,13 @@ export const Step1 = () => {
           variant="contained"
           disableElevation
           disabled={!email}
-          onClick={() => {}}
+          onClick={() => {
+            setIndex((prev) => prev + 1);
+          }}
         >
           Үргэлжлүүлэх
         </Button>
       </Stack>
-    </Container>
+    </Stack>
   );
 };

@@ -79,6 +79,7 @@ export default function LoginModal() {
               fontSize: "14px",
               color: "black",
               textDecoration: "none",
+              cursor: "pointer",
             }}
           >
             Нууц үг сэргээх

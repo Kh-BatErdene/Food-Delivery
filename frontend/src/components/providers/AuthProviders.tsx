@@ -8,11 +8,9 @@ import {
   useState,
 } from "react";
 import { api } from "../../common";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
-import { useStates } from "./StateProviders";
-import { error } from "console";
 
 //Доорх функцанд авж буй хувьсагчдын төрөлийг зааж өөртөө хадгалж байна.
 type signupParams = {
@@ -98,7 +96,14 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 
   return (
     <AuthContext.Provider
-      value={{ signup, login, isProfile, isLogin, isOpen, setIsOpen }}
+      value={{
+        signup,
+        login,
+        isProfile,
+        isLogin,
+        isOpen,
+        setIsOpen,
+      }}
     >
       {children}
     </AuthContext.Provider>
