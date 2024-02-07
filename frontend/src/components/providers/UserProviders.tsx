@@ -24,16 +24,14 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
 
   //profile information button function
   const user = async () => {
-    router.push("/user");
-
     try {
       const { data } = await api.get("/user", {
         headers: { Authorization: localStorage.getItem("token") },
       });
-
       setIsUser(data);
+      router.push("/user");
     } catch (error) {
-      if (error.response?.status === 409) {
+      if (error.response?.status === 401) {
         return toast.error("kwjfkl");
       }
     }

@@ -3,11 +3,31 @@ import { CustomInput } from "./CustomInput";
 import { useContext, useState } from "react";
 import { useStates } from "./providers/StateProviders";
 import { AuthContext } from "./providers/AuthProviders";
+import { useFormik } from "formik";
+import * as yup from "yup";
+
+const validationSchema = yup.object({
+  email: yup
+    .string()
+    .email("И-мэйл буруу байна")
+    .required("И-мэйлээ оруулна уу"),
+});
 
 export const Step1 = () => {
-  const { setIndex } = useStates();
+  const { email, setEmail } = useStates();
   const { recovery } = useContext(AuthContext);
-  const [email, setEmail] = useState("");
+
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+      recovery({ recovery_email: values.email });
+      setEmail(values.email);
+    },
+  });
+
   return (
     <Stack
       sx={{
@@ -21,20 +41,25 @@ export const Step1 = () => {
       </Typography>
       <Stack gap={2}>
         <CustomInput
+          id="email"
+          name="email"
           label="Имэйл"
           placeholder="Имэйл хаягаа оруулна уу"
-          onChange={(event) => {
-            setEmail(event.target.value);
-          }}
+          value={formik.values.email}
+          onChange={formik.handleChange}
+          error={formik.touched.email && Boolean(formik.errors.email)}
+          helperText={formik.touched.email && formik.errors.email}
+          onBlur={formik.handleBlur}
           type="text"
         />
 
         <Button
           variant="contained"
+          sx={{ mt: "20px" }}
           disableElevation
-          disabled={!email}
+          disabled={!formik.values.email}
           onClick={() => {
-            setIndex((prev) => prev + 1);
+            formik.handleSubmit();
           }}
         >
           Үргэлжлүүлэх

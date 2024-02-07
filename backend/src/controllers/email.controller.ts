@@ -3,13 +3,13 @@ import nodemailer from "nodemailer";
 import { UserModel } from "../models";
 
 export const sendEmail: RequestHandler = async (req, res) => {
-  const { email } = req.body;
+  const { recovery_email } = req.body;
 
-  const user = await UserModel.findOne({ email });
+  const user = await UserModel.findOne({ email: recovery_email });
 
   if (!user) {
     return res.status(401).json({
-      message: "hereglegch oldsongui ",
+      message: "Хэрэглэгч олдсонгүй",
     });
   }
 
@@ -28,11 +28,16 @@ export const sendEmail: RequestHandler = async (req, res) => {
     });
     const mailOptions = {
       from: "hadabagi85@gmail.com",
-      to: email,
+      to: recovery_email,
       subject: "from Food Delivery",
       text: `Your OTP code: ${otpCode}`,
     };
     await transporter.sendMail(mailOptions);
+
+    const userCode = await UserModel.updateOne(
+      { _id: user.id },
+      { $set: { otp: otpCode } }
+    );
     res.json("Email sent!");
   } catch (error) {
     res.status(500).json(error);

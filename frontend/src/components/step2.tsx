@@ -1,11 +1,10 @@
-import { Button, Container, Stack, Typography } from "@mui/material";
+import { Button, Stack, Typography } from "@mui/material";
 import { CustomInput } from "./CustomInput";
-import { useState } from "react";
 import { useStates } from "./providers/StateProviders";
 
 export const Step2 = () => {
-  const [email, setEmail] = useState("");
-  const { setIndex } = useStates();
+  const { email, setEmail } = useStates();
+
   return (
     <Stack
       sx={{
@@ -18,9 +17,13 @@ export const Step2 = () => {
       <Typography fontSize={28} fontWeight={700} marginBottom={6}>
         Нууц үг сэргээх
       </Typography>
-      <Stack gap={2} alignItems="center">
-        <Typography textAlign="center">
-          Таны example@pinecone.mn хаяг руу сэргээх код илгээх болно.
+      <Stack gap={2} alignItems="center" width="384px">
+        <Typography color="#695C08">
+          Таны
+          <Typography component="span" color="#18BA51" mx="5px">
+            {email}
+          </Typography>
+          хаяг руу сэргээх код илгээх болно.
         </Typography>
         <CustomInput
           label="Нууц үг сэргээх код"
@@ -36,9 +39,7 @@ export const Step2 = () => {
           disableElevation
           disabled={!email}
           sx={{ maxWidth: "384px", width: "100%" }}
-          onClick={() => {
-            setIndex((prev) => prev + 1);
-          }}
+          onClick={() => {}}
         >
           Үргэлжлүүлэх
         </Button>

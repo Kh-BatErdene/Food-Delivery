@@ -9,8 +9,8 @@ import {
 type StateContextType = {
   isOpenDrawer: boolean;
   setIsOpenDrawer: Dispatch<SetStateAction<boolean>>;
-  index: number;
-  setIndex: Dispatch<SetStateAction<number>>;
+  setEmail: Dispatch<SetStateAction<string>>;
+  email: string;
 };
 
 export const StateContext = createContext<StateContextType>(
@@ -21,11 +21,17 @@ export const StateProvider = ({ children }) => {
   //States
 
   const [isOpenDrawer, setIsOpenDrawer] = useState(false);
-  const [index, setIndex] = useState(0);
+
+  const [email, setEmail] = useState("");
 
   return (
     <StateContext.Provider
-      value={{ isOpenDrawer, setIsOpenDrawer, index, setIndex }}
+      value={{
+        isOpenDrawer,
+        setIsOpenDrawer,
+        email,
+        setEmail,
+      }}
     >
       {children}
     </StateContext.Provider>

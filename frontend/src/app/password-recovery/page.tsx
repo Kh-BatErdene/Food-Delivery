@@ -5,14 +5,15 @@ import { Stack } from "@mui/material";
 import { Step1 } from "../../components/step1";
 import { Step2 } from "../../components/step2";
 import { Step3 } from "../../components/step3";
-import { useStates } from "../../components/providers/StateProviders";
+import { useContext } from "react";
+import { AuthContext } from "../../components";
 
 export default function PasswordRecovery() {
-  const { index } = useStates();
+  const { index } = useContext(AuthContext);
 
   const data = [{ cmp: <Step1 /> }, { cmp: <Step2 /> }, { cmp: <Step3 /> }];
   return (
-    <Stack width="100%">
+    <Stack width="100%" overflow="hidden">
       <Stack
         width="300%"
         sx={{

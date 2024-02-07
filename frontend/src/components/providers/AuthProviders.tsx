@@ -10,6 +10,7 @@ import { api } from "../../common";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
+import { useStates } from "./StateProviders";
 
 //Доорх функцанд авж буй хувьсагчдын төрөлийг зааж өөртөө хадгалж байна.
 type signupParams = {
@@ -26,7 +27,7 @@ type loginParams = {
 };
 
 type recoveryParams = {
-  email: string;
+  recovery_email: string;
 };
 
 //Мөн AuthContextType функцанд дотор энд бичсэн 2 функцын төрөлийг зааж өгч байна.
@@ -37,7 +38,9 @@ type AuthContextType = {
   isLogin: boolean;
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
-  recovery: (params: recoveryParams) => void;
+  recovery: (params?: recoveryParams) => void;
+  index: number;
+  setIndex: Dispatch<SetStateAction<number>>;
 };
 
 //Шинэ контекст үүсгэж түүнд AuthContextType-г агуулж төрөлийг зааж өгнө.
@@ -50,7 +53,9 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isProfile, setIsProfile] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
+  const [index, setIndex] = useState(0);
   const router = useRouter();
+
   //SignUp function
 
   const signup = async (params: signupParams) => {
@@ -100,11 +105,13 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 
   //Recovery Function
 
-  const recovery = async (params: recoveryParams) => {
-    alert("successfuly");
+  const recovery = async (params?: recoveryParams) => {
     try {
+      const { data } = await api.post("/send", params);
+
+      setIndex((prev) => prev + 1);
     } catch (error) {
-      console.log(error);
+      console.log(error, "recovery function err");
     }
   };
 
@@ -118,6 +125,8 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
         isOpen,
         setIsOpen,
         recovery,
+        index,
+        setIndex,
       }}
     >
       {children}

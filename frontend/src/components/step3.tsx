@@ -7,8 +7,7 @@ import { AuthContext } from "./providers/AuthProviders";
 
 export const Step3 = () => {
   const [email, setEmail] = useState("");
-  const { setIndex, index } = useStates();
-  const { setIsOpen } = useContext(AuthContext);
+  const { setIsOpen, index, setIndex } = useContext(AuthContext);
   const router = useRouter();
   return (
     <Stack
