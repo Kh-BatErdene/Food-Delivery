@@ -121,7 +121,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   const recovery = async (params?: recoveryParams) => {
     try {
       const { data } = await api.post("/send", params);
-      toast.success("Амжилттай бүртгэгдлээ", {
+      toast.success("Амжилттай илгээгдлээ", {
         position: "top-center",
         autoClose: 3000,
         hideProgressBar: true,
@@ -134,10 +134,18 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 
   const resetpassword = async (params?: resetpasswordParams) => {
     try {
-      const { data } = await api.post("/resetpassword", params);
+      const token = localStorage.getItem("token");
+      const { data } = await api.post("/code", params, {
+        headers: { Authorization: token },
+      });
+      toast.success("Амжилттай", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: true,
+      });
       setIndex((prev) => prev + 1);
     } catch (error) {
-      console.log(error, "resetpassword function err");
+      toast.error(error.response.data.message);
     }
   };
 

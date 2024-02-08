@@ -19,8 +19,8 @@ export const Step2 = () => {
       code: "",
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-      resetpassword({ code: values.code });
+    onSubmit: async (values) => {
+      await resetpassword({ code: values.code });
     },
   });
 
@@ -47,7 +47,7 @@ export const Step2 = () => {
         <CustomInput
           id="code"
           name="code"
-          label="Имэйл"
+          label="Нууц үг сэргээх"
           placeholder="Имэйл хаягаа оруулна уу"
           value={formik.values.code}
           onChange={formik.handleChange}
@@ -61,7 +61,9 @@ export const Step2 = () => {
           disableElevation
           disabled={!formik.values.code}
           sx={{ maxWidth: "384px", width: "100%" }}
-          onClick={() => {}}
+          onClick={() => {
+            formik.handleSubmit();
+          }}
         >
           Үргэлжлүүлэх
         </Button>

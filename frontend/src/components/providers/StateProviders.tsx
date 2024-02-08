@@ -12,6 +12,10 @@ type StateContextType = {
   setIsOpenDrawer: Dispatch<SetStateAction<boolean>>;
   setEmail: Dispatch<SetStateAction<string>>;
   email: string;
+  isCreateFood: boolean;
+  setIsCreateFood: Dispatch<SetStateAction<boolean>>;
+  isCategory: boolean;
+  setIsCategory: Dispatch<SetStateAction<boolean>>;
 };
 
 export const StateContext = createContext<StateContextType>(
@@ -22,7 +26,8 @@ export const StateProvider = ({ children }) => {
   //States
 
   const [isOpenDrawer, setIsOpenDrawer] = useState(false);
-
+  const [isCreateFood, setIsCreateFood] = useState(false);
+  const [isCategory, setIsCategory] = useState(false);
   const [email, setEmail] = useState("");
 
   return (
@@ -32,6 +37,10 @@ export const StateProvider = ({ children }) => {
         setIsOpenDrawer,
         email,
         setEmail,
+        isCategory,
+        setIsCategory,
+        isCreateFood,
+        setIsCreateFood,
       }}
     >
       {children}

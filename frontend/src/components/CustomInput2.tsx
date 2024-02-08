@@ -31,7 +31,7 @@ export const CustomInput2 = (props: TextFieldProps) => {
                   bgcolor: "white",
                   borderRadius: "100%",
                   p: "5px",
-                  border: "solid 1px #EEEFF2",
+                  "& fieldset": { border: "none" },
                 }}
               >
                 {(type === "text" && (

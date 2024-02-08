@@ -11,6 +11,7 @@ export const code: RequestHandler = async (req, res) => {
         message: "Код буруу байна",
       });
     }
-    return res.json({ message: "Амжилттай" });
-  } catch (error) {}
+  } catch (error) {
+    console.log("backend break");
+  }
 };

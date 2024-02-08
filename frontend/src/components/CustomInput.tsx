@@ -31,6 +31,7 @@ export const CustomInput = (props: TextFieldProps) => {
           width: type === "password" || type === "text" ? "384px" : "260px",
           height: type === "password" || type === "text" ? "48px" : "32px",
           mb: type === "password" || type === "text" ? "0" : "10px",
+          "& fieldset": { border: "none" },
           bgcolor: "#ECEDF0",
         }}
         InputProps={{
