@@ -4,13 +4,13 @@ import {
   PropsWithChildren,
   SetStateAction,
   createContext,
+  useEffect,
   useState,
 } from "react";
 import { api } from "../../common";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
-import { useStates } from "./StateProviders";
 
 //Доорх функцанд авж буй хувьсагчдын төрөлийг зааж өөртөө хадгалж байна.
 type signupParams = {
@@ -30,17 +30,22 @@ type recoveryParams = {
   recovery_email: string;
 };
 
+type resetpasswordParams = {
+  code: string;
+};
+
 //Мөн AuthContextType функцанд дотор энд бичсэн 2 функцын төрөлийг зааж өгч байна.
 type AuthContextType = {
   signup: (params: signupParams) => void;
   login: (params: loginParams) => void;
   isProfile: boolean;
-  isLogin: boolean;
+  isLoggedIn: boolean;
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   recovery: (params?: recoveryParams) => void;
   index: number;
   setIndex: Dispatch<SetStateAction<number>>;
+  resetpassword: (params?: resetpasswordParams) => Promise<void>;
 };
 
 //Шинэ контекст үүсгэж түүнд AuthContextType-г агуулж төрөлийг зааж өгнө.
@@ -50,10 +55,10 @@ export const AuthContext = createContext<AuthContextType>(
 
 //AuthProvider component эндээс эхэлнэ. Layout-аас {children}-г react-ийн PropsWithChildren ашиглан авж байна.
 export const AuthProvider = ({ children }: PropsWithChildren) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isProfile, setIsProfile] = useState(false);
-  const [isLogin, setIsLogin] = useState(true);
-  const [index, setIndex] = useState(0);
+  const [isOpen, setIsOpen] = useState(false); //Login modal
+  const [isProfile, setIsProfile] = useState(false); //User button
+  const [isLoggedIn, setIsLoggedIn] = useState(false); //Login state
+  const [index, setIndex] = useState(0); //Carousel index
   const router = useRouter();
 
   //SignUp function
@@ -63,7 +68,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       const { data } = await api.post("/signup", params);
       router.push("/home");
       setIsProfile(true);
-      setIsLogin(false);
+      setIsLoggedIn(true);
       toast.success("Амжилттай бүртгэгдлээ", {
         position: "top-center",
         autoClose: 3000,
@@ -85,7 +90,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       const { token } = data;
       localStorage.setItem("token", token);
       setIsProfile(true);
-      setIsLogin(false);
+      setIsLoggedIn(true);
       setIsOpen(false);
       router.push("/home");
       toast(data.message);
@@ -103,15 +108,36 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     }
   };
 
+  //useEffect
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
+  //   if (token) {
+  //     setIsProfile(true);
+  //   }
+  // }, []);
+
   //Recovery Function
 
   const recovery = async (params?: recoveryParams) => {
     try {
       const { data } = await api.post("/send", params);
-
+      toast.success("Амжилттай бүртгэгдлээ", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: true,
+      });
       setIndex((prev) => prev + 1);
     } catch (error) {
-      console.log(error, "recovery function err");
+      toast.error(error.response.data.message);
+    }
+  };
+
+  const resetpassword = async (params?: resetpasswordParams) => {
+    try {
+      const { data } = await api.post("/resetpassword", params);
+      setIndex((prev) => prev + 1);
+    } catch (error) {
+      console.log(error, "resetpassword function err");
     }
   };
 
@@ -121,12 +147,13 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
         signup,
         login,
         isProfile,
-        isLogin,
+        isLoggedIn,
         isOpen,
         setIsOpen,
         recovery,
         index,
         setIndex,
+        resetpassword,
       }}
     >
       {children}

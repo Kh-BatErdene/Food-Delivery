@@ -57,7 +57,7 @@ export const Step1 = () => {
           variant="contained"
           sx={{ mt: "20px" }}
           disableElevation
-          disabled={!formik.values.email}
+          disabled={!formik.values.email === !Boolean(formik.errors.email)}
           onClick={() => {
             formik.handleSubmit();
           }}

@@ -5,9 +5,9 @@ import { UserModel } from "../models";
 export const sendEmail: RequestHandler = async (req, res) => {
   const { recovery_email } = req.body;
 
-  const user = await UserModel.findOne({ email: recovery_email });
+  const userid = await UserModel.findOne({ email: recovery_email });
 
-  if (!user) {
+  if (!userid) {
     return res.status(401).json({
       message: "Хэрэглэгч олдсонгүй",
     });
@@ -35,7 +35,7 @@ export const sendEmail: RequestHandler = async (req, res) => {
     await transporter.sendMail(mailOptions);
 
     const userCode = await UserModel.updateOne(
-      { _id: user.id },
+      { _id: userid.id },
       { $set: { otp: otpCode } }
     );
     res.json("Email sent!");

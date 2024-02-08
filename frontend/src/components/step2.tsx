@@ -1,9 +1,28 @@
 import { Button, Stack, Typography } from "@mui/material";
 import { CustomInput } from "./CustomInput";
 import { useStates } from "./providers/StateProviders";
+import { useFormik } from "formik";
+import * as yup from "yup";
+import { useContext } from "react";
+import { AuthContext } from "./providers/AuthProviders";
+
+const validationSchema = yup.object({
+  code: yup.string().required("Кодоо оруулна уу"),
+});
 
 export const Step2 = () => {
-  const { email, setEmail } = useStates();
+  const { email } = useStates();
+  const { resetpassword } = useContext(AuthContext);
+
+  const formik = useFormik({
+    initialValues: {
+      code: "",
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+      resetpassword({ code: values.code });
+    },
+  });
 
   return (
     <Stack
@@ -26,18 +45,21 @@ export const Step2 = () => {
           хаяг руу сэргээх код илгээх болно.
         </Typography>
         <CustomInput
-          label="Нууц үг сэргээх код"
-          placeholder="********"
-          onChange={(event) => {
-            setEmail(event.target.value);
-          }}
-          type="password"
+          id="code"
+          name="code"
+          label="Имэйл"
+          placeholder="Имэйл хаягаа оруулна уу"
+          value={formik.values.code}
+          onChange={formik.handleChange}
+          error={formik.touched.code && Boolean(formik.errors.code)}
+          helperText={formik.touched.code && formik.errors.code}
+          onBlur={formik.handleBlur}
+          type="text"
         />
-
         <Button
           variant="contained"
           disableElevation
-          disabled={!email}
+          disabled={!formik.values.code}
           sx={{ maxWidth: "384px", width: "100%" }}
           onClick={() => {}}
         >

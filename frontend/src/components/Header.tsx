@@ -23,7 +23,7 @@ export const Header = () => {
 
   const { isOpenDrawer, setIsOpenDrawer } = useStates();
   const { user } = useContext(UserContext);
-  const { isLogin, isProfile, isOpen, setIsOpen } = useContext(AuthContext);
+  const { isLoggedIn, isProfile, isOpen, setIsOpen } = useContext(AuthContext);
 
   const data = [
     {
@@ -140,7 +140,7 @@ export const Header = () => {
           </React.Fragment>
 
           {/* //Login Button */}
-          {isLogin && (
+          {!isLoggedIn && (
             <Button
               sx={{
                 color: "common.black",

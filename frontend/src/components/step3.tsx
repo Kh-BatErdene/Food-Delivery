@@ -30,10 +30,11 @@ export const Step3 = () => {
           type="password"
         />
         <CustomInput
-          id="repassword"
-          name="repassword"
-          label="Нууц үг давтах"
+          label="Нууц үг сэргээх код"
           placeholder="********"
+          onChange={(event) => {
+            setEmail(event.target.value);
+          }}
           type="password"
         />
 

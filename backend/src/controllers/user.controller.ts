@@ -12,11 +12,15 @@ export const user: RequestHandler = async (req, res) => {
   }
 
   try {
-    const payload = jwt.verify(authorization, "secret-key");
-    const { id } = payload as JwtPayload;
-    const user = UserModel.find({ _id: id });
-    return res.json({ user });
+    const verify = jwt.verify(authorization, "secret-key");
+    const { id } = verify as JwtPayload;
+
+    const profile = await UserModel.find({ _id: id });
+
+    res.json({
+      profile,
+    });
   } catch (error) {
-    console.log(error);
+    return res.status(409).json({ message: "Profile unauthorization" });
   }
 };

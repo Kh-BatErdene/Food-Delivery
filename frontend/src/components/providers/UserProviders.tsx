@@ -1,3 +1,4 @@
+"use client";
 import {
   Dispatch,
   PropsWithChildren,
@@ -25,14 +26,18 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
   //profile information button function
   const user = async () => {
     try {
+      const token = localStorage.getItem("token");
       const { data } = await api.get("/user", {
-        headers: { Authorization: localStorage.getItem("token") },
+        headers: {
+          Authorization: token,
+        },
       });
-      setIsUser(data);
+      console.log(data);
+
       router.push("/user");
     } catch (error) {
       if (error.response?.status === 401) {
-        return toast.error("kwjfkl");
+        return toast.error("User authentication failed");
       }
     }
   };
