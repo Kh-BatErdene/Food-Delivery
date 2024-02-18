@@ -108,7 +108,9 @@ export default function Administrator() {
             borderRadius="4px"
             alignItems="center"
             justifyContent="center"
-            sx={{ cursor: "pointer" }}
+            sx={{
+              "&:hover": { cursor: "pointer", backgroundColor: "#05a512" },
+            }}
             onClick={(item) => {
               setIsCreateFood(true);
             }}
@@ -126,8 +128,10 @@ export default function Administrator() {
         <Box
           sx={{
             display: "flex",
-            height: "854px",
-            width: "587px",
+            maxHeight: "854px",
+            height: "100%",
+            maxWidth: "587px",
+            width: "100%",
             p: 4,
             position: "absolute",
             top: "50%",

@@ -6,8 +6,7 @@ import { useRouter } from "next/navigation";
 import { CustomInput } from "./CustomInput";
 import * as yup from "yup";
 import { useFormik } from "formik";
-import { useStates } from "./providers/StateProviders";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AuthContext } from "./providers/AuthProviders";
 
 const validationSchema = yup.object({
@@ -26,6 +25,14 @@ export default function LoginModal() {
   const router = useRouter();
   const { login, setIsOpen } = useContext(AuthContext);
 
+  useEffect(() => {
+    document.addEventListener("keydown", detectKeyDown);
+  }, []);
+  const detectKeyDown = (event) => {
+    if (event.key === "Enter") {
+      formik.handleSubmit();
+    }
+  };
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -38,7 +45,7 @@ export default function LoginModal() {
   });
 
   return (
-    <Stack width={448} height={549} alignItems={"center"}>
+    <Stack width={400} height={518} alignItems={"center"}>
       <Typography fontSize={28} fontWeight={700} marginBottom={6}>
         Нэвтрэх
       </Typography>
@@ -89,6 +96,7 @@ export default function LoginModal() {
 
       <Stack gap={3} width={348} height={48}>
         <Button
+          id="login"
           variant="contained"
           disableElevation
           onClick={() => {

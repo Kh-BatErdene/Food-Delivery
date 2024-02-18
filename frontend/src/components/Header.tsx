@@ -61,12 +61,12 @@ export const Header = () => {
           bgcolor: "white",
           m: "auto",
           px: "24px",
-          boxShadow: 5,
+          borderBottom: "#dfdfdf solid 1px",
           zIndex: 100,
         }}
       >
         <Stack direction="row" alignItems="center" gap={5}>
-          <Link href={"/"}>
+          <Link href={"/home"}>
             <img src="/BlackIcon.svg" style={{ width: "40px" }} />
           </Link>
 
@@ -175,7 +175,7 @@ export const Header = () => {
             </Button>
           )}
 
-          {isProfile && (
+          {isLoggedIn && (
             <Button
               sx={{
                 color: "common.black",

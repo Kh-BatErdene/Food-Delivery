@@ -1,12 +1,12 @@
 "use client";
 
 import { Stack } from "@mui/material";
-import Login from "./login/page";
+import HomePage from "./home/page";
 
 export default function Home() {
   return (
     <Stack>
-      <Login />
+      <HomePage />
     </Stack>
   );
 }

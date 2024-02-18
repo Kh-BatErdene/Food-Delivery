@@ -37,9 +37,33 @@ export default function CategoryModal() {
       >
         <CustomInput3 label="Category name" />
       </Stack>
-
-      <Button variant="text">Text</Button>
-      <Button variant="contained">Contained</Button>
+      <Stack direction="row" justifyContent="end" m="24px" gap="16px">
+        <Stack
+          justifyContent="center"
+          sx={{
+            "&:hover": { cursor: "pointer", color: "black" },
+          }}
+        >
+          Clear
+        </Stack>
+        <Stack
+          justifyContent="center"
+          alignItems="center"
+          width="110px"
+          height="40px"
+          sx={{
+            bgcolor: "#393939",
+            color: "white",
+            borderRadius: "4px",
+            "&:hover": {
+              cursor: "pointer",
+              backgroundColor: "#505050",
+            },
+          }}
+        >
+          Continue
+        </Stack>
+      </Stack>
     </Stack>
   );
 }

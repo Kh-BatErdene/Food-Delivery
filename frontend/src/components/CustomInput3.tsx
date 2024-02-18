@@ -14,6 +14,9 @@ export const CustomInput3 = (props: TextFieldProps) => {
           bgcolor: "#F4F4F4",
           "& fieldset": { border: "none" },
           borderRadius: "8px",
+          maxWidth: "523px",
+          width: "100%",
+          height: "56px",
         }}
       />
     </Stack>

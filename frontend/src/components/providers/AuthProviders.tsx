@@ -68,12 +68,13 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       const { data } = await api.post("/signup", params);
       router.push("/home");
       setIsProfile(true);
-      setIsLoggedIn(true);
+
       toast.success("Амжилттай бүртгэгдлээ", {
         position: "top-center",
         autoClose: 3000,
         hideProgressBar: true,
       });
+      setIsLoggedIn(true);
     } catch (error) {
       toast.error(error.response.data.message, {
         position: "top-center",
@@ -90,7 +91,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       const { token } = data;
       localStorage.setItem("token", token);
       setIsProfile(true);
-      setIsLoggedIn(true);
+
       setIsOpen(false);
       router.push("/home");
       toast(data.message);
@@ -99,6 +100,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
         autoClose: 3000,
         hideProgressBar: true,
       });
+      setIsLoggedIn(true);
     } catch (error) {
       toast.error(error.response.data.message, {
         position: "top-center",
@@ -108,13 +110,12 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     }
   };
 
-  //useEffect
-  // useEffect(() => {
-  //   const token = localStorage.getItem("token");
-  //   if (token) {
-  //     setIsProfile(true);
-  //   }
-  // }, []);
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setIsLoggedIn(true);
+    }
+  }, []);
 
   //Recovery Function
 

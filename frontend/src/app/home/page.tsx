@@ -9,7 +9,7 @@ import React, { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import Modal from "@mui/material/Modal";
 
-export default function Home() {
+export default function HomePage() {
   const [order, setOrder] = useState(false);
   return (
     <Stack>

@@ -15,7 +15,6 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const inter = Inter({ subsets: ["latin"] });
-<link rel="shortcut icon" href="#"></link>;
 
 export default function RootLayout({
   children,

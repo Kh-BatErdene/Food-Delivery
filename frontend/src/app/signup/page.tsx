@@ -9,7 +9,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import CloudOutlinedIcon from "@mui/icons-material/CloudOutlined";
 import CloudIcon from "@mui/icons-material/Cloud";
 import { AuthContext, CustomInput } from "../../components";
@@ -54,6 +54,14 @@ export default function SignUp() {
     },
   });
 
+  useEffect(() => {
+    document.addEventListener("keydown", DetectKeyDown);
+  });
+  const DetectKeyDown = (e) => {
+    if (e.key === "Enter") {
+      formik.handleSubmit();
+    }
+  };
   const [open, setOpen] = useState(false);
 
   return (
