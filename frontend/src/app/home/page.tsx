@@ -1,10 +1,8 @@
 "use client";
 
 // import { Card } from "@/components/Card";
-import QuickButton from "../../components/Quick_Button";
+import { HomeGuide, Card, OrderModal } from "../../components";
 import { Box, Container, Grid, Stack, Typography } from "@mui/material";
-import { Card } from "../../components/Card";
-import OrderModal from "../../components/OrderModal";
 import React, { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import Modal from "@mui/material/Modal";
@@ -80,7 +78,7 @@ export default function HomePage() {
           <Grid container spacing={2}>
             {new Array(4).fill(0).map((_, index) => (
               <Grid key={index} item xs={12} sm={6} md={4} lg={3}>
-                <QuickButton />
+                <HomeGuide />
               </Grid>
             ))}
           </Grid>

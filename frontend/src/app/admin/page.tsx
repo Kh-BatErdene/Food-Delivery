@@ -2,9 +2,7 @@
 import { Box, Modal, Stack, Typography } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useState } from "react";
-import CreateFood from "../../components/CreateFoodModal";
-import CategoryModal from "../../components/CategoryModal";
-import { useStates } from "../../components/providers/StateProviders";
+import { CreateFood, CategoryModal, useStates } from "../../components";
 
 export default function Administrator() {
   const food_category = [

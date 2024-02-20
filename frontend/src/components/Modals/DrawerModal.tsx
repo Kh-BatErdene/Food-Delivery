@@ -3,9 +3,9 @@
 import { Box, Stack, Typography } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { useState } from "react";
-import { useStates } from "./providers/StateProviders";
+import { useStates } from "../providers/StateProviders";
 
-export default function DrawerModal() {
+export function DrawerModal() {
   const { setIsOpenDrawer } = useStates();
   const [count, setCount] = useState(1);
   return (

@@ -1,9 +1,7 @@
-import { Container, Grid, Stack, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import AutoStoriesOutlinedIcon from "@mui/icons-material/AutoStoriesOutlined";
-import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
-import FastfoodOutlinedIcon from "@mui/icons-material/FastfoodOutlined";
 
-export default function QuickButton() {
+export function HomeGuide() {
   const data = [
     {
       title: "Хүргэлтийн төлөв хянах",
@@ -18,7 +16,6 @@ export default function QuickButton() {
           <Stack
             key={index}
             sx={{
-              // bgcolor: { xs: "red", md: "green" },
               width: "264px",
               height: "155px",
               borderRadius: "16px",

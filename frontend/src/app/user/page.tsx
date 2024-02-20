@@ -2,10 +2,8 @@
 import { Box, Container, Modal, Stack } from "@mui/material";
 import HistoryOutlinedIcon from "@mui/icons-material/HistoryOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
-import { CustomInput2 } from "../../components/CustomInput2";
 import { useContext, useState } from "react";
-import { AuthContext } from "../../components";
-import { Logout } from "../../components/LogOut";
+import { AuthContext, Logout, CustomInput2 } from "../../components";
 
 export default function User() {
   const { isInfo } = useContext(AuthContext);

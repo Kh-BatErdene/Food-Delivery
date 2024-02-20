@@ -1,5 +1,4 @@
-import { Box, Grid, Stack, Typography } from "@mui/material";
-import Image from "next/image";
+import { Stack, Typography } from "@mui/material";
 
 export const Card = () => {
   const data = [
@@ -30,13 +29,6 @@ export const Card = () => {
                 width: "100%",
               }}
             >
-              {/* <Image
-                src="/card.png"
-                alt="home-page-img"
-                width={282}
-                height={186}
-              ></Image> */}
-
               <img src="/card.png"></img>
 
               <div

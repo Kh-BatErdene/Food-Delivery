@@ -1,31 +1,28 @@
 "use client";
-//Mui Imports
 import { Button, Drawer, Stack, Typography } from "@mui/material";
 import ShoppingBasketOutlinedIcon from "@mui/icons-material/ShoppingBasketOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 
-//Next Ract imports
 import React, { useContext } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
-import LoginModal from "./LoginModal";
-import DrawerModal from "./DrawerModal";
-import { CustomInput } from "./CustomInput";
-import { useStates } from "./providers/StateProviders";
-// import { UserContext } from "./providers/UserProviders";
-import { AuthContext } from "./providers/AuthProviders";
-import { useRouter } from "next/navigation";
+import {
+  useStates,
+  AuthContext,
+  CustomInput,
+  DrawerModal,
+  LoginModal,
+} from "../components";
 
 export const Header = () => {
   const pathname = usePathname();
   const router = useRouter();
 
   const { isOpenDrawer, setIsOpenDrawer } = useStates();
-  // const { user } = useContext(UserContext);
-  const { isLoggedIn, isProfile, isOpen, setIsOpen } = useContext(AuthContext);
+  const { isLoggedIn, isOpen, setIsOpen, isInfo } = useContext(AuthContext);
 
   const data = [
     {
@@ -204,7 +201,9 @@ export const Header = () => {
                   marginTop={0.4}
                   sx={{ color: isOpen ? "#18BA51" : "black" }}
                 >
-                  Хэрэглэгч
+                  {isInfo.map((item, index) => (
+                    <p key={index}>{item.name}</p>
+                  ))}
                 </Typography>
               </Stack>
             </Button>

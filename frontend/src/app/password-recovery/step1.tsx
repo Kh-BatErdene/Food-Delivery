@@ -1,8 +1,6 @@
 import { Button, Stack, Typography } from "@mui/material";
-import { CustomInput } from "./CustomInput";
-import { useContext, useState } from "react";
-import { useStates } from "./providers/StateProviders";
-import { AuthContext } from "./providers/AuthProviders";
+import { useContext } from "react";
+import { AuthContext, useStates, CustomInput } from "../../components";
 import { useFormik } from "formik";
 import * as yup from "yup";
 

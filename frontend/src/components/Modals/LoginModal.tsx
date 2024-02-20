@@ -3,11 +3,11 @@
 // import { CustomInput } from "@/components";
 import { Button, Container, Stack, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
-import { CustomInput } from "./CustomInput";
+import { CustomInput } from "../Customs/CustomInput";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import { useContext, useEffect } from "react";
-import { AuthContext } from "./providers/AuthProviders";
+import { AuthContext } from "../providers/AuthProviders";
 
 const validationSchema = yup.object({
   email: yup
@@ -21,7 +21,7 @@ const validationSchema = yup.object({
   // ),
 });
 
-export default function LoginModal() {
+export function LoginModal() {
   const router = useRouter();
   const { login, setIsOpen } = useContext(AuthContext);
 

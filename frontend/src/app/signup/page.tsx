@@ -1,17 +1,9 @@
 "use client";
 
-// import { CustomInput } from "@/components";
-import {
-  Box,
-  Button,
-  Container,
-  Snackbar,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Button, Container, Stack, Typography } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
-import CloudOutlinedIcon from "@mui/icons-material/CloudOutlined";
 import CloudIcon from "@mui/icons-material/Cloud";
+import CloudOutlinedIcon from "@mui/icons-material/CloudOutlined";
 import { AuthContext, CustomInput } from "../../components";
 import * as yup from "yup";
 import { useFormik } from "formik";

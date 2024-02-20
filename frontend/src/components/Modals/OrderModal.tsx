@@ -3,7 +3,7 @@
 import { Stack, Typography } from "@mui/material";
 import { useState } from "react";
 
-export default function OrderModal() {
+export function OrderModal() {
   const [count, setCount] = useState(1);
   return (
     <Stack direction="row" spacing={4}>

@@ -1,10 +1,10 @@
 "use client";
 import { Stack, Typography } from "@mui/material";
-import { CustomInput3 } from "./CustomInput3";
+import { CustomInput3 } from "../Customs/CustomInput3";
 import CloseIcon from "@mui/icons-material/Close";
-import { useStates } from "./providers/StateProviders";
+import { useStates } from "../providers/StateProviders";
 
-export default function CreateFood() {
+export function CreateFood() {
   const { setIsCreateFood } = useStates();
   return (
     <Stack spacing={2} width="100%">

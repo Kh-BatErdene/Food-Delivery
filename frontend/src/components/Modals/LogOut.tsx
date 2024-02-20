@@ -1,7 +1,7 @@
 import { Box, Modal, Stack, Typography } from "@mui/material";
 import { Dispatch, SetStateAction, useContext, useState } from "react";
 import { useRouter } from "next/navigation";
-import { AuthContext } from "./providers/AuthProviders";
+import { AuthContext } from "../providers/AuthProviders";
 
 type LogoutComfirmProps = { setIsLogOut: Dispatch<SetStateAction<boolean>> };
 export const Logout = (props: LogoutComfirmProps) => {

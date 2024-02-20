@@ -1,9 +1,10 @@
 "use client";
 import { Button, Stack, Typography } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { useStates } from "./providers/StateProviders";
-import { CustomInput3 } from "./CustomInput3";
-export default function CategoryModal() {
+import { useStates } from "../providers/StateProviders";
+import { CustomInput3 } from "../Customs/CustomInput3";
+
+export function CategoryModal() {
   const { setIsCategory } = useStates();
   return (
     <Stack>

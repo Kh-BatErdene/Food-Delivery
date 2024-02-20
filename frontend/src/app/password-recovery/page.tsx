@@ -1,10 +1,8 @@
 "use client";
-
-// import { CustomInput } from "@/components";
 import { Stack } from "@mui/material";
-import { Step1 } from "../../components/step1";
-import { Step2 } from "../../components/step2";
-import { Step3 } from "../../components/step3";
+import { Step1 } from "./step1";
+import { Step2 } from "./step2";
+import { Step3 } from "./step3";
 import { useContext } from "react";
 import { AuthContext } from "../../components";
 

@@ -1,10 +1,8 @@
+import { useContext } from "react";
 import { Button, Stack, Typography } from "@mui/material";
-import { CustomInput } from "./CustomInput";
-import { useStates } from "./providers/StateProviders";
+import { CustomInput, useStates, AuthContext } from "../../components";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { useContext } from "react";
-import { AuthContext } from "./providers/AuthProviders";
 
 const validationSchema = yup.object({
   code: yup.string().required("Кодоо оруулна уу"),
