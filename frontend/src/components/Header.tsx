@@ -15,14 +15,16 @@ import LoginModal from "./LoginModal";
 import DrawerModal from "./DrawerModal";
 import { CustomInput } from "./CustomInput";
 import { useStates } from "./providers/StateProviders";
-import { UserContext } from "./providers/UserProviders";
+// import { UserContext } from "./providers/UserProviders";
 import { AuthContext } from "./providers/AuthProviders";
+import { useRouter } from "next/navigation";
 
 export const Header = () => {
   const pathname = usePathname();
+  const router = useRouter();
 
   const { isOpenDrawer, setIsOpenDrawer } = useStates();
-  const { user } = useContext(UserContext);
+  // const { user } = useContext(UserContext);
   const { isLoggedIn, isProfile, isOpen, setIsOpen } = useContext(AuthContext);
 
   const data = [
@@ -184,7 +186,7 @@ export const Header = () => {
                 width: "120px",
               }}
               onClick={() => {
-                user();
+                router.push("/user");
               }}
             >
               <Stack
@@ -193,7 +195,7 @@ export const Header = () => {
                 gap={1}
                 sx={{ mx: "4px" }}
               >
-                <PersonOutlineOutlinedIcon />
+                <img src="/profile.png" width="25px" />
 
                 <Typography
                   fontSize={13}

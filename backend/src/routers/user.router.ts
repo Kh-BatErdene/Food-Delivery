@@ -1,10 +1,10 @@
 import { Router } from "express";
-import { user } from "../controllers/user.controller";
-import { code } from "../controllers/reset.controller";
+import { getUser } from "../controllers/user.controller";
+import { resetpassword } from "../controllers/reset.controller";
 
 const userRouter = Router();
 
-userRouter.get("/user", user);
-userRouter.post("/code", code);
+userRouter.get("/getUser", getUser);
+userRouter.post("/code", resetpassword);
 
 export default userRouter;

@@ -10,7 +10,6 @@ import { theme } from "../theme";
 import { Header } from "../components/Header";
 import { StateProvider } from "../components/providers/StateProviders";
 import { AuthProvider } from "../components";
-import { UserProvider } from "../components/providers/UserProviders";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -24,15 +23,13 @@ export default function RootLayout({
       <body className={inter.className}>
         <AppRouterCacheProvider>
           <ThemeProvider theme={theme}>
-            <UserProvider>
-              <AuthProvider>
-                <StateProvider>
-                  <Header />
-                  {children}
-                  <Footer />
-                </StateProvider>
-              </AuthProvider>
-            </UserProvider>
+            <AuthProvider>
+              <StateProvider>
+                <Header />
+                {children}
+                <Footer />
+              </StateProvider>
+            </AuthProvider>
             <CssBaseline />
             <ToastContainer
               position="top-center"

@@ -21,6 +21,10 @@ const userSchema = new Schema({
     type: String,
     required: false,
   },
+  updatedAt: {
+    type: String,
+    required: false,
+  },
 });
 
 export const UserModel = model("user", userSchema);

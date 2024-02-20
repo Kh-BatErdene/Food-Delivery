@@ -12,8 +12,9 @@ app.use(cors());
 app.use(json());
 
 app.use("/", authRouter);
-app.use("/", sendEmail);
 app.use("/", userRouter);
 app.use("/email", emailRouter);
+
+app.use("/", sendEmail);
 
 export default app;

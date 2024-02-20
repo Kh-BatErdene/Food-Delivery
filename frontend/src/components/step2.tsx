@@ -18,9 +18,10 @@ export const Step2 = () => {
     initialValues: {
       code: "",
     },
+
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      await resetpassword({ code: values.code });
+      await resetpassword({ code: values.code, email: `${email}` });
     },
   });
 

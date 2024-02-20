@@ -4,7 +4,6 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useState } from "react";
 import CreateFood from "../../components/CreateFoodModal";
 import CategoryModal from "../../components/CategoryModal";
-import CloseIcon from "@mui/icons-material/Close";
 import { useStates } from "../../components/providers/StateProviders";
 
 export default function Administrator() {

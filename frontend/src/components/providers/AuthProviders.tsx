@@ -31,7 +31,9 @@ type recoveryParams = {
 };
 
 type resetpasswordParams = {
-  code: string;
+  code?: string;
+  email: string;
+  password?: string;
 };
 
 //Мөн AuthContextType функцанд дотор энд бичсэн 2 функцын төрөлийг зааж өгч байна.
@@ -46,6 +48,8 @@ type AuthContextType = {
   index: number;
   setIndex: Dispatch<SetStateAction<number>>;
   resetpassword: (params?: resetpasswordParams) => Promise<void>;
+  signOut: () => Promise<void>;
+  isInfo: any[];
 };
 
 //Шинэ контекст үүсгэж түүнд AuthContextType-г агуулж төрөлийг зааж өгнө.
@@ -133,15 +137,16 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     }
   };
 
+  const [btnwait, setBtnwait] = useState(true);
+
   const resetpassword = async (params?: resetpasswordParams) => {
     try {
       const token = localStorage.getItem("token");
       const { data } = await api.post("/code", params, {
         headers: { Authorization: token },
       });
-      toast.success("Амжилттай", {
+      toast.success(data.message, {
         position: "top-center",
-        autoClose: 3000,
         hideProgressBar: true,
       });
       setIndex((prev) => prev + 1);
@@ -149,6 +154,43 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       toast.error(error.response.data.message);
     }
   };
+
+  const signOut = async () => {
+    try {
+      localStorage.removeItem("token");
+      setIsLoggedIn(false);
+      router.push("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const [isInfo, setIsInfo] = useState([]);
+
+  const getUser = async () => {
+    try {
+      const { data } = await api.get("/getUser", {
+        headers: { Authorization: localStorage.getItem("token") },
+      });
+      setIsInfo(data.profile);
+      toast.success(data.message, {
+        position: "top-center",
+        hideProgressBar: true,
+      });
+    } catch (error) {
+      if (error) {
+        toast.error(error.response?.data.message ?? error.message, {
+          position: "top-center",
+          hideProgressBar: true,
+        });
+      }
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (isLoggedIn) getUser();
+  }, [isLoggedIn]);
 
   return (
     <AuthContext.Provider
@@ -163,6 +205,8 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
         index,
         setIndex,
         resetpassword,
+        signOut,
+        isInfo,
       }}
     >
       {children}
