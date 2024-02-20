@@ -57,7 +57,7 @@ export default function HomePage() {
                 fontSize: { xs: "14px", sm: "18px", lg: "22px" },
               }}
             >
-              Horem ipsum dolor sit amet, consectetur adipiscing elit.
+              Order Food Online For Take Away or Delivery in Ulaanbaatar
             </Typography>
           </Box>
           <Stack direction="row" sx={{ justifyContent: "center", mt: "20px" }}>

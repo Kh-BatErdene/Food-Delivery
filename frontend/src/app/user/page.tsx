@@ -4,6 +4,7 @@ import HistoryOutlinedIcon from "@mui/icons-material/HistoryOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import { useContext, useState } from "react";
 import { AuthContext, Logout, CustomInput2 } from "../../components";
+import { Upload } from "../upload/page";
 
 export default function User() {
   const { isInfo } = useContext(AuthContext);
@@ -87,15 +88,7 @@ export default function User() {
         );
       })}
 
-      {/* <Modal open={open} onClose={handleClose}>
-        <Box sx={style}>
-          <ChangeProfilePic
-            handleClose={handleClose}
-            imageUrl={imageUrl}
-            setImageUrl={setImageUrl}
-          />
-        </Box>
-      </Modal> */}
+      <Upload />
       <Modal
         open={isLogOut}
         onClose={() => {
