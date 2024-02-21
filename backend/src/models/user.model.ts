@@ -21,7 +21,7 @@ const userSchema = new Schema({
     type: String,
     required: false,
   },
-  updatedAt: {
+  updatedAtTime: {
     type: String,
     required: false,
   },

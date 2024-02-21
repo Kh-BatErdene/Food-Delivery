@@ -23,7 +23,7 @@ const validationSchema = yup.object({
 
 export function LoginModal() {
   const router = useRouter();
-  const { login, setIsOpen } = useContext(AuthContext);
+  const { login, setIsOpen, setRefresh } = useContext(AuthContext);
 
   useEffect(() => {
     document.addEventListener("keydown", detectKeyDown);
@@ -79,6 +79,7 @@ export function LoginModal() {
           <Stack
             onClick={() => {
               router.push("/password-recovery");
+              setRefresh(true);
               setIsOpen(false);
             }}
             sx={{

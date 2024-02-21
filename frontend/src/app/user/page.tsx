@@ -23,7 +23,7 @@ export default function User() {
               <CustomInput2
                 type="number"
                 label="Утасны дугаар"
-                value={item.phone}
+                value={item.address}
               />
               <CustomInput2
                 type="email"

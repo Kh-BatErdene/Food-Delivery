@@ -3,7 +3,7 @@ import { UserModel } from "../models";
 
 export const resetpassword: RequestHandler = async (req, res) => {
   try {
-    const { email, password, code } = req.body;
+    const { email, code, password } = req.body;
     const user = await UserModel.findOne({ email });
 
     if (!user) {
@@ -20,14 +20,14 @@ export const resetpassword: RequestHandler = async (req, res) => {
       });
     }
 
-    // const updateUser = await UserModel.findOneAndUpdate(
-    //   { _id: user._id },
-    //   {
-    //     password: password,
-    //     updatedAt: new Date(),
-    //   }
-    // );
-    // res.json({ message: "Хэрэглэгчийн нууц үг шинэчлэгдсэн" });
+    const updateUser = await UserModel.findOneAndUpdate(
+      { _id: user._id },
+      {
+        password: password,
+        updatedAt: new Date(),
+      }
+    );
+    res.json({ message: "Хэрэглэгчийн нууц үг шинэчлэгдсэн" });
   } catch (err) {
     res.json(err);
   }

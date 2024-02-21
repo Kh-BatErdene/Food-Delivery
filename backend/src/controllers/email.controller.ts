@@ -34,11 +34,12 @@ export const sendEmail: RequestHandler = async (req, res) => {
     };
     await transporter.sendMail(mailOptions);
 
-    const userCode = await UserModel.updateOne(
+    const userOtp = await UserModel.updateOne(
       { _id: userid.id },
       { $set: { otp: otpCode } }
     );
-    res.json("Email sent!");
+
+    res.json({ otpCode, message: "Нэг удаагийн код и-мэйл рүү илгээгдсэн" });
   } catch (error) {
     res.status(500).json(error);
   }

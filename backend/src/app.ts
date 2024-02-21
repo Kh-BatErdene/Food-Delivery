@@ -3,7 +3,7 @@ import cors from "cors";
 import { json } from "body-parser";
 import authRouter from "./routers/auth.router";
 import emailRouter from "./routers/email.router";
-import { sendEmail } from "./controllers/email.controller";
+// import { sendEmail } from "./controllers/email.controller";
 import userRouter from "./routers/user.router";
 
 const app = express();
@@ -13,8 +13,6 @@ app.use(json());
 
 app.use("/", authRouter);
 app.use("/", userRouter);
-app.use("/email", emailRouter);
-
-app.use("/", sendEmail);
+app.use("/", emailRouter);
 
 export default app;

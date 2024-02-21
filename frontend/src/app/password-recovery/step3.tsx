@@ -11,7 +11,7 @@ const validationSchema = yup.object({
 });
 
 export const Step3 = () => {
-  const { resetpassword } = useContext(AuthContext);
+  // const { newpassword } = useContext(AuthContext);
   const router = useRouter();
   const { email } = useStates();
 
@@ -23,10 +23,10 @@ export const Step3 = () => {
 
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      await resetpassword({
-        password: values.newpassword,
-        email: `${email}`,
-      });
+      // await newpassword({
+      //   password: values.newpassword,
+      //   email: `${email}`,
+      // });
     },
   });
   return (
@@ -65,7 +65,7 @@ export const Step3 = () => {
         <Button
           variant="contained"
           disableElevation
-          disabled={formik.values.reppassword !== formik.values.newpassword}
+          // disabled={!formik.values.reppassword || !formik.values.newpassword}
           sx={{ maxWidth: "384px", width: "100%" }}
           onClick={() => {
             formik.handleSubmit();

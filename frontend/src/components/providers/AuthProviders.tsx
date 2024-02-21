@@ -33,7 +33,10 @@ type recoveryParams = {
 type resetpasswordParams = {
   code?: string;
   email: string;
-  password?: string;
+};
+type newpasswordParams = {
+  password: string;
+  email: string;
 };
 
 //Мөн AuthContextType функцанд дотор энд бичсэн 2 функцын төрөлийг зааж өгч байна.
@@ -50,6 +53,8 @@ type AuthContextType = {
   resetpassword: (params?: resetpasswordParams) => Promise<void>;
   signOut: () => Promise<void>;
   isInfo: any[];
+  newpassword: (params?: newpasswordParams) => Promise<void>;
+  setRefresh: Dispatch<SetStateAction<boolean>>;
 };
 
 //Шинэ контекст үүсгэж түүнд AuthContextType-г агуулж төрөлийг зааж өгнө.
@@ -63,6 +68,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   const [isProfile, setIsProfile] = useState(false); //User button
   const [isLoggedIn, setIsLoggedIn] = useState(false); //Login state
   const [index, setIndex] = useState(0); //Carousel index
+  const [refresh, setRefresh] = useState(false);
   const router = useRouter();
 
   //SignUp function
@@ -71,14 +77,12 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     try {
       const { data } = await api.post("/signup", params);
       router.push("/home");
-      setIsProfile(true);
 
       toast.success("Амжилттай бүртгэгдлээ", {
         position: "top-center",
         autoClose: 3000,
         hideProgressBar: true,
       });
-      setIsLoggedIn(true);
     } catch (error) {
       toast.error(error.response.data.message, {
         position: "top-center",
@@ -116,12 +120,12 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (token) {
-      setIsLoggedIn(true);
-    }
+    if (token) setIsLoggedIn(true);
   }, []);
 
   //Recovery Function
+
+  const [isSaveOtp, setIsSaveOtp] = useState("");
 
   const recovery = async (params?: recoveryParams) => {
     try {
@@ -131,13 +135,17 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
         autoClose: 3000,
         hideProgressBar: true,
       });
+      setIsSaveOtp(data);
+      console.log("your otp is: ", isSaveOtp);
       setIndex((prev) => prev + 1);
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data.message ?? error.message, {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: true,
+      });
     }
   };
-
-  const [btnwait, setBtnwait] = useState(true);
 
   const resetpassword = async (params?: resetpasswordParams) => {
     try {
@@ -151,7 +159,27 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       });
       setIndex((prev) => prev + 1);
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data.message ?? error.message, {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: true,
+      });
+    }
+  };
+
+  const newpassword = async (params?: newpasswordParams) => {
+    try {
+      const { data } = await api.post("/newpassword", params);
+      console.log(params.password);
+      toast.success(data.message, {
+        position: "top-center",
+        hideProgressBar: true,
+      });
+    } catch (error) {
+      toast.error(error.response?.data.message ?? error.message, {
+        position: "top-center",
+        hideProgressBar: true,
+      });
     }
   };
 
@@ -161,7 +189,11 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       setIsLoggedIn(false);
       router.push("/");
     } catch (error) {
-      console.log(error);
+      toast.error(error.response?.data.message ?? error.message, {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: true,
+      });
     }
   };
 
@@ -184,13 +216,16 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
           hideProgressBar: true,
         });
       }
-      console.log(error);
     }
   };
 
   useEffect(() => {
     if (isLoggedIn) getUser();
   }, [isLoggedIn]);
+
+  useEffect(() => {
+    if (refresh) return;
+  }, [refresh]);
 
   return (
     <AuthContext.Provider
@@ -207,6 +242,8 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
         resetpassword,
         signOut,
         isInfo,
+        newpassword,
+        setRefresh,
       }}
     >
       {children}

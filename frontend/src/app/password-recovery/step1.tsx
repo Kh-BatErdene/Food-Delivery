@@ -1,4 +1,4 @@
-import { Button, Stack, Typography } from "@mui/material";
+import { Button, Stack, Typography, setRef } from "@mui/material";
 import { useContext } from "react";
 import { AuthContext, useStates, CustomInput } from "../../components";
 import { useFormik } from "formik";
@@ -13,7 +13,7 @@ const validationSchema = yup.object({
 
 export const Step1 = () => {
   const { email, setEmail } = useStates();
-  const { recovery } = useContext(AuthContext);
+  const { recovery, setRefresh } = useContext(AuthContext);
 
   const formik = useFormik({
     initialValues: {
@@ -57,6 +57,7 @@ export const Step1 = () => {
           disableElevation
           disabled={!formik.values.email === !Boolean(formik.errors.email)}
           onClick={() => {
+            setRefresh(false);
             formik.handleSubmit();
           }}
         >

@@ -97,8 +97,8 @@ export default function SignUp() {
           <CustomInput
             id="address"
             name="address"
-            label="Хаяг"
-            placeholder="Хаягаа оруулна уу"
+            label="Утас"
+            placeholder="Утасны дугаараа оруулна уу"
             value={formik.values.address}
             onChange={formik.handleChange}
             error={formik.touched.address && Boolean(formik.errors.address)}

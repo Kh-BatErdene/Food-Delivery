@@ -145,7 +145,7 @@ export const Header = () => {
                 color: "common.black",
                 height: "32px",
                 mb: "2px",
-                width: "120px",
+                minWidth: "120px",
               }}
               onClick={() => {
                 setIsOpen(true);
@@ -180,7 +180,7 @@ export const Header = () => {
                 color: "common.black",
                 height: "32px",
                 mb: "2px",
-                width: "120px",
+                minWidth: "120px",
               }}
               onClick={() => {
                 router.push("/user");
@@ -194,7 +194,7 @@ export const Header = () => {
               >
                 <img src="/profile.png" width="25px" />
 
-                <Typography
+                <Stack
                   fontSize={13}
                   fontWeight={700}
                   fontFamily={"Roboto"}
@@ -204,7 +204,7 @@ export const Header = () => {
                   {isInfo.map((item, index) => (
                     <p key={index}>{item.name}</p>
                   ))}
-                </Typography>
+                </Stack>
               </Stack>
             </Button>
           )}

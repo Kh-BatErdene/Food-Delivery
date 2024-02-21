@@ -46,8 +46,8 @@ export const Step2 = () => {
         <CustomInput
           id="code"
           name="code"
-          label="Нууц үг сэргээх"
-          placeholder="Имэйл хаягаа оруулна уу"
+          label="Нууц үг сэргээх код (OTP)"
+          placeholder="Кодоо оруулна уу"
           value={formik.values.code}
           onChange={formik.handleChange}
           error={formik.touched.code && Boolean(formik.errors.code)}
