@@ -20,15 +20,14 @@ export const resetpassword: RequestHandler = async (req, res) => {
       });
     }
 
-    const updateUser = await UserModel.findOneAndUpdate(
+    const updateUser = await UserModel.updateOne(
       { _id: user._id },
       {
         password: password,
-        updatedAt: new Date(),
       }
     );
-    res.json({ message: "Хэрэглэгчийн нууц үг шинэчлэгдсэн" });
-  } catch (err) {
-    res.json(err);
+    res.json({ updateUser, message: "Хэрэглэгчийн нууц үг шинэчлэгдсэн" });
+  } catch (error) {
+    res.json(error);
   }
 };

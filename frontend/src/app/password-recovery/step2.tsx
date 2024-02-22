@@ -9,8 +9,8 @@ const validationSchema = yup.object({
 });
 
 export const Step2 = () => {
-  const { email } = useStates();
-  const { resetpassword } = useContext(AuthContext);
+  const { email, isClicked, setIsClicked } = useStates();
+  const { setIsOtp, setIndex } = useContext(AuthContext);
 
   const formik = useFormik({
     initialValues: {
@@ -19,7 +19,9 @@ export const Step2 = () => {
 
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      await resetpassword({ code: values.code, email: `${email}` });
+      setIsOtp(values.code);
+      setIndex((prev) => prev + 1);
+      setIsClicked(true);
     },
   });
 
@@ -55,18 +57,22 @@ export const Step2 = () => {
           onBlur={formik.handleBlur}
           type="text"
         />
+
         <Button
           variant="contained"
+          sx={{ mt: "20px" }}
           disableElevation
-          disabled={!formik.values.code}
-          sx={{ maxWidth: "384px", width: "100%" }}
+          disabled={
+            !formik.values.code === !Boolean(formik.errors.code) || isClicked
+          }
+          style={isClicked ? { cursor: "not-allowed" } : { cursor: "pointer" }}
           onClick={() => {
             formik.handleSubmit();
           }}
         >
           Үргэлжлүүлэх
         </Button>
-      </Stack>{" "}
+      </Stack>
     </Stack>
   );
 };

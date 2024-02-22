@@ -12,8 +12,8 @@ const validationSchema = yup.object({
 });
 
 export const Step1 = () => {
-  const { email, setEmail } = useStates();
-  const { recovery, setRefresh } = useContext(AuthContext);
+  const { email, setEmail, setIsClicked, isClicked } = useStates();
+  const { recovery, setRefresh, setIndex } = useContext(AuthContext);
 
   const formik = useFormik({
     initialValues: {
@@ -23,6 +23,9 @@ export const Step1 = () => {
     onSubmit: (values) => {
       recovery({ recovery_email: values.email });
       setEmail(values.email);
+      setRefresh((prev) => prev + 1);
+      setIndex(0);
+      setIsClicked(true);
     },
   });
 
@@ -56,8 +59,8 @@ export const Step1 = () => {
           sx={{ mt: "20px" }}
           disableElevation
           disabled={!formik.values.email === !Boolean(formik.errors.email)}
+          // style={isClicked ? { cursor: "not-allowed" } : { cursor: "pointer" }}
           onClick={() => {
-            setRefresh(false);
             formik.handleSubmit();
           }}
         >

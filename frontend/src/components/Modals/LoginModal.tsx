@@ -79,7 +79,7 @@ export function LoginModal() {
           <Stack
             onClick={() => {
               router.push("/password-recovery");
-              setRefresh(true);
+              setRefresh((prev) => prev + 1);
               setIsOpen(false);
             }}
             sx={{

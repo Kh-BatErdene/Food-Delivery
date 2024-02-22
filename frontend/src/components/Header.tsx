@@ -22,9 +22,14 @@ export const Header = () => {
   const router = useRouter();
 
   const { isOpenDrawer, setIsOpenDrawer } = useStates();
-  const { isLoggedIn, isOpen, setIsOpen, isInfo } = useContext(AuthContext);
+  const { isLoggedIn, isOpen, setIsOpen, isInfo, isAdmin } =
+    useContext(AuthContext);
 
   const data = [
+    {
+      label: "АДМИН",
+      href: "admin",
+    },
     {
       label: "НҮҮР",
       href: "home",
@@ -85,6 +90,7 @@ export const Header = () => {
                   color: pathname.includes(item.href) ? "#18BA51" : "black",
                 }}
               >
+                {isAdmin && "АДМИН"}
                 {item.label}
               </Link>
             );

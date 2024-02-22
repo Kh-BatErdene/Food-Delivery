@@ -19,6 +19,7 @@ export const getUser: RequestHandler = async (req, res) => {
 
     res.json({
       profile,
+      message: "Амжилттай нэвтэрлээ",
     });
   } catch (error) {
     return res.status(401).json({ message: "Profile unauthorization" });

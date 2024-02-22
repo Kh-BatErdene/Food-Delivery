@@ -18,6 +18,7 @@ type signupParams = {
   password: string;
   name: string;
   address: string;
+  role: string;
 };
 
 //Нэвтрэх төрөл
@@ -31,11 +32,8 @@ type recoveryParams = {
 };
 
 type resetpasswordParams = {
+  password?: string;
   code?: string;
-  email: string;
-};
-type newpasswordParams = {
-  password: string;
   email: string;
 };
 
@@ -53,8 +51,11 @@ type AuthContextType = {
   resetpassword: (params?: resetpasswordParams) => Promise<void>;
   signOut: () => Promise<void>;
   isInfo: any[];
-  newpassword: (params?: newpasswordParams) => Promise<void>;
-  setRefresh: Dispatch<SetStateAction<boolean>>;
+  setRefresh: Dispatch<SetStateAction<number>>;
+  isOtp: string;
+  setIsOtp: Dispatch<SetStateAction<string>>;
+  isAdmin: boolean;
+  setIsAdmin: Dispatch<SetStateAction<boolean>>;
 };
 
 //Шинэ контекст үүсгэж түүнд AuthContextType-г агуулж төрөлийг зааж өгнө.
@@ -68,7 +69,10 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   const [isProfile, setIsProfile] = useState(false); //User button
   const [isLoggedIn, setIsLoggedIn] = useState(false); //Login state
   const [index, setIndex] = useState(0); //Carousel index
-  const [refresh, setRefresh] = useState(false);
+  const [refresh, setRefresh] = useState(0);
+  const [isOtp, setIsOtp] = useState("");
+  const [isInfo, setIsInfo] = useState([]);
+  const [isAdmin, setIsAdmin] = useState(false);
   const router = useRouter();
 
   //SignUp function
@@ -99,16 +103,15 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       const { token } = data;
       localStorage.setItem("token", token);
       setIsProfile(true);
-
       setIsOpen(false);
       router.push("/home");
-      toast(data.message);
-      toast.success("Амжилттай нэвтэрлээ", {
+      setIsLoggedIn(true);
+
+      toast.success(data.message, {
         position: "top-center",
         autoClose: 3000,
         hideProgressBar: true,
       });
-      setIsLoggedIn(true);
     } catch (error) {
       toast.error(error.response.data.message, {
         position: "top-center",
@@ -125,23 +128,21 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 
   //Recovery Function
 
-  const [isSaveOtp, setIsSaveOtp] = useState("");
-
   const recovery = async (params?: recoveryParams) => {
     try {
       const { data } = await api.post("/send", params);
-      toast.success("Амжилттай илгээгдлээ", {
+
+      toast.success(data.message, {
         position: "top-center",
-        autoClose: 3000,
+        autoClose: 4000,
         hideProgressBar: true,
       });
-      setIsSaveOtp(data);
-      console.log("your otp is: ", isSaveOtp);
+
       setIndex((prev) => prev + 1);
     } catch (error) {
       toast.error(error.response?.data.message ?? error.message, {
         position: "top-center",
-        autoClose: 3000,
+        autoClose: 4000,
         hideProgressBar: true,
       });
     }
@@ -149,37 +150,19 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 
   const resetpassword = async (params?: resetpasswordParams) => {
     try {
-      const token = localStorage.getItem("token");
-      const { data } = await api.post("/code", params, {
-        headers: { Authorization: token },
-      });
+      const { data } = await api.post("/code", params);
       toast.success(data.message, {
         position: "top-center",
         hideProgressBar: true,
       });
-      setIndex((prev) => prev + 1);
+      router.push("/");
     } catch (error) {
       toast.error(error.response?.data.message ?? error.message, {
         position: "top-center",
-        autoClose: 3000,
+        autoClose: 5000,
         hideProgressBar: true,
       });
-    }
-  };
-
-  const newpassword = async (params?: newpasswordParams) => {
-    try {
-      const { data } = await api.post("/newpassword", params);
-      console.log(params.password);
-      toast.success(data.message, {
-        position: "top-center",
-        hideProgressBar: true,
-      });
-    } catch (error) {
-      toast.error(error.response?.data.message ?? error.message, {
-        position: "top-center",
-        hideProgressBar: true,
-      });
+      setIndex(1);
     }
   };
 
@@ -197,13 +180,16 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     }
   };
 
-  const [isInfo, setIsInfo] = useState([]);
-
   const getUser = async () => {
     try {
       const { data } = await api.get("/getUser", {
         headers: { Authorization: localStorage.getItem("token") },
       });
+      const { role } = data;
+      if (role === "admin") {
+        setIsAdmin(true);
+      }
+
       setIsInfo(data.profile);
       toast.success(data.message, {
         position: "top-center",
@@ -221,11 +207,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 
   useEffect(() => {
     if (isLoggedIn) getUser();
-  }, [isLoggedIn]);
-
-  useEffect(() => {
-    if (refresh) return;
-  }, [refresh]);
+  }, [isLoggedIn, refresh]);
 
   return (
     <AuthContext.Provider
@@ -242,8 +224,11 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
         resetpassword,
         signOut,
         isInfo,
-        newpassword,
         setRefresh,
+        isOtp,
+        setIsOtp,
+        isAdmin,
+        setIsAdmin,
       }}
     >
       {children}

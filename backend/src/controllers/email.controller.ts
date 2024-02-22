@@ -39,7 +39,7 @@ export const sendEmail: RequestHandler = async (req, res) => {
       { $set: { otp: otpCode } }
     );
 
-    res.json({ otpCode, message: "Нэг удаагийн код и-мэйл рүү илгээгдсэн" });
+    res.json({ message: "Нэг удаагийн код и-мэйл рүү илгээгдсэн" });
   } catch (error) {
     res.status(500).json(error);
   }

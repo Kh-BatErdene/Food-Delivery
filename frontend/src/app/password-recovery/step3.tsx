@@ -1,18 +1,16 @@
 import { Button, Stack, Typography } from "@mui/material";
 import { useContext } from "react";
 import { useStates, CustomInput, AuthContext } from "../../components";
-import { useRouter } from "next/navigation";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
 const validationSchema = yup.object({
   newpassword: yup.string().required("Шинэ нууц үгээ оруулна уу"),
-  reppassword: yup.string().required("Нууц үгээ давтана уу"),
+  reppassword: yup.string().required("Нууц үг таарахгүй байна"),
 });
 
 export const Step3 = () => {
-  // const { newpassword } = useContext(AuthContext);
-  const router = useRouter();
+  const { resetpassword, isOtp } = useContext(AuthContext);
   const { email } = useStates();
 
   const formik = useFormik({
@@ -23,12 +21,14 @@ export const Step3 = () => {
 
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      // await newpassword({
-      //   password: values.newpassword,
-      //   email: `${email}`,
-      // });
+      await resetpassword({
+        password: values.newpassword,
+        email: `${email}`,
+        code: isOtp,
+      });
     },
   });
+
   return (
     <Stack
       sx={{
@@ -55,21 +55,31 @@ export const Step3 = () => {
           onBlur={formik.handleBlur}
           type="text"
         />
+
         <CustomInput
           label="Нууц үг давтах "
+          name="reppassword"
           placeholder="********"
+          sx={{ mt: "10px" }}
           onChange={formik.handleChange}
+          error={
+            formik.touched.reppassword && Boolean(formik.errors.reppassword)
+          }
+          helperText={formik.touched.reppassword && formik.errors.reppassword}
+          onBlur={formik.handleBlur}
           type="password"
         />
 
         <Button
           variant="contained"
           disableElevation
-          // disabled={!formik.values.reppassword || !formik.values.newpassword}
-          sx={{ maxWidth: "384px", width: "100%" }}
+          disabled={
+            !formik.values.reppassword || !formik.values.newpassword
+            // !formik.values.reppassword === !formik.values.newpassword
+          }
+          sx={{ maxWidth: "384px", width: "100%", mt: "10px" }}
           onClick={() => {
             formik.handleSubmit();
-            router.push("/");
           }}
         >
           Үргэлжлүүлэх

@@ -21,9 +21,9 @@ const userSchema = new Schema({
     type: String,
     required: false,
   },
-  updatedAtTime: {
+  role: {
     type: String,
-    required: false,
+    required: true,
   },
 });
 

@@ -3,7 +3,7 @@ import { UserModel } from "../models";
 import jwt = require("jsonwebtoken");
 
 export const signup: RequestHandler = async (req, res) => {
-  const { name, email, password, address } = req.body;
+  const { name, email, password, address, role } = req.body;
   try {
     const usercheck = await UserModel.findOne({ email: email });
 
@@ -12,14 +12,18 @@ export const signup: RequestHandler = async (req, res) => {
         message: "Хэрэглэгч давхцаж байна",
       });
     }
+
     const user = await UserModel.create({
       name,
       email,
       password,
       address,
+      role: "user",
     });
     return res.json(user);
-  } catch (error) {}
+  } catch (error) {
+    return res.status(401).json({ message: "signup unauthorization" });
+  }
 };
 
 export const login: RequestHandler = async (req, res) => {
@@ -44,5 +48,7 @@ export const login: RequestHandler = async (req, res) => {
     const id = user._id;
     const token = jwt.sign({ id }, "secret-key");
     res.json({ token });
-  } catch (error) {}
+  } catch (error) {
+    return res.status(401).json({ message: "Login unauthorization" });
+  }
 };
