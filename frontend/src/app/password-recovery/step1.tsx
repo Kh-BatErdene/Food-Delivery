@@ -58,8 +58,10 @@ export const Step1 = () => {
           variant="contained"
           sx={{ mt: "20px" }}
           disableElevation
-          disabled={!formik.values.email === !Boolean(formik.errors.email)}
-          // style={isClicked ? { cursor: "not-allowed" } : { cursor: "pointer" }}
+          disabled={
+            !formik.values.email === !Boolean(formik.errors.email) || isClicked
+          }
+          style={isClicked ? { cursor: "not-allowed" } : { cursor: "pointer" }}
           onClick={() => {
             formik.handleSubmit();
           }}

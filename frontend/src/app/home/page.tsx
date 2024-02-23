@@ -76,11 +76,11 @@ export default function HomePage() {
       <Stack sx={{ boxShadow: 50, pt: "72px" }}>
         <Container sx={{ mb: "138px" }}>
           <Grid container spacing={2}>
-            {new Array(4).fill(0).map((_, index) => (
+            {/* {new Array(4).fill(0).map((_, index) => (
               <Grid key={index} item xs={12} sm={6} md={4} lg={3}>
                 <HomeGuide />
               </Grid>
-            ))}
+            ))} */}
           </Grid>
         </Container>
 
