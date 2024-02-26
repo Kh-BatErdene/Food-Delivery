@@ -104,10 +104,12 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       localStorage.setItem("token", token);
       setIsProfile(true);
       setIsOpen(false);
-      router.push("/home");
       setIsLoggedIn(true);
-
-      toast.success(data.message, {
+      if (isAdmin) {
+        router.push("/admin");
+      }
+      router.push("/home");
+      toast.success("Амжилттай нэвтэрлээ", {
         position: "top-center",
         autoClose: 3000,
         hideProgressBar: true,
@@ -185,16 +187,13 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       const { data } = await api.get("/getUser", {
         headers: { Authorization: localStorage.getItem("token") },
       });
-      const { role } = data;
+      const { role } = data[0];
+
       if (role === "admin") {
         setIsAdmin(true);
       }
 
-      setIsInfo(data.profile);
-      toast.success(data.message, {
-        position: "top-center",
-        hideProgressBar: true,
-      });
+      setIsInfo(data);
     } catch (error) {
       if (error) {
         toast.error(error.response?.data.message ?? error.message, {

@@ -10,6 +10,7 @@ import { theme } from "../theme";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { BigDataProvider } from "../components/providers/BigData";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,9 +24,11 @@ export default function RootLayout({
           <ThemeProvider theme={theme}>
             <AuthProvider>
               <StateProvider>
-                <Header />
-                {children}
-                <Footer />
+                <BigDataProvider>
+                  <Header />
+                  {children}
+                  <Footer />
+                </BigDataProvider>
               </StateProvider>
             </AuthProvider>
             <CssBaseline />

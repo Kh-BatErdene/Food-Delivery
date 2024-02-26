@@ -3,9 +3,27 @@ import { Button, Stack, Typography } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { useStates } from "../providers/StateProviders";
 import { CustomInput3 } from "../Customs/CustomInput3";
+import { useContext } from "react";
+import { BigDataContext } from "../providers/BigData";
+import { useFormik } from "formik";
+import * as yup from "yup";
 
+const validationSchema = yup.object({
+  name: yup.string().required(),
+});
 export function CategoryModal() {
   const { setIsCategory } = useStates();
+  const { newCategory } = useContext(BigDataContext);
+
+  const formik = useFormik({
+    initialValues: {
+      name: "",
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+      newCategory({ name: values.name });
+    },
+  });
   return (
     <Stack>
       <Stack
@@ -36,7 +54,12 @@ export function CategoryModal() {
         borderTop="solid 1px #E0E0E0"
         borderBottom="solid 1px #E0E0E0"
       >
-        <CustomInput3 label="Category name" />
+        <CustomInput3
+          label="Category name"
+          name="name"
+          onChange={formik.handleChange}
+          value={formik.values.name}
+        />
       </Stack>
       <Stack direction="row" justifyContent="end" m="24px" gap="16px">
         <Stack
@@ -60,6 +83,9 @@ export function CategoryModal() {
               cursor: "pointer",
               backgroundColor: "#505050",
             },
+          }}
+          onClick={() => {
+            formik.handleSubmit();
           }}
         >
           Continue

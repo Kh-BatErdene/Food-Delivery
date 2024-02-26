@@ -14,5 +14,6 @@ app.use(json());
 app.use("/", authRouter);
 app.use("/", userRouter);
 app.use("/", emailRouter);
+app.use("/", userRouter);
 
 export default app;

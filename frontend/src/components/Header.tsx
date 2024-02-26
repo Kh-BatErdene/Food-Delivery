@@ -27,10 +27,6 @@ export const Header = () => {
 
   const data = [
     {
-      label: "АДМИН",
-      href: "admin",
-    },
-    {
       label: "НҮҮР",
       href: "home",
     },
@@ -73,8 +69,21 @@ export const Header = () => {
           <Link href={"/home"}>
             <img src="/BlackIcon.svg" style={{ width: "40px" }} />
           </Link>
-
-          {/* //Labels map here */}
+          {isAdmin && (
+            <Link
+              href={`/admin`}
+              style={{
+                fontSize: "13px",
+                fontFamily: "Roboto",
+                fontWeight: "700",
+                alignItems: "center",
+                textDecoration: "none",
+                color: pathname.includes("/admin") ? "#18BA51" : "black",
+              }}
+            >
+              АДМИН
+            </Link>
+          )}
 
           {data.map((item, index) => {
             return (
@@ -90,7 +99,6 @@ export const Header = () => {
                   color: pathname.includes(item.href) ? "#18BA51" : "black",
                 }}
               >
-                {isAdmin && "АДМИН"}
                 {item.label}
               </Link>
             );

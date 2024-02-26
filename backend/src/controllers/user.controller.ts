@@ -17,10 +17,7 @@ export const getUser: RequestHandler = async (req, res) => {
 
     const profile = await UserModel.find({ _id: id });
 
-    res.json({
-      profile,
-      message: "Амжилттай нэвтэрлээ",
-    });
+    res.json(profile);
   } catch (error) {
     return res.status(401).json({ message: "Profile unauthorization" });
   }
