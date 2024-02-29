@@ -1,6 +1,6 @@
 "use client";
 import { Stack, Typography } from "@mui/material";
-import { CustomInput3 } from "../Customs/CustomInput3";
+import Select, { CustomInput3 } from "../Customs/CustomInput3";
 import CloseIcon from "@mui/icons-material/Close";
 import { useStates } from "../providers/StateProviders";
 
@@ -23,7 +23,7 @@ export function CreateFood() {
       </Stack>
 
       <CustomInput3 label="Хоолны нэр" />
-      <CustomInput3 label="Хоолны ангилал" />
+      <Select label="Хоолны ангилал" />
       <CustomInput3 label="Хоолны орц" />
       <CustomInput3 label="Хоолны үнэ" />
       <CustomInput3 label="Хямдралтай эсэх" />

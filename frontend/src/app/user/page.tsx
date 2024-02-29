@@ -4,7 +4,7 @@ import HistoryOutlinedIcon from "@mui/icons-material/HistoryOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import { useContext, useState } from "react";
 import { AuthContext, Logout, CustomInput2 } from "../../components";
-import { Upload } from "../upload/page";
+import Upload from "../upload/page";
 
 export default function User() {
   const { isInfo } = useContext(AuthContext);
