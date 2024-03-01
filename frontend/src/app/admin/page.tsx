@@ -1,10 +1,17 @@
 "use client";
 import { Box, Modal, Stack, Typography } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { useState } from "react";
-import { CreateFood, CategoryModal, useStates } from "../../components";
+import { useContext, useEffect, useState } from "react";
+import {
+  CreateFood,
+  CategoryModal,
+  useStates,
+  AuthContext,
+} from "../../components";
+import { useRouter } from "next/navigation";
 
 export default function Administrator() {
+  const router = useRouter();
   const food_category = [
     { name: "Breakfast" },
     { name: "Soup" },
@@ -14,6 +21,13 @@ export default function Administrator() {
   const [isIndex, setIsIndex] = useState(food_category[0]);
   const { isCategory, setIsCategory, isCreateFood, setIsCreateFood } =
     useStates();
+  const { isAdmin } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (!isAdmin) {
+      router.push("/");
+    }
+  });
 
   return (
     <Stack direction="row">

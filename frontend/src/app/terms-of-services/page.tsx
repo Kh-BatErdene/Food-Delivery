@@ -1,4 +1,5 @@
 import { Stack, Typography } from "@mui/material";
+import { CustomStarTitle } from "../../components/Modals/CustomStarTitle";
 
 export default function TermsOfServices() {
   return (
@@ -10,12 +11,7 @@ export default function TermsOfServices() {
       >
         <div>
           {" "}
-          <div style={{ display: "flex", gap: "8px" }}>
-            <img src="/Star.svg" />
-            <Typography fontFamily={"Roboto"} fontWeight={700} fontSize={22}>
-              Үйлчилгээний нөхцөл
-            </Typography>
-          </div>
+          <CustomStarTitle label="Үйлчилгээний нөхцөл" />
           <Typography>
             Mstars Food delivery нь Mstars Lab компанийн интернэт худалдааны
             албан ёсны вэбсайт бөгөөд энэхүү нөхцөл, журам нь уг вэбсайтаар

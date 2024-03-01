@@ -19,6 +19,7 @@ export const CustomInput3 = (props: TextFieldProps) => {
           maxWidth: "523px",
           width: "100%",
           height: "56px",
+          mb: "10px",
         }}
       />
     </Stack>
@@ -26,24 +27,15 @@ export const CustomInput3 = (props: TextFieldProps) => {
 };
 
 export default function Select(props: TextFieldProps) {
-  const { label } = props;
-  const options = top100Films.map((option) => {
-    const firstLetter = option.title[0].toUpperCase();
-    return {
-      firstLetter: /[0-9]/.test(firstLetter) ? "0-9" : firstLetter,
-      ...option,
-    };
-  });
+  const { label, ...rest } = props;
 
   return (
     <Stack>
-      <Typography>{label}</Typography>{" "}
+      <Typography>{label}</Typography>
       <Autocomplete
-        options={options.sort(
-          (a, b) => -b.firstLetter.localeCompare(a.firstLetter)
-        )}
-        groupBy={(option) => option.firstLetter}
-        getOptionLabel={(option) => option.title}
+        {...rest}
+        disablePortal
+        options={foodcategory.map((item) => item.title)}
         sx={{
           bgcolor: "#F4F4F4",
           "& fieldset": { border: "none" },
@@ -52,13 +44,13 @@ export default function Select(props: TextFieldProps) {
           width: "100%",
           height: "56px",
         }}
-        renderInput={(params) => <TextField {...params} />}
+        renderInput={(params) => <TextField {...params} {...rest} />}
       />
     </Stack>
   );
 }
 
-const top100Films = [
+const foodcategory = [
   { title: "Breakfast " },
   { title: "Soup" },
   { title: "Main course" },
