@@ -33,7 +33,6 @@ export default function Select(props: TextFieldProps) {
     <Stack>
       <Typography>{label}</Typography>
       <Autocomplete
-        {...rest}
         disablePortal
         options={foodcategory.map((item) => item.title)}
         sx={{

@@ -44,7 +44,7 @@ type AddFoodParams = {
   FoodType: string;
   FoodIngredients: string;
   FoodPrice: number;
-  OnSale: number;
+  OnSale?: number;
 };
 
 //Мөн AuthContextType функцанд дотор энд бичсэн 2 функцын төрөлийг зааж өгч байна.
@@ -216,7 +216,21 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   };
 
   const addFood = async (params: AddFoodParams) => {
-    FetchAddFood(params);
+    try {
+      const { data } = api.post("/addfood", params);
+
+      toast.success(data.message, {
+        position: "top-center",
+        hideProgressBar: true,
+      });
+    } catch (error) {
+      if (error) {
+        toast.error(error.response?.data.message ?? error.message, {
+          position: "top-center",
+          hideProgressBar: true,
+        });
+      }
+    }
   };
 
   useEffect(() => {

@@ -1,39 +1,39 @@
 "use client";
 import { Stack, TextField, Typography } from "@mui/material";
-import Select, { CustomInput3 } from "../Customs/CustomInput3";
+import { CustomInput3 } from "../Customs/CustomInput3";
 import CloseIcon from "@mui/icons-material/Close";
 import { useStates } from "../providers/StateProviders";
-import { Switch } from "antd";
-import { useContext } from "react";
+import { Button, Switch } from "antd";
+import { useContext, useState } from "react";
 import { AuthContext } from "../providers/AuthProviders";
 import * as yup from "yup";
 import { useFormik } from "formik";
 const validationSchema = yup.object({
   FoodName: yup.string().required(),
+  FoodType: yup.string().required(),
   FoodIngredients: yup.string().required(),
   FoodPrice: yup.number().required(),
   OnSale: yup.number(),
 });
-type selectType = {
-  type: string;
-};
+
 export function CreateFood() {
   const { setIsCreateFood } = useStates();
+  const [isSale, setIsSale] = useState(false);
   const { addFood } = useContext(AuthContext);
 
   const formik = useFormik({
     initialValues: {
       FoodName: "",
-      FoodPrice: 0,
-      foodIngredients: "",
+      FoodPrice: null,
+      FoodType: "",
       FoodIngredients: "",
       OnSale: 0,
     },
     validationSchema: validationSchema,
-    onSubmit: (values, selectValue) => {
+    onSubmit: (values) => {
       addFood({
         FoodName: values.FoodName,
-        FoodType: selectValue,
+        FoodType: values.FoodType,
         FoodIngredients: values.FoodIngredients,
         FoodPrice: values.FoodPrice,
         OnSale: values.OnSale,
@@ -41,12 +41,11 @@ export function CreateFood() {
     },
   });
 
-  function selectValue(e) {
-    e.target.value;
-  }
-
   const onChange = (checked: boolean) => {
-    console.log(`switch to ${checked}`);
+    if (checked) setIsSale(true);
+    else {
+      setIsSale(false);
+    }
   };
   return (
     <Stack spacing={2} width="100%">
@@ -73,10 +72,15 @@ export function CreateFood() {
         error={formik.touched.FoodName && Boolean(formik.errors.FoodName)}
         helperText={formik.touched.FoodName && formik.errors.FoodName}
       />
-      <Select
+      <CustomInput3
         label="Хоолны ангилал"
         placeholder="Хоолны ангилалаа оруулна уу!"
-        onChange={selectValue}
+        name="FoodType"
+        value={formik.values.FoodType}
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+        error={formik.touched.FoodType && Boolean(formik.errors.FoodType)}
+        helperText={formik.touched.FoodType && formik.errors.FoodType}
       />
 
       <CustomInput3
@@ -96,6 +100,7 @@ export function CreateFood() {
       />
 
       <CustomInput3
+        type="number"
         label="Хоолны үнэ"
         placeholder="Хоолны үнэ оруулна уу!"
         name="FoodPrice"
@@ -109,7 +114,7 @@ export function CreateFood() {
       </Stack>
 
       <CustomInput3
-        // disabled={!OnSale}
+        disabled={!isSale}
         placeholder="Хямдралын хувь оруулна уу!"
         name="OnSale"
         value={formik.values.OnSale}
@@ -122,14 +127,9 @@ export function CreateFood() {
         <Stack py={1} gap={1} alignItems="start" width={0.5}>
           <Typography>Хоолны зураг</Typography>
           <Stack gap={3} flexDirection={"row"}>
-            <TextField
-              type="file"
-              // onChange={handleImageChange}
-              variant="outlined"
-            />
+            <TextField type="file" variant="outlined" />
           </Stack>
           <Typography
-            // onClick={handleImageUpload}
             p={1}
             bgcolor={"primary.main"}
             width={1}
@@ -141,13 +141,8 @@ export function CreateFood() {
             Upload image
           </Typography>
         </Stack>
-        <Stack width={0.5}>
-          {/* {imageUrl && (
-            <Stack width="100%" height={"100%"} position="relative">
-              <Image src={imageUrl} alt="Uploaded" fill />
-            </Stack>
-          )} */}
-        </Stack>
+        <Stack width={0.5}></Stack>
+        <Button>Create Food</Button>
       </Stack>
     </Stack>
   );

@@ -1,8 +1,9 @@
 import { Router } from "express";
 import { newCategrory } from "../controllers/category.controller";
 
-const emailRouter = Router();
+const foodRouter = Router();
 
-emailRouter.post("/addcategory", newCategrory);
+foodRouter.post("/addcategory", newCategrory);
+foodRouter.post("/addfood");
 
-export default emailRouter;
+export default foodRouter;
