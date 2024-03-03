@@ -1,43 +1,47 @@
 "use client";
-import { Stack, TextField, Typography } from "@mui/material";
+import { Button, Stack, TextField, Typography } from "@mui/material";
 import { CustomInput3 } from "../Customs/CustomInput3";
 import CloseIcon from "@mui/icons-material/Close";
 import { useStates } from "../providers/StateProviders";
-import { Button, Switch } from "antd";
-import { useContext, useState } from "react";
-import { AuthContext } from "../providers/AuthProviders";
+import { Switch } from "antd";
+import { ChangeEvent, useContext, useState } from "react";
 import * as yup from "yup";
 import { useFormik } from "formik";
+import { FoodDataContext } from "../providers/FoodData";
 const validationSchema = yup.object({
-  FoodName: yup.string().required(),
-  FoodType: yup.string().required(),
-  FoodIngredients: yup.string().required(),
-  FoodPrice: yup.number().required(),
+  FoodName: yup.string().required("Хоолны нэрээ оруулна уу"),
+  FoodType: yup.string().required("Хоолны төрөл өө оруулна уу"),
+  FoodIngredients: yup.string().required("Хоолны орцоо оруулна уу"),
+  FoodPrice: yup.number().required("Хоолны үнээ оруулна уу"),
   OnSale: yup.number(),
 });
 
 export function CreateFood() {
   const { setIsCreateFood } = useStates();
   const [isSale, setIsSale] = useState(false);
-  const { addFood } = useContext(AuthContext);
+  const { addFood, setFoodImg, FoodImg, getFood } = useContext(FoodDataContext);
 
   const formik = useFormik({
     initialValues: {
       FoodName: "",
-      FoodPrice: null,
+      FoodPrice: "",
       FoodType: "",
       FoodIngredients: "",
-      OnSale: 0,
+      OnSale: "",
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-      addFood({
+    onSubmit: async (values) => {
+      await addFood({
         FoodName: values.FoodName,
         FoodType: values.FoodType,
         FoodIngredients: values.FoodIngredients,
         FoodPrice: values.FoodPrice,
         OnSale: values.OnSale,
+        ImageUrl: FoodImg,
       });
+
+      await getFood();
+      setIsCreateFood(false);
     },
   });
 
@@ -45,6 +49,35 @@ export function CreateFood() {
     if (checked) setIsSale(true);
     else {
       setIsSale(false);
+    }
+  };
+
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
+  const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (!event.target.files) return;
+    setSelectedFile(event.target.files[0]);
+  };
+
+  const handleImageUpload = async () => {
+    if (selectedFile) {
+      try {
+        const formData = new FormData();
+        formData.append("file", selectedFile);
+        const response = await fetch(
+          "https://api.cloudinary.com/v1_1/dikptaigp/upload?upload_preset=vmbs0z4z",
+          {
+            method: "POST",
+            body: formData,
+          }
+        );
+        const data = await response.json();
+        console.log(data);
+        setFoodImg(data.secure_url);
+        console.log(FoodImg);
+      } catch (error) {
+        console.error("Image upload error:", error);
+      }
     }
   };
   return (
@@ -123,26 +156,59 @@ export function CreateFood() {
         error={formik.touched.OnSale && Boolean(formik.errors.OnSale)}
         helperText={formik.touched.OnSale && formik.errors.OnSale}
       />
-      <Stack width={1} flexDirection={"row"} gap={1}>
-        <Stack py={1} gap={1} alignItems="start" width={0.5}>
+      <Stack width={1} direction={"row"} gap={1}>
+        <Stack py={1} gap={1} alignItems="start" width="100%">
           <Typography>Хоолны зураг</Typography>
-          <Stack gap={3} flexDirection={"row"}>
-            <TextField type="file" variant="outlined" />
+
+          <Stack gap={3} direction="row">
+            <TextField
+              type="file"
+              onChange={handleImageChange}
+              sx={{ border: "1px dashed #D6D7DC" }}
+            />
+            <Button onClick={handleImageUpload}>Add Image</Button>
           </Stack>
-          <Typography
-            p={1}
-            bgcolor={"primary.main"}
-            width={1}
-            borderRadius={1}
-            textAlign={"center"}
-            color={"common.white"}
-            mt={1}
+
+          <Stack
+            direction="row"
+            justifyContent="end"
+            m="24px"
+            gap="16px"
+            width="100%"
           >
-            Upload image
-          </Typography>
+            <Stack
+              justifyContent="center"
+              onClick={() => {
+                formik.resetForm();
+              }}
+              sx={{
+                "&:hover": { cursor: "pointer", color: "black" },
+              }}
+            >
+              Clear
+            </Stack>
+            <Stack justifyContent="center" alignItems="center" height="40px">
+              <Button
+                disabled={FoodImg === null}
+                sx={{
+                  width: "110px",
+                  bgcolor: !FoodImg ? "#bbbbbb" : "#393939",
+                  color: "white",
+                  borderRadius: "4px",
+                  "&:hover": {
+                    cursor: "pointer",
+                    backgroundColor: "#505050",
+                  },
+                }}
+                onClick={() => {
+                  formik.handleSubmit();
+                }}
+              >
+                Continue
+              </Button>
+            </Stack>
+          </Stack>
         </Stack>
-        <Stack width={0.5}></Stack>
-        <Button>Create Food</Button>
       </Stack>
     </Stack>
   );

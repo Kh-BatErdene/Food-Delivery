@@ -1,10 +1,10 @@
 import { Schema, model } from "mongoose";
 
-const userSchema = new Schema({
+const categorySchema = new Schema({
   name: {
     type: String,
     required: true,
   },
 });
 
-export const CategoryModel = model("category", userSchema);
+export const CategoryModel = model("category", categorySchema);

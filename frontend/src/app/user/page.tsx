@@ -1,20 +1,107 @@
 "use client";
-import { Box, Container, Modal, Stack } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Button,
+  Container,
+  Modal,
+  Stack,
+  TextField,
+} from "@mui/material";
 import HistoryOutlinedIcon from "@mui/icons-material/HistoryOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
-import { useContext, useState } from "react";
+import { ChangeEvent, useContext, useState } from "react";
 import { AuthContext, Logout, CustomInput2 } from "../../components";
-import Upload from "../upload/page";
+import { toast } from "react-toastify";
+import Image from "next/image";
+import EditIcon from "../../components/Modals/EditIcon";
+import { FoodDataContext } from "../../components/providers/FoodData";
 
 export default function User() {
   const { isInfo } = useContext(AuthContext);
+  const { imageUrl, setImageUrl } = useContext(FoodDataContext);
   const [isLogOut, setIsLogOut] = useState(false);
+  const [isSaveBtn, setIsSaveBtn] = useState(false);
+
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
+  const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (!event.target.files) return;
+    setSelectedFile(event.target.files[0]);
+  };
+
+  const handleImageUpload = async () => {
+    if (selectedFile) {
+      try {
+        const formData = new FormData();
+        formData.append("file", selectedFile);
+        const response = await fetch(
+          "https://api.cloudinary.com/v1_1/dikptaigp/upload?upload_preset=vmbs0z4z",
+          {
+            method: "POST",
+            body: formData,
+          }
+        );
+        const data = await response.json();
+        console.log(data);
+        setImageUrl(data.secure_url);
+
+        toast.success("Нүүр зураг амжилттай солигдлоо", {
+          position: "top-center",
+        });
+      } catch (error) {
+        console.error("Image upload error:", error);
+      }
+    }
+    setIsSaveBtn(false);
+  };
   return (
     <Container sx={{ mt: "133px", mb: "200px" }}>
       {isInfo.map((item, index) => {
         return (
           <Stack key={index} alignItems="center" spacing={5}>
-            <img src="/profile.png" width={120} />
+            <Stack sx={{ position: "relative" }}>
+              {imageUrl && (
+                <Stack
+                  width="100%"
+                  position="relative"
+                  style={{ objectFit: "cover" }}
+                >
+                  <Avatar sx={{ width: "120px", height: "120px" }}>
+                    <Image src={imageUrl} alt="Uploaded" fill />
+                  </Avatar>
+                </Stack>
+              )}
+              {!imageUrl && (
+                <Avatar
+                  sx={{
+                    width: "120px",
+                    height: "120px",
+                  }}
+                >
+                  <img src="/profile.png" width="120px" />
+                </Avatar>
+              )}
+              <EditIcon />
+              <TextField
+                type="file"
+                onClick={() => {
+                  setIsSaveBtn(true);
+                }}
+                onChange={handleImageChange}
+                variant="outlined"
+                sx={{
+                  position: "absolute",
+                  width: "34px",
+                  height: "34px",
+                  right: 0,
+                  bottom: 0,
+                  opacity: 0,
+                  cursor: "pointer",
+                }}
+              />
+            </Stack>
+
             <Stack sx={{ fontSize: "28px", fontWeight: "bold" }}>
               {item.name}
             </Stack>
@@ -88,7 +175,14 @@ export default function User() {
         );
       })}
 
-      <Upload />
+      {isSaveBtn && (
+        <Stack gap={3} width={400} alignItems="center">
+          <Button onClick={handleImageUpload} variant="contained">
+            Хадгалах
+          </Button>
+        </Stack>
+      )}
+
       <Modal
         open={isLogOut}
         onClose={() => {

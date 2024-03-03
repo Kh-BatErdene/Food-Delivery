@@ -1,28 +1,20 @@
 "use client";
-import { Box, Modal, Stack, Typography } from "@mui/material";
+import { Box, Grid, Modal, Stack, Typography } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useContext, useEffect, useState } from "react";
-import {
-  CreateFood,
-  CategoryModal,
-  useStates,
-  AuthContext,
-} from "../../components";
+import { CreateFood, CategoryModal, useStates, AuthContext } from ".";
 import { useRouter } from "next/navigation";
+import { FoodDataContext } from "./providers/FoodData";
+import { Card } from "./Card";
 
 export default function Administrator() {
   const router = useRouter();
-  const food_category = [
-    { name: "Breakfast" },
-    { name: "Soup" },
-    { name: "Main course" },
-    { name: "Desserts" },
-  ];
-  const [isIndex, setIsIndex] = useState(food_category[0]);
+
   const { isCategory, setIsCategory, isCreateFood, setIsCreateFood } =
     useStates();
   const { isAdmin } = useContext(AuthContext);
-
+  const { getcate, foods } = useContext(FoodDataContext);
+  const [isIndex, setIsIndex] = useState(getcate[0]);
   useEffect(() => {
     if (!isAdmin) {
       router.push("/");
@@ -41,7 +33,7 @@ export default function Administrator() {
           Food menu
         </Typography>
 
-        {food_category.map((item, index) => {
+        {getcate.map((item, index) => {
           return (
             <Stack
               direction="row"
@@ -106,6 +98,7 @@ export default function Administrator() {
           direction="row"
           justifyContent="space-between"
           alignItems="center"
+          marginBottom="20px"
         >
           <Typography fontFamily="Poppins" fontSize="22px" fontWeight="700">
             {isIndex.name}
@@ -129,6 +122,37 @@ export default function Administrator() {
             Add new food
           </Stack>
         </Stack>
+
+        <Grid container spacing={2}>
+          {foods
+            .filter((food) => {
+              return food.FoodType === isIndex.name;
+            })
+            // .filter((food) =>
+            //   food.FoodName.toLowerCase().includes(searchValue.toLowerCase())
+            // )
+            .map((item: any, index: number) => (
+              <Grid item key={index} xs={12} md={5} lg={4}>
+                <Card
+                  FoodName={item.FoodName}
+                  FoodPrice={item.FoodPrice}
+                  Sale={item.OnSale}
+                  ImageUrl={item.ImageUrl}
+                  FoodIngredients={item.FoodIngredients}
+                  FoodType={item.FoodType}
+                  // setOpenFood={setOpenFood}
+                  // editFood={editFood}
+                  // setEditFood={setEditFood}
+                  // setEditFoodName={setEditFoodName}
+                  // setEditFoodCategory={setEditFoodCategory}
+                  // setEditFoodIngredients={setEditFoodIngredients}
+                  // setEditFoodPrice={setEditFoodPrice}
+                  // setEditFoodDiscount={setEditFoodDiscount}
+                  // setEditFoodPic={setEditFoodPic}
+                />
+              </Grid>
+            ))}
+        </Grid>
       </Stack>
       <Modal
         open={isCreateFood}

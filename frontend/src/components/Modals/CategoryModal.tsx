@@ -4,7 +4,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useStates } from "../providers/StateProviders";
 import { CustomInput3 } from "../Customs/CustomInput3";
 import { useContext } from "react";
-import { BigDataContext } from "../providers/BigData";
+import { FoodDataContext } from "../providers/FoodData";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
@@ -13,15 +13,17 @@ const validationSchema = yup.object({
 });
 export function CategoryModal() {
   const { setIsCategory } = useStates();
-  const { newCategory } = useContext(BigDataContext);
+  const { newCategory, getCategory } = useContext(FoodDataContext);
 
   const formik = useFormik({
     initialValues: {
       name: "",
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-      newCategory({ name: values.name });
+    onSubmit: async (values) => {
+      await newCategory({ name: values.name });
+      await getCategory();
+      setIsCategory(false);
     },
   });
   return (
@@ -66,6 +68,9 @@ export function CategoryModal() {
           justifyContent="center"
           sx={{
             "&:hover": { cursor: "pointer", color: "black" },
+          }}
+          onClick={() => {
+            formik.resetForm();
           }}
         >
           Clear

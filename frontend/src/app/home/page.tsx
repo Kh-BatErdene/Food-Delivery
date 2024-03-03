@@ -1,14 +1,21 @@
 "use client";
 
 // import { Card } from "@/components/Card";
-import { HomeGuide, Card, OrderModal } from "../../components";
+import { Card, OrderModal } from "../../components";
 import { Box, Container, Grid, Stack, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import Modal from "@mui/material/Modal";
+import { FoodDataContext } from "../../components/providers/FoodData";
 
 export default function HomePage() {
   const [order, setOrder] = useState(false);
+  const { foods } = useContext(FoodDataContext);
+  const numberFormat = new Intl.NumberFormat("en-US", {
+    style: "decimal",
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  });
   return (
     <Stack>
       {/* Home carousel code start here */}
@@ -92,23 +99,8 @@ export default function HomePage() {
                Хямдралтай
             </Typography>
           </Stack>
-          <Grid container spacing={2}>
-            {new Array(12).fill(0).map((item, index) => (
-              <Grid
-                key={index}
-                item
-                xs={12}
-                sm={6}
-                md={4}
-                lg={3}
-                onClick={() => {
-                  setOrder(true);
-                }}
-              >
-                <Card />
-              </Grid>
-            ))}
-          </Grid>
+
+          <Card />
         </Container>
       </Stack>
       <Modal open={order} sx={{ mx: "20px" }}>

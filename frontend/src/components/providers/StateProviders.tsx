@@ -18,6 +18,8 @@ type StateContextType = {
   setIsCategory: Dispatch<SetStateAction<boolean>>;
   isClicked: boolean;
   setIsClicked: Dispatch<SetStateAction<boolean>>;
+  isBasket: any;
+  setIsBasket: Dispatch<any>;
 };
 
 export const StateContext = createContext<StateContextType>(
@@ -32,6 +34,7 @@ export const StateProvider = ({ children }) => {
   const [isCategory, setIsCategory] = useState(false);
   const [email, setEmail] = useState("");
   const [isClicked, setIsClicked] = useState(false);
+  const [isBasket, setIsBasket] = useState(null);
 
   return (
     <StateContext.Provider
@@ -46,6 +49,8 @@ export const StateProvider = ({ children }) => {
         setIsCreateFood,
         isClicked,
         setIsClicked,
+        isBasket,
+        setIsBasket,
       }}
     >
       {children}

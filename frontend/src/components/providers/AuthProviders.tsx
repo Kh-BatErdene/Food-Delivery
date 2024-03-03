@@ -13,6 +13,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
 import { StyleInfo } from "antd/es/theme/util/genComponentStyleHook";
 import { FetchAddFood } from "../apiFetch";
+import { AxiosError } from "axios";
 
 //Доорх функцанд авж буй хувьсагчдын төрөлийг зааж өөртөө хадгалж байна.
 type signupParams = {
@@ -39,14 +40,6 @@ type resetpasswordParams = {
   email: string;
 };
 
-type AddFoodParams = {
-  FoodName: string;
-  FoodType: string;
-  FoodIngredients: string;
-  FoodPrice: number;
-  OnSale?: number;
-};
-
 //Мөн AuthContextType функцанд дотор энд бичсэн 2 функцын төрөлийг зааж өгч байна.
 type AuthContextType = {
   signup: (params: signupParams) => void;
@@ -66,7 +59,6 @@ type AuthContextType = {
   setIsOtp: Dispatch<SetStateAction<string>>;
   isAdmin: boolean;
   setIsAdmin: Dispatch<SetStateAction<boolean>>;
-  addFood: (params: AddFoodParams) => Promise<void>;
 };
 
 //Шинэ контекст үүсгэж түүнд AuthContextType-г агуулж төрөлийг зааж өгнө.
@@ -84,6 +76,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   const [isOtp, setIsOtp] = useState("");
   const [isInfo, setIsInfo] = useState([]);
   const [isAdmin, setIsAdmin] = useState(false);
+
   const router = useRouter();
 
   //SignUp function
@@ -215,24 +208,6 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     }
   };
 
-  const addFood = async (params: AddFoodParams) => {
-    try {
-      const { data } = api.post("/addfood", params);
-
-      toast.success(data.message, {
-        position: "top-center",
-        hideProgressBar: true,
-      });
-    } catch (error) {
-      if (error) {
-        toast.error(error.response?.data.message ?? error.message, {
-          position: "top-center",
-          hideProgressBar: true,
-        });
-      }
-    }
-  };
-
   useEffect(() => {
     if (isLoggedIn) getUser();
   }, [isLoggedIn, refresh]);
@@ -257,7 +232,6 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
         setIsOtp,
         isAdmin,
         setIsAdmin,
-        addFood,
       }}
     >
       {children}

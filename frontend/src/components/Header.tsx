@@ -71,14 +71,13 @@ export const Header = () => {
           </Link>
           {isAdmin && (
             <Link
-              href={`/admin`}
+              href={`/`}
               style={{
-                fontSize: "13px",
+                fontSize: "17px",
                 fontFamily: "Roboto",
-                fontWeight: "700",
+                fontWeight: "900",
                 alignItems: "center",
                 textDecoration: "none",
-                color: pathname.includes("/admin") ? "#18BA51" : "black",
               }}
             >
               АДМИН

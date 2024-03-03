@@ -21,6 +21,10 @@ const foodSchema = new Schema({
     type: Number,
     required: false,
   },
+  ImageUrl: {
+    type: String,
+    required: true,
+  },
 });
 
 export const foodModel = model("foods", foodSchema);
