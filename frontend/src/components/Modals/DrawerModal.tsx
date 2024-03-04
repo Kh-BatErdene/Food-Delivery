@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Stack, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { useState } from "react";
 import { useStates } from "../providers/StateProviders";
@@ -8,6 +8,7 @@ import { useStates } from "../providers/StateProviders";
 export function DrawerModal() {
   const { setIsOpenDrawer } = useStates();
   const [count, setCount] = useState(1);
+
   return (
     <Stack sx={{ p: "24px", width: "586px" }}>
       <Stack direction="row" sx={{ mb: "50px" }} onClick={() => {}}>
@@ -31,7 +32,11 @@ export function DrawerModal() {
           borderTop: "solid 1px #D6D8DB",
         }}
       >
-        <Typography sx={{ textAlign: "center" }}>Сагс хоосон байна</Typography>
+        {/* <Typography sx={{ textAlign: "center" }}>Сагс хоосон байна</Typography> */}
+
+        <Stack>
+          <img src={isOrderImg} />
+        </Stack>
       </Stack>
     </Stack>
   );

@@ -94,7 +94,7 @@ export default function HomePage() {
 
         {/* Cards code start here */}
         <Container sx={{ px: "20px" }}>
-          {/* <Stack>
+          <Stack>
             <Stack
               direction="row"
               alignItems="center"
@@ -106,26 +106,44 @@ export default function HomePage() {
                 Хямдралтай
               </Typography>
             </Stack>
-            {foods
-              .filter((food) => {
-                return food.isSale === true;
-              })
-              .map((item, index) => {
-                return (
-                  <Stack>
-                    <HomeCard
-                      setOrder={setOrder}
-                      FoodName={item.FoodName}
-                      FoodPrice={item.FoodPrice}
-                      Sale={item.OnSale}
-                      ImageUrl={item.ImageUrl}
-                      FoodIngredients={item.FoodIngredients}
-                      FoodType={item.FoodType}
-                    />
-                  </Stack>
-                );
-              })}
-          </Stack> */}
+            <Grid
+              container
+              spacing={0}
+              sx={{ justifyContent: { xs: "center", lg: "start" } }}
+            >
+              {foods
+                .filter((food) => {
+                  return food.isSale === "true";
+                })
+                .map((item, index) => {
+                  return (
+                    <Grid
+                      item
+                      key={index}
+                      xs={12}
+                      sm={6}
+                      md={4}
+                      lg={3}
+                      sx={{
+                        maxWidth: "282px",
+                      }}
+                    >
+                      <Stack key={index}>
+                        <HomeCard
+                          setOrder={setOrder}
+                          FoodName={item.FoodName}
+                          FoodPrice={item.FoodPrice}
+                          Sale={item.OnSale}
+                          ImageUrl={item.ImageUrl}
+                          FoodIngredients={item.FoodIngredients}
+                          FoodType={item.FoodType}
+                        />
+                      </Stack>
+                    </Grid>
+                  );
+                })}
+            </Grid>
+          </Stack>
 
           {getcate.map((category) => {
             return (
@@ -203,6 +221,7 @@ export default function HomePage() {
             border: "2px solid #000",
             boxShadow: 24,
             borderRadius: "16px",
+            outline: "none",
           }}
         >
           <Stack

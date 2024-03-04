@@ -53,7 +53,7 @@ export const HomeCard = (props: CardProps) => {
   }, [inAdminPage]);
 
   return (
-    <Stack sx={{ width: "272px" }}>
+    <Stack sx={{ width: "272px", mb: "30px" }}>
       <Stack
         sx={{
           width: "272px",

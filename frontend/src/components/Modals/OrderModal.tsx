@@ -7,8 +7,8 @@ import { useStates } from "../providers/StateProviders";
 export function OrderModal() {
   const [count, setCount] = useState(1);
   const {
-    isOrderType,
     setIsOrderType,
+    isOrderType,
     isOrderIngre,
     setIsOrderIngre,
     isOrderImg,
@@ -20,6 +20,21 @@ export function OrderModal() {
     isOrderName,
     setIsOrderName,
     setOrder,
+
+    //basket
+
+    isbaskettype,
+    setisbasckettype,
+    isbasketingre,
+    setisbascketingre,
+    isbasketimg,
+    setisbascketimg,
+    isbasketsale,
+    setisbascketsale,
+    isbasketprice,
+    setisbascketprice,
+    isbasketname,
+    setisbascketname,
   } = useStates();
 
   const numberFormatter = new Intl.NumberFormat("en-US", {
@@ -40,12 +55,12 @@ export function OrderModal() {
           {isOrderName}
         </Typography>
         <Typography
-          fontFamily={"Poppins"}
+          fontFamily="Poppins"
           fontWeight={600}
           fontSize={18}
           color="#18BA51"
         >
-          {numberFormatter.format(isOrderPric)}
+          {numberFormatter.format((1 - isOrderSale / 100) * isOrderPric)}₮
         </Typography>
         <Typography fontWeight="600" mt="30px">
           Орц
@@ -106,12 +121,12 @@ export function OrderModal() {
           sx={{ cursor: "pointer", borderRadius: "4px" }}
           onClick={() => {
             setOrder(false);
-            // setIsOrderType(FoodType);
-            // setIsOrderIngre(FoodIngredients);
-            // setIsOrderImg(ImageUrl);
-            // setIsOrderNameSale(Sale);
-            // setIsOrderPrice(FoodPrice);
-            // setIsOrderName(FoodName);
+            setisbasckettype(isOrderType);
+            isbasketingre(isOrderIngre);
+            setIsOrderImg(isOrderImg);
+            setIsOrderNameSale(isOrderSale);
+            setIsOrderPrice(isOrderPric);
+            setIsOrderName(isOrderName);
           }}
         >
           Сагслах

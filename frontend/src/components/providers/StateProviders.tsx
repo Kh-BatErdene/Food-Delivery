@@ -35,6 +35,18 @@ type StateContextType = {
   setIsOrderName: Dispatch<any>;
   order: boolean;
   setOrder: Dispatch<SetStateAction<boolean>>;
+  isbaskettype: any;
+  setisbasckettype: Dispatch<any>;
+  isbasketingre: any;
+  setisbascketingre: Dispatch<any>;
+  isbasketimg: any;
+  setisbascketimg: Dispatch<any>;
+  isbasketsale: any;
+  setisbascketsale: Dispatch<any>;
+  isbasketprice: any;
+  setisbascketprice: Dispatch<any>;
+  isbasketname: any;
+  setisbascketname: Dispatch<any>;
 };
 
 export const StateContext = createContext<StateContextType>(
@@ -57,8 +69,17 @@ export const StateProvider = ({ children }) => {
   const [isOrderImg, setIsOrderImg] = useState(null);
   const [isOrderIngre, setIsOrderIngre] = useState(null);
   const [isOrderType, setIsOrderType] = useState(null);
+
   //ordermodal
   const [order, setOrder] = useState(false);
+
+  //basket states
+  const [isbasketname, setisbascketname] = useState(null);
+  const [isbasketprice, setisbascketprice] = useState(null);
+  const [isbasketsale, setisbascketsale] = useState(null);
+  const [isbasketimg, setisbascketimg] = useState(null);
+  const [isbasketingre, setisbascketingre] = useState(null);
+  const [isbaskettype, setisbasckettype] = useState(null);
 
   return (
     <StateContext.Provider
@@ -90,6 +111,19 @@ export const StateProvider = ({ children }) => {
         setIsOrderName,
         order,
         setOrder,
+        //isbasket
+        isbaskettype,
+        setisbasckettype,
+        isbasketingre,
+        setisbascketingre,
+        isbasketimg,
+        setisbascketimg,
+        isbasketsale,
+        setisbascketsale,
+        isbasketprice,
+        setisbascketprice,
+        isbasketname,
+        setisbascketname,
       }}
     >
       {children}
