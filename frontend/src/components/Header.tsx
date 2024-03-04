@@ -73,11 +73,12 @@ export const Header = () => {
             <Link
               href={`/`}
               style={{
-                fontSize: "17px",
+                fontSize: "16px",
                 fontFamily: "Roboto",
                 fontWeight: "900",
                 alignItems: "center",
                 textDecoration: "none",
+                color: "black",
               }}
             >
               АДМИН

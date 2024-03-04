@@ -25,6 +25,10 @@ const foodSchema = new Schema({
     type: String,
     required: true,
   },
+  isSale: {
+    type: String,
+    required: true,
+  },
 });
 
 export const foodModel = model("foods", foodSchema);

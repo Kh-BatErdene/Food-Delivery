@@ -1,5 +1,5 @@
 "use client";
-import { Box, Grid, Modal, Stack, Typography } from "@mui/material";
+import { Box, Container, Grid, Modal, Stack, Typography } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useContext, useEffect, useState } from "react";
 import { CreateFood, CategoryModal, useStates, AuthContext } from ".";
@@ -94,65 +94,65 @@ export default function Administrator() {
       {/* Right side */}
 
       <Stack bgcolor="#F7F7F8" width="100%" height="100vh" py="40px" px="32px">
-        <Stack
-          direction="row"
-          justifyContent="space-between"
-          alignItems="center"
-          marginBottom="20px"
-        >
-          <Typography fontFamily="Poppins" fontSize="22px" fontWeight="700">
-            {isIndex.name}
-          </Typography>
+        <Container>
           <Stack
-            height="35px"
-            maxWidth="130px"
-            width="100%"
-            bgcolor="#18BA51"
-            color="white"
-            borderRadius="4px"
+            direction="row"
+            justifyContent="space-between"
             alignItems="center"
-            justifyContent="center"
-            sx={{
-              "&:hover": { cursor: "pointer", backgroundColor: "#05a512" },
-            }}
-            onClick={(item) => {
-              setIsCreateFood(true);
-            }}
+            marginBottom="20px"
           >
-            Add new food
+            <Typography fontFamily="Poppins" fontSize="22px" fontWeight="700">
+              {isIndex.name}
+            </Typography>
+            <Stack
+              height="35px"
+              maxWidth="130px"
+              width="100%"
+              bgcolor="#18BA51"
+              color="white"
+              borderRadius="4px"
+              alignItems="center"
+              justifyContent="center"
+              sx={{
+                "&:hover": { cursor: "pointer", backgroundColor: "#05a512" },
+              }}
+              onClick={(item) => {
+                setIsCreateFood(true);
+              }}
+            >
+              Add new food
+            </Stack>
           </Stack>
-        </Stack>
 
-        <Grid container spacing={2}>
-          {foods
-            .filter((food) => {
-              return food.FoodType === isIndex.name;
-            })
-            // .filter((food) =>
-            //   food.FoodName.toLowerCase().includes(searchValue.toLowerCase())
-            // )
-            .map((item: any, index: number) => (
-              <Grid item key={index} xs={12} md={5} lg={4}>
-                <Card
-                  FoodName={item.FoodName}
-                  FoodPrice={item.FoodPrice}
-                  Sale={item.OnSale}
-                  ImageUrl={item.ImageUrl}
-                  FoodIngredients={item.FoodIngredients}
-                  FoodType={item.FoodType}
-                  // setOpenFood={setOpenFood}
-                  // editFood={editFood}
-                  // setEditFood={setEditFood}
-                  // setEditFoodName={setEditFoodName}
-                  // setEditFoodCategory={setEditFoodCategory}
-                  // setEditFoodIngredients={setEditFoodIngredients}
-                  // setEditFoodPrice={setEditFoodPrice}
-                  // setEditFoodDiscount={setEditFoodDiscount}
-                  // setEditFoodPic={setEditFoodPic}
-                />
-              </Grid>
-            ))}
-        </Grid>
+          <Grid container spacing={2}>
+            {foods
+              .filter((food) => {
+                return food.FoodType === isIndex.name;
+              })
+              .map((item: any, index: number) => (
+                <Grid
+                  item
+                  key={index}
+                  xs={12}
+                  sm={6}
+                  md={4}
+                  lg={3}
+                  sx={{
+                    maxWidth: "282px",
+                  }}
+                >
+                  <Card
+                    FoodName={item.FoodName}
+                    FoodPrice={item.FoodPrice}
+                    Sale={item.OnSale}
+                    ImageUrl={item.ImageUrl}
+                    FoodIngredients={item.FoodIngredients}
+                    FoodType={item.FoodType}
+                  />
+                </Grid>
+              ))}
+          </Grid>
+        </Container>
       </Stack>
       <Modal
         open={isCreateFood}

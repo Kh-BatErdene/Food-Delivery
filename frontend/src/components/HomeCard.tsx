@@ -3,7 +3,7 @@ import { Box, Modal, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import { AuthContext } from "./providers/AuthProviders";
 import { useContext, useEffect, useState } from "react";
-import { FoodModal } from "./Modals/FoodModal";
+import { useStates } from "./providers/StateProviders";
 
 type CardProps = {
   FoodName: string;
@@ -12,14 +12,29 @@ type CardProps = {
   ImageUrl: string;
   FoodIngredients: string;
   FoodType: string;
+  setOrder: any;
 };
 
-export const Card = (props: CardProps) => {
+export const HomeCard = (props: CardProps) => {
   const { isAdmin } = useContext(AuthContext);
-  const { FoodName, FoodPrice, Sale, ImageUrl, FoodIngredients, FoodType } =
-    props;
-  const [open, setOpen] = useState(false);
-  const [hover, setHover] = useState(false);
+  const {
+    setIsOrderType,
+    setIsOrderIngre,
+    setIsOrderImg,
+    setIsOrderNameSale,
+    setIsOrderPrice,
+    setIsOrderName,
+  } = useStates();
+  const {
+    FoodName,
+    FoodPrice,
+    Sale,
+    ImageUrl,
+    setOrder,
+    FoodType,
+    FoodIngredients,
+  } = props;
+
   const [inAdminPage, setInAdminPage] = useState(false);
 
   //number Formatter
@@ -37,27 +52,11 @@ export const Card = (props: CardProps) => {
     }
   }, [inAdminPage]);
 
-  const style = {
-    position: "absolute" as "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    maxWidth: "800px",
-    width: { xs: "100%", md: "50%" },
-    bgcolor: "background.paper",
-    border: "1px solid #DADCE0",
-    boxShadow: 24,
-    p: 2,
-    borderRadius: "16px",
-  };
   return (
-    <Stack sx={{ width: "282px" }}>
+    <Stack sx={{ width: "272px" }}>
       <Stack
         sx={{
           width: "272px",
-          boxShadow: 0,
-          mx: "auto",
-          pb: 0,
           position: "relative",
         }}
       >
@@ -68,24 +67,24 @@ export const Card = (props: CardProps) => {
             boxShadow: 1,
             borderRadius: "16px",
             width: "272px",
-            height: "186px",
+            height: "189px",
+            cursor: "pointer",
           }}
           justifyContent="center"
           alignItems="center"
           overflow="hidden"
           onClick={() => {
-            setOpen(true);
-          }}
-          onMouseLeave={() => {
-            setHover(false);
+            setOrder(true);
+            setIsOrderType(FoodType);
+            setIsOrderIngre(FoodIngredients);
+            setIsOrderImg(ImageUrl);
+            setIsOrderNameSale(Sale);
+            setIsOrderPrice(FoodPrice);
+            setIsOrderName(FoodName);
           }}
         >
           {
-            <Stack
-              onMouseEnter={() => {
-                setHover(true);
-              }}
-            >
+            <Stack>
               <img
                 style={{
                   objectFit: "cover",
@@ -98,35 +97,6 @@ export const Card = (props: CardProps) => {
               />
             </Stack>
           }
-
-          {hover && inAdminPage && (
-            <Stack
-              position="absolute"
-              width="100%"
-              height="100%"
-              sx={{
-                bgcolor: "#00000080",
-                zIndex: 4,
-              }}
-              alignItems="center"
-              justifyContent="center"
-            >
-              <Stack
-                px={8}
-                py={1}
-                bgcolor="common.white"
-                border={1}
-                borderColor={"#ECEDF0"}
-                borderRadius={"100px"}
-                width={"166px"}
-                sx={{ cursor: "pointer" }}
-              >
-                <Typography fontSize={20} fontWeight={590}>
-                  Edit
-                </Typography>
-              </Stack>
-            </Stack>
-          )}
         </Stack>
         <Stack
           sx={{
@@ -185,24 +155,6 @@ export const Card = (props: CardProps) => {
           </Typography>
         )}
       </Stack>
-      <Modal
-        open={!inAdminPage && open}
-        onClose={() => {
-          setOpen(false);
-        }}
-      >
-        <Box sx={style}>
-          <FoodModal
-            setOpen={setOpen}
-            FoodName={FoodName}
-            FoodPrice={FoodPrice}
-            Sale={Sale}
-            ImageUrl={ImageUrl}
-            FoodIngredients={FoodIngredients}
-            FoodType={FoodType}
-          />
-        </Box>
-      </Modal>
     </Stack>
   );
 };

@@ -38,6 +38,7 @@ export function CreateFood() {
         FoodPrice: values.FoodPrice,
         OnSale: values.OnSale,
         ImageUrl: FoodImg,
+        isSale: isSale,
       });
 
       await getFood();
@@ -157,22 +158,29 @@ export function CreateFood() {
         helperText={formik.touched.OnSale && formik.errors.OnSale}
       />
       <Stack width={1} direction={"row"} gap={1}>
-        <Stack py={1} gap={1} alignItems="start" width="100%">
+        <Stack gap={1} alignItems="start" width="100%">
           <Typography>Хоолны зураг</Typography>
+          <Stack direction="row" justifyContent="space-around" width="100%">
+            <Stack gap={3}>
+              <TextField
+                type="file"
+                onChange={handleImageChange}
+                sx={{ border: "1px dashed #D6D7DC", width: "200px" }}
+              />
+              <Button onClick={handleImageUpload}>Upload Image</Button>
+            </Stack>
 
-          <Stack gap={3} direction="row">
-            <TextField
-              type="file"
-              onChange={handleImageChange}
-              sx={{ border: "1px dashed #D6D7DC" }}
+            <img
+              src={FoodImg}
+              width="190px"
+              height="100px"
+              style={{ borderRadius: "8px", objectFit: "cover" }}
             />
-            <Button onClick={handleImageUpload}>Add Image</Button>
           </Stack>
-
           <Stack
             direction="row"
             justifyContent="end"
-            m="24px"
+            m="0px 24px 0px 0px"
             gap="16px"
             width="100%"
           >

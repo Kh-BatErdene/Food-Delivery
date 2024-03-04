@@ -1,16 +1,17 @@
 "use client";
 
 // import { Card } from "@/components/Card";
-import { Card, OrderModal } from "../../components";
+import { Card, HomeGuide, OrderModal, useStates } from "../../components";
 import { Box, Container, Grid, Stack, Typography } from "@mui/material";
 import React, { useContext, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import Modal from "@mui/material/Modal";
 import { FoodDataContext } from "../../components/providers/FoodData";
+import { HomeCard } from "../../components/HomeCard";
 
 export default function HomePage() {
-  const [order, setOrder] = useState(false);
-  const { foods } = useContext(FoodDataContext);
+  const { foods, getcate } = useContext(FoodDataContext);
+  const { setOrder, order } = useStates();
   const numberFormat = new Intl.NumberFormat("en-US", {
     style: "decimal",
     minimumFractionDigits: 0,
@@ -83,24 +84,106 @@ export default function HomePage() {
       <Stack sx={{ boxShadow: 50, pt: "72px" }}>
         <Container sx={{ mb: "138px" }}>
           <Grid container spacing={2}>
-            {/* {new Array(4).fill(0).map((_, index) => (
+            {new Array(4).fill(0).map((_, index) => (
               <Grid key={index} item xs={12} sm={6} md={4} lg={3}>
                 <HomeGuide />
               </Grid>
-            ))} */}
+            ))}
           </Grid>
         </Container>
 
         {/* Cards code start here */}
         <Container sx={{ px: "20px" }}>
-          <Stack direction="row" alignItems="center" sx={{ mb: "42px" }}>
-            <img src="/Star.svg" />
-            <Typography fontFamily={"Roboto"} fontWeight={700} fontSize={22}>
-               Хямдралтай
-            </Typography>
-          </Stack>
+          {/* <Stack>
+            <Stack
+              direction="row"
+              alignItems="center"
+              spacing={1}
+              sx={{ my: "42px" }}
+            >
+              <img src="/Star.svg" />
+              <Typography fontFamily={"Roboto"} fontWeight={700} fontSize={22}>
+                Хямдралтай
+              </Typography>
+            </Stack>
+            {foods
+              .filter((food) => {
+                return food.isSale === true;
+              })
+              .map((item, index) => {
+                return (
+                  <Stack>
+                    <HomeCard
+                      setOrder={setOrder}
+                      FoodName={item.FoodName}
+                      FoodPrice={item.FoodPrice}
+                      Sale={item.OnSale}
+                      ImageUrl={item.ImageUrl}
+                      FoodIngredients={item.FoodIngredients}
+                      FoodType={item.FoodType}
+                    />
+                  </Stack>
+                );
+              })}
+          </Stack> */}
 
-          <Card />
+          {getcate.map((category) => {
+            return (
+              <Stack>
+                <Stack
+                  direction="row"
+                  alignItems="center"
+                  spacing={1}
+                  sx={{ my: "42px" }}
+                >
+                  <img src="/Star.svg" />
+                  <Typography
+                    fontFamily={"Roboto"}
+                    fontWeight={700}
+                    fontSize={22}
+                  >
+                    {category.name}
+                  </Typography>
+                </Stack>
+
+                <Grid
+                  container
+                  spacing={0}
+                  sx={{ justifyContent: { xs: "center", lg: "start" } }}
+                >
+                  {foods
+                    .filter((food) => {
+                      return food.FoodType === category.name;
+                    })
+                    .map((item, index) => (
+                      <Grid
+                        item
+                        key={index}
+                        xs={12}
+                        sm={6}
+                        md={4}
+                        lg={3}
+                        sx={{
+                          maxWidth: "282px",
+                        }}
+                      >
+                        <Stack width="100%" alignItems="center">
+                          <HomeCard
+                            setOrder={setOrder}
+                            FoodName={item.FoodName}
+                            FoodPrice={item.FoodPrice}
+                            Sale={item.OnSale}
+                            ImageUrl={item.ImageUrl}
+                            FoodIngredients={item.FoodIngredients}
+                            FoodType={item.FoodType}
+                          />
+                        </Stack>
+                      </Grid>
+                    ))}
+                </Grid>
+              </Stack>
+            );
+          })}
         </Container>
       </Stack>
       <Modal open={order} sx={{ mx: "20px" }}>

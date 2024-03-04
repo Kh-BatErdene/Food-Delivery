@@ -2,8 +2,15 @@ import { RequestHandler } from "express";
 import { foodModel } from "../models/food.model";
 
 export const addfood: RequestHandler = async (req, res) => {
-  const { FoodIngredients, FoodName, FoodPrice, FoodType, OnSale, ImageUrl } =
-    req.body;
+  const {
+    FoodIngredients,
+    FoodName,
+    FoodPrice,
+    FoodType,
+    OnSale,
+    ImageUrl,
+    isSale,
+  } = req.body;
 
   try {
     const payload = await foodModel.findOne({ FoodName: FoodName });
@@ -20,6 +27,7 @@ export const addfood: RequestHandler = async (req, res) => {
       FoodType,
       OnSale,
       ImageUrl,
+      isSale,
     });
     res.json({ message: "Хоол амжиллтай нэмэгдлээ" });
   } catch (error) {

@@ -19,7 +19,7 @@ export const CustomInput3 = (props: TextFieldProps) => {
           maxWidth: "523px",
           width: "100%",
           height: "56px",
-          mb: "10px",
+          mb: "5px",
         }}
       />
     </Stack>

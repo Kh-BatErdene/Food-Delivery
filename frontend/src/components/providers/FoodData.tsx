@@ -33,6 +33,7 @@ type AddFoodParams = {
   FoodPrice: string;
   OnSale?: string;
   ImageUrl: string;
+  isSale: boolean;
 };
 
 export const FoodDataContext = createContext<FoodDataContextType>(

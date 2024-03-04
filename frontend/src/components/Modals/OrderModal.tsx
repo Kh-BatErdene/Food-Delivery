@@ -2,23 +2,42 @@
 
 import { Stack, Typography } from "@mui/material";
 import { useState } from "react";
+import { useStates } from "../providers/StateProviders";
 
 export function OrderModal() {
   const [count, setCount] = useState(1);
+  const {
+    isOrderType,
+    setIsOrderType,
+    isOrderIngre,
+    setIsOrderIngre,
+    isOrderImg,
+    setIsOrderImg,
+    isOrderSale,
+    setIsOrderNameSale,
+    isOrderPric,
+    setIsOrderPrice,
+    isOrderName,
+    setIsOrderName,
+    setOrder,
+  } = useStates();
+
+  const numberFormatter = new Intl.NumberFormat("en-US", {
+    style: "decimal",
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  });
   return (
     <Stack direction="row" spacing={4}>
       <img
-        src="/MainPizza.png"
-        alt="MainPizza"
+        src={isOrderImg}
         style={{
-          maxWidth: "500px",
-          width: "100%",
-          minWidth: "350px",
+          width: "500px",
         }}
       />
-      <Stack>
+      <Stack width="381px">
         <Typography fontSize="28px" fontWeight="700" mt="40px">
-          Main Pizza
+          {isOrderName}
         </Typography>
         <Typography
           fontFamily={"Poppins"}
@@ -26,13 +45,13 @@ export function OrderModal() {
           fontSize={18}
           color="#18BA51"
         >
-          34,800₮
+          {numberFormatter.format(isOrderPric)}
         </Typography>
         <Typography fontWeight="600" mt="30px">
           Орц
         </Typography>
         <Stack bgcolor="#F6F6F6" color="#767676" mt="20px" p="8px">
-          Хулуу, төмс, лууван , сонгино, цөцгийн тос, самрын үр
+          {isOrderIngre}
         </Stack>
         <Typography fontSize="18px" fontWeight={600} my="32px">
           Тоо
@@ -56,6 +75,7 @@ export function OrderModal() {
           >
             <img src="/minus.svg" width="14px" />
           </Stack>
+
           <Typography fontFamily={"Poppins"} fontWeight="500">
             {count}
           </Typography>
@@ -84,6 +104,15 @@ export function OrderModal() {
           justifyContent="center"
           color="white"
           sx={{ cursor: "pointer", borderRadius: "4px" }}
+          onClick={() => {
+            setOrder(false);
+            // setIsOrderType(FoodType);
+            // setIsOrderIngre(FoodIngredients);
+            // setIsOrderImg(ImageUrl);
+            // setIsOrderNameSale(Sale);
+            // setIsOrderPrice(FoodPrice);
+            // setIsOrderName(FoodName);
+          }}
         >
           Сагслах
         </Stack>
