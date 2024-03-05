@@ -5,6 +5,8 @@ import { ArrowBackIos, Check } from "@mui/icons-material";
 import { Box, Button, Container, Stack, Typography } from "@mui/material";
 import { useState } from "react";
 import { useStates } from "../../components";
+import { LeftSideField } from "./LeftSideField";
+import SingleOrderCard from "../../components/Modals/SingleOrderCard";
 const numberFormatter = new Intl.NumberFormat("en-US", {
   style: "decimal",
   minimumFractionDigits: 0,
@@ -12,7 +14,7 @@ const numberFormatter = new Intl.NumberFormat("en-US", {
 });
 
 export default function Order() {
-  const { isBasketArr, sumCount } = useStates();
+  const { isBasketArr, sumCount, postOrder } = useStates();
   const [district, setDistrict] = useState("");
   const [khoroo, setKhoroo] = useState("");
   const [bair, setBair] = useState("");
@@ -82,7 +84,7 @@ export default function Order() {
             </Stack>
           </Stack>
           <Stack boxShadow={1} p={3} borderRadius={2}>
-            <AddressForm
+            <LeftSideField
               setDistrict={setDistrict}
               setKhoroo={setKhoroo}
               setBair={setBair}
@@ -140,25 +142,13 @@ export default function Order() {
             <Box
               display={"flex"}
               flexDirection={"column"}
-              // height={"100vh"}
               justifyContent={"space-between"}
               position={"relative"}
-              // overflow={"scroll"}
             >
               <Stack padding={"18px 16px"}>
                 <Stack borderTop={1} borderColor={"#D6D8DB"} py={1}>
                   {Boolean(isBasketArr) &&
-                    isBasketArr.map((item, index) => (
-                      <BasketItem
-                        key={index}
-                        foodName={item.foodName}
-                        foodPic={item.foodPic}
-                        foodIngredients={item.foodIngredients}
-                        foodCount={item.foodCount}
-                        foodPrice={item.foodPrice}
-                        discount={item.discount}
-                      />
-                    ))}
+                    isBasketArr.map(() => <SingleOrderCard />)}
                 </Stack>
               </Stack>
               <Stack
@@ -193,7 +183,7 @@ export default function Order() {
                         phone,
                         paymentMethod,
                       },
-                      basket
+                      isBasketArr
                     );
                   }}
                   variant="contained"

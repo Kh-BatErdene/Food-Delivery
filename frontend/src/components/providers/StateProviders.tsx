@@ -66,6 +66,7 @@ export const StateProvider = ({ children }) => {
   const [order, setOrder] = useState(false);
   //basket states
   const [isBasketArr, setIsBasketArr] = useState([]);
+  //last order state
 
   const sumCount = isBasketArr.reduce((sum, item) => {
     return sum + (1 - item.isOrderSale / 100) * item.isOrderPric * item.count;

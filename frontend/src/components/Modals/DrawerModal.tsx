@@ -52,6 +52,7 @@ export function DrawerModal() {
               if (!pathname.includes("/order")) {
                 router.push("/order");
               }
+              setIsOpenDrawer(false);
             }}
             variant="contained"
           >
