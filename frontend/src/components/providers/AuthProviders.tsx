@@ -212,6 +212,8 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     if (isLoggedIn) getUser();
   }, [isLoggedIn, refresh]);
 
+
+  
   return (
     <AuthContext.Provider
       value={{

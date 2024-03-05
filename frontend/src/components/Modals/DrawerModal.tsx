@@ -2,17 +2,15 @@
 
 import { Button, Stack, Typography } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import { useState } from "react";
 import { useStates } from "../providers/StateProviders";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
+import SingleOrderCard from "./SingleOrderCard";
 
 export function DrawerModal() {
-  const { setIsOpenDrawer, isBasketArr } = useStates();
-  const [count, setCount] = useState(1);
+  const { setIsOpenDrawer, sumCount } = useStates();
   const pathname = usePathname();
   const router = useRouter();
-
   const numberFormatter = new Intl.NumberFormat("en-US", {
     style: "decimal",
     minimumFractionDigits: 0,
@@ -20,8 +18,8 @@ export function DrawerModal() {
   });
 
   return (
-    <Stack sx={{ p: "24px", width: "586px" }}>
-      <Stack>
+    <Stack sx={{ width: "586px" }}>
+      <Stack minHeight="87vh" p="24px">
         <Stack direction="row" sx={{ mb: "50px" }} onClick={() => {}}>
           <Stack
             sx={{ cursor: "pointer" }}
@@ -36,107 +34,32 @@ export function DrawerModal() {
             Таны сагс
           </Typography>
         </Stack>
-
-        {isBasketArr.map((item, index) => {
-          return (
-            <Stack
-              mb="20px"
-              sx={{
-                borderBottom: "solid 1px #D6D8DB",
-                py: "20px",
-                borderTop: "solid 1px #D6D8DB",
-              }}
-            >
-              <Stack key={index} direction="row" spacing={2}>
-                <img src={item.isOrderImg} width="245px" height="150px" />
-                <Stack>
-                  <Typography sx={{ fontSize: "18px", fontWeight: 600 }}>
-                    {item.isOrderName}
-                  </Typography>
-                  <Typography
-                    fontFamily="Poppins"
-                    fontWeight={600}
-                    fontSize={18}
-                    color="#18BA51"
-                  >
-                    {numberFormatter.format(
-                      (1 - item.isOrderSale / 100) * item.isOrderPric
-                    )}
-                    ₮
-                  </Typography>
-                  <Stack color="#767676" mt="10px" fontSize="14px" width="90%">
-                    {item.isOrderIngre}
-                  </Stack>
-                  <Stack width="150px">
-                    <Stack
-                      direction="row"
-                      justifyContent="space-between"
-                      alignItems="center"
-                    >
-                      <Stack
-                        width="45px"
-                        height="40px"
-                        bgcolor="#18BA51"
-                        borderRadius="10px"
-                        alignItems="center"
-                        justifyContent="center"
-                        sx={{ cursor: "pointer" }}
-                        onClick={() => {
-                          item.setCount(item.count - 1);
-                        }}
-                      >
-                        <img src="/minus.svg" width="14px" />
-                      </Stack>
-
-                      <Typography fontFamily={"Poppins"} fontWeight="500">
-                        {count}
-                      </Typography>
-                      <Stack
-                        width="45px"
-                        height="40px"
-                        bgcolor="#18BA51"
-                        borderRadius="10px"
-                        alignItems="center"
-                        justifyContent="center"
-                        sx={{ cursor: "pointer" }}
-                        onClick={() => {
-                          item.setCount(item.count + 1);
-                        }}
-                      >
-                        <img src="/plus.svg" width="14px" />
-                      </Stack>
-                    </Stack>
-                  </Stack>
-                </Stack>
-              </Stack>
-            </Stack>
-          );
-        })}
+        <SingleOrderCard />
       </Stack>
-
-      <Stack>
-        <Stack>
-          <Typography fontSize={18} fontWeight={400} color={"#5E6166"}>
-            Нийт төлөх дүн
-          </Typography>
-          <Typography
-            fontSize={18}
-            fontWeight={700}
-            color={"#121316"}
-          ></Typography>
+      <Stack sx={{ boxShadow: 3, height: "13vh", px: "24px", py: "10px" }}>
+        <Stack direction="row" justifyContent="space-between" mt="20px">
+          <Stack>
+            <Typography fontSize={18} fontWeight={400} color={"#5E6166"}>
+              Нийт төлөх дүн
+            </Typography>
+            <Typography fontSize={18} fontWeight={700} color={"#121316"}>
+              {numberFormatter.format(sumCount)}
+            </Typography>
+          </Stack>
+          <Button
+            sx={{ maxWidth: "225px", width: "100%" }}
+            onClick={() => {
+              if (!pathname.includes("/order")) {
+                router.push("/order");
+              }
+            }}
+            variant="contained"
+          >
+            <Typography fontSize={14} fontWeight={400}>
+              Захиалах
+            </Typography>
+          </Button>
         </Stack>
-        <Button
-          onClick={() => {
-            if (!pathname.includes("/order")) {
-              router.push("/order");
-            }
-          }}
-          variant="contained"
-        >
-          <Typography fontSize={14} fontWeight={400}>
-            Захиалах
-          </Typography>
-        </Button>
       </Stack>
     </Stack>
   );

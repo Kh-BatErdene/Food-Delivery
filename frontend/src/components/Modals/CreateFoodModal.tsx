@@ -7,7 +7,7 @@ import { Switch } from "antd";
 import { ChangeEvent, useContext, useState } from "react";
 import * as yup from "yup";
 import { useFormik } from "formik";
-import { FoodDataContext } from "../providers/FoodData";
+import { FoodDataContext } from "../providers/FoodDataProviders";
 const validationSchema = yup.object({
   FoodName: yup.string().required("Хоолны нэрээ оруулна уу"),
   FoodType: yup.string().required("Хоолны төрөл өө оруулна уу"),
@@ -19,7 +19,8 @@ const validationSchema = yup.object({
 export function CreateFood() {
   const { setIsCreateFood } = useStates();
   const [isSale, setIsSale] = useState(false);
-  const { addFood, setFoodImg, FoodImg, getFood } = useContext(FoodDataContext);
+  const { addFood, setFoodImg, FoodImg, getFood, getcate } =
+    useContext(FoodDataContext);
 
   const formik = useFormik({
     initialValues: {
@@ -107,6 +108,7 @@ export function CreateFood() {
         helperText={formik.touched.FoodName && formik.errors.FoodName}
       />
       <CustomInput3
+        select
         label="Хоолны ангилал"
         placeholder="Хоолны ангилалаа оруулна уу!"
         name="FoodType"
@@ -115,7 +117,19 @@ export function CreateFood() {
         onBlur={formik.handleBlur}
         error={formik.touched.FoodType && Boolean(formik.errors.FoodType)}
         helperText={formik.touched.FoodType && formik.errors.FoodType}
-      />
+      >
+        {getcate.map((item: any) => {
+          return (
+            <option
+              key={item.name}
+              value={item.name}
+              style={{ cursor: "pointer", marginBottom: "5px" }}
+            >
+              {item.name}
+            </option>
+          );
+        })}
+      </CustomInput3>
 
       <CustomInput3
         label="Хоолны орц"

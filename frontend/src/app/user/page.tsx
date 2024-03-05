@@ -15,7 +15,7 @@ import { AuthContext, Logout, CustomInput2 } from "../../components";
 import { toast } from "react-toastify";
 import Image from "next/image";
 import EditIcon from "../../components/Modals/EditIcon";
-import { FoodDataContext } from "../../components/providers/FoodData";
+import { FoodDataContext } from "../../components/providers/FoodDataProviders";
 
 export default function User() {
   const { isInfo } = useContext(AuthContext);

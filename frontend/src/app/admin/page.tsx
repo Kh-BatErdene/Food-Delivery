@@ -9,22 +9,24 @@ import {
   AuthContext,
 } from "../../components";
 import { useRouter } from "next/navigation";
-import { FoodDataContext } from "../../components/providers/FoodData";
+import { FoodDataContext } from "../../components/providers/FoodDataProviders";
 import { Card } from "../../components/Card";
 
 export default function Administrator() {
-  const router = useRouter();
-
+  const { isAdmin } = useContext(AuthContext);
   const { isCategory, setIsCategory, isCreateFood, setIsCreateFood } =
     useStates();
-  const { isAdmin } = useContext(AuthContext);
+
   const { getcate, foods } = useContext(FoodDataContext);
   const [isIndex, setIsIndex] = useState(getcate[0]);
+
+  const router = useRouter();
+
   useEffect(() => {
     if (!isAdmin) {
       router.push("/");
     }
-  });
+  }, []);
 
   return (
     <Stack direction="row">

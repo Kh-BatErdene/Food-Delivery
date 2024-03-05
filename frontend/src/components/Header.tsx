@@ -21,7 +21,7 @@ export const Header = () => {
   const pathname = usePathname();
   const router = useRouter();
 
-  const { isOpenDrawer, setIsOpenDrawer } = useStates();
+  const { isOpenDrawer, setIsOpenDrawer, setSearchValue } = useStates();
   const { isLoggedIn, isOpen, setIsOpen, isInfo, isAdmin } =
     useContext(AuthContext);
 
@@ -108,7 +108,13 @@ export const Header = () => {
         <Stack direction="row" alignItems="center" gap={1}>
           {/* //Search...  */}
 
-          <CustomInput type="search" placeholder="Хайх" />
+          <CustomInput
+            type="search"
+            placeholder="Хайх"
+            onChange={(e) => {
+              setSearchValue(e.target.value);
+            }}
+          />
 
           {/* //SignUp Button */}
           <Button

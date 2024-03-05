@@ -13,3 +13,4 @@ export * from "./Modals/OrderModal";
 export * from "./Home_Guide";
 export * from "./Footer";
 export * from "./Header";
+export * from "./providers/FoodDataProviders";

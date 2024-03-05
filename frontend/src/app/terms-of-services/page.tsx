@@ -1,5 +1,5 @@
 import { Stack, Typography } from "@mui/material";
-import { CustomStarTitle } from "../../components/Modals/CustomStarTitle";
+import { CustomStarTitle } from "../../components/Customs/CustomStarTitle";
 
 export default function TermsOfServices() {
   return (

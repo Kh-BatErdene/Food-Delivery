@@ -37,6 +37,9 @@ type StateContextType = {
   setOrder: Dispatch<SetStateAction<boolean>>;
   isBasketArr: any[];
   setIsBasketArr: Dispatch<SetStateAction<any[]>>;
+  sumCount: any;
+  searchValue: string;
+  setSearchValue: Dispatch<SetStateAction<string>>;
 };
 
 export const StateContext = createContext<StateContextType>(
@@ -44,8 +47,8 @@ export const StateContext = createContext<StateContextType>(
 );
 
 export const StateProvider = ({ children }) => {
+  const [searchValue, setSearchValue] = useState("");
   //States
-
   const [isOpenDrawer, setIsOpenDrawer] = useState(false);
   const [isCreateFood, setIsCreateFood] = useState(false);
   const [isCategory, setIsCategory] = useState(false);
@@ -59,13 +62,14 @@ export const StateProvider = ({ children }) => {
   const [isOrderImg, setIsOrderImg] = useState(null);
   const [isOrderIngre, setIsOrderIngre] = useState(null);
   const [isOrderType, setIsOrderType] = useState(null);
-
   //ordermodal
   const [order, setOrder] = useState(false);
-
   //basket states
   const [isBasketArr, setIsBasketArr] = useState([]);
 
+  const sumCount = isBasketArr.reduce((sum, item) => {
+    return sum + (1 - item.isOrderSale / 100) * item.isOrderPric * item.count;
+  }, 0);
   return (
     <StateContext.Provider
       value={{
@@ -99,6 +103,9 @@ export const StateProvider = ({ children }) => {
         //isbasket
         isBasketArr,
         setIsBasketArr,
+        sumCount,
+        searchValue,
+        setSearchValue,
       }}
     >
       {children}

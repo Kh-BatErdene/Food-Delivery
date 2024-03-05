@@ -32,7 +32,9 @@ export const CustomInput = (props: TextFieldProps) => {
           height: type === "password" || type === "text" ? "48px" : "32px",
           mb: type === "password" || type === "text" ? "0" : "10px",
           "& fieldset": { border: "none" },
-          bgcolor: "#ECEDF0",
+          bgcolor: type === "search" ? "white" : "#ECEDF0",
+          border: type === "search" ? "solid 1px black" : "none",
+          borderRadius: type === "search" ? "8px" : "none",
         }}
         InputProps={{
           sx: { padding: "0px 10px" },

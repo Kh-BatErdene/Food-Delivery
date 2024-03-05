@@ -6,12 +6,13 @@ import { Box, Container, Grid, Stack, Typography } from "@mui/material";
 import React, { useContext, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import Modal from "@mui/material/Modal";
-import { FoodDataContext } from "../../components/providers/FoodData";
+import { FoodDataContext } from "../../components/providers/FoodDataProviders";
 import { HomeCard } from "../../components/HomeCard";
+import { CustomSelectInput } from "../../components/Customs/CustomSelectInput";
 
 export default function HomePage() {
   const { foods, getcate } = useContext(FoodDataContext);
-  const { setOrder, order } = useStates();
+  const { setOrder, order, searchValue } = useStates();
   const numberFormat = new Intl.NumberFormat("en-US", {
     style: "decimal",
     minimumFractionDigits: 0,
@@ -19,7 +20,6 @@ export default function HomePage() {
   });
   return (
     <Stack>
-      {/* Home carousel code start here */}
       <Stack
         sx={{
           bgcolor: "primary.main",
@@ -115,6 +115,11 @@ export default function HomePage() {
                 .filter((food) => {
                   return food.isSale === "true";
                 })
+                .filter((food) => {
+                  return food.FoodName.toLowerCase().includes(
+                    searchValue.toLowerCase()
+                  );
+                })
                 .map((item, index) => {
                   return (
                     <Grid
@@ -145,9 +150,9 @@ export default function HomePage() {
             </Grid>
           </Stack>
 
-          {getcate.map((category) => {
+          {getcate.map((category, index) => {
             return (
-              <Stack>
+              <Stack key={index}>
                 <Stack
                   direction="row"
                   alignItems="center"
@@ -172,6 +177,11 @@ export default function HomePage() {
                   {foods
                     .filter((food) => {
                       return food.FoodType === category.name;
+                    })
+                    .filter((food) => {
+                      return food.FoodName.toLowerCase().includes(
+                        searchValue.toLowerCase()
+                      );
                     })
                     .map((item, index) => (
                       <Grid

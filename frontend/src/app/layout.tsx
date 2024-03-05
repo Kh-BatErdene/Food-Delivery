@@ -10,7 +10,7 @@ import { theme } from "../theme";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { FoodDataProvider } from "../components/providers/FoodData";
+import { FoodDataProvider } from "../components/providers/FoodDataProviders";
 
 const inter = Inter({ subsets: ["latin"] });
 
