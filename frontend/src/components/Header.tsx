@@ -71,7 +71,7 @@ export const Header = () => {
           </Link>
           {isAdmin && (
             <Link
-              href={`/`}
+              href={`/admin`}
               style={{
                 fontSize: "16px",
                 fontFamily: "Roboto",

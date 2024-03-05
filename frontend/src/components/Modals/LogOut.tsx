@@ -5,7 +5,7 @@ import { AuthContext } from "../providers/AuthProviders";
 
 type LogoutComfirmProps = { setIsLogOut: Dispatch<SetStateAction<boolean>> };
 export const Logout = (props: LogoutComfirmProps) => {
-  const { signOut } = useContext(AuthContext);
+  const { signOut, setIsAdmin } = useContext(AuthContext);
   const router = useRouter();
   const { setIsLogOut } = props;
   return (
@@ -26,6 +26,7 @@ export const Logout = (props: LogoutComfirmProps) => {
         <Typography
           onClick={() => {
             signOut();
+            setIsAdmin(false);
             router.push("/");
           }}
           width={0.5}

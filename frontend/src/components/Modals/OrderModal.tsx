@@ -7,34 +7,18 @@ import { useStates } from "../providers/StateProviders";
 export function OrderModal() {
   const [count, setCount] = useState(1);
   const {
-    setIsOrderType,
     isOrderType,
     isOrderIngre,
-    setIsOrderIngre,
     isOrderImg,
-    setIsOrderImg,
     isOrderSale,
-    setIsOrderNameSale,
     isOrderPric,
-    setIsOrderPrice,
     isOrderName,
     setIsOrderName,
     setOrder,
 
     //basket
-
-    isbaskettype,
-    setisbasckettype,
-    isbasketingre,
-    setisbascketingre,
-    isbasketimg,
-    setisbascketimg,
-    isbasketsale,
-    setisbascketsale,
-    isbasketprice,
-    setisbascketprice,
-    isbasketname,
-    setisbascketname,
+    isBasketArr,
+    setIsBasketArr,
   } = useStates();
 
   const numberFormatter = new Intl.NumberFormat("en-US", {
@@ -121,12 +105,19 @@ export function OrderModal() {
           sx={{ cursor: "pointer", borderRadius: "4px" }}
           onClick={() => {
             setOrder(false);
-            setisbasckettype(isOrderType);
-            isbasketingre(isOrderIngre);
-            setIsOrderImg(isOrderImg);
-            setIsOrderNameSale(isOrderSale);
-            setIsOrderPrice(isOrderPric);
-            setIsOrderName(isOrderName);
+            setIsBasketArr([
+              ...isBasketArr,
+              {
+                isOrderIngre,
+                isOrderImg,
+                isOrderSale,
+                isOrderPric,
+                isOrderName,
+                count,
+                setCount,
+              },
+            ]);
+            console.log(isBasketArr);
           }}
         >
           Сагслах

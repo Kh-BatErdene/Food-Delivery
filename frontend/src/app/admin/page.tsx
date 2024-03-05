@@ -2,10 +2,15 @@
 import { Box, Container, Grid, Modal, Stack, Typography } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useContext, useEffect, useState } from "react";
-import { CreateFood, CategoryModal, useStates, AuthContext } from ".";
+import {
+  CreateFood,
+  CategoryModal,
+  useStates,
+  AuthContext,
+} from "../../components";
 import { useRouter } from "next/navigation";
-import { FoodDataContext } from "./providers/FoodData";
-import { Card } from "./Card";
+import { FoodDataContext } from "../../components/providers/FoodData";
+import { Card } from "../../components/Card";
 
 export default function Administrator() {
   const router = useRouter();
